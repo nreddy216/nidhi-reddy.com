@@ -1,7 +1,21 @@
 body{
-	font-family: Arial;
+	font-family: Avenir;
+	float: left;
+}
+
+#container{
+	float:center;
+	width: 450px;
+	text-align:left;
 }
 
 h1{
-	font-family: Arial;
+	font-family: Avenir;
+	
+}
+
+img{
+	width: 250px;
+	align: top;
+	float:right;
 }
