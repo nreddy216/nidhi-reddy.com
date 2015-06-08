@@ -3,5 +3,5 @@
 // }
 
 $("#container").click(function(){
-	$("container").slideUp();
+	$("#container").slideUp();
 });
