@@ -5,8 +5,10 @@ body{
 
 #container{
 	float:center;
+	vertical-align: middle;
 	width: 450px;
 	text-align:left;
+	align: middle;
 }
 
 h1{
