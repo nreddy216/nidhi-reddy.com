@@ -3,17 +3,25 @@ body{
 	float: left;
 }
 
-#container{
+.navigation{
+	display: inline-block;
+	background: blue;
+	margin: 0 auto;
+}
+
+
+.about{
 	float:center;
 	vertical-align: middle;
 	width: 450px;
 	text-align:left;
 	align: middle;
+	background-image: url(images/photome.jpg);
 }
 
 h1{
 	font-family: Avenir;
-	
+
 }
 
 img{
