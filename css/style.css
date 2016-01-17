@@ -1,6 +1,8 @@
 body{
-	font-family: Avenir;
 	float: left;
+
+	width:99%;
+	margin: 0 auto;
 }
 
 .navigation{
@@ -19,8 +21,28 @@ body{
 	background-image: url(images/photome.jpg);
 }
 
-h1{
-	font-family: Avenir;
+.header-container{
+	width:99%;
+	margin: 0 auto;
+
+	justify-content: center;
+
+
+
+}
+
+.header{
+	font-family: 'Nixie One', cursive;
+	font-size: 30px;
+
+
+	margin-top: 90px;
+	padding: 40px;
+	line-height: 50px;
+
+	text-align: center;
+
+
 
 }
 
