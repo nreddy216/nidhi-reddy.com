@@ -1,53 +1,177 @@
 body{
-	float: left;
-
-	width:99%;
 	margin: 0 auto;
 }
 
-.navigation{
+
+
+.hide{
+	visibility: hidden;
+}
+
+.nav-float-right{
+	float: right;
+}
+
+.nav-show{
+	color: white;
+}
+
+.nav-wrapper{
+	right: 0px;
+	top: 0px;
+	position: fixed;
+}
+
+.nav{
+	background-color: black;
 	display: inline-block;
-	background: blue;
-	margin: 0 auto;
+	color: white;
+
+	width: 60px;
+	height: 60px;
+
+	margin: 15px;
+
+	-ms-transform: rotate(45deg); /* IE 9 */
+  -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+  transform: rotate(45deg);
 }
 
+
+.nav p{
+	-ms-transform: rotate(-45deg); /* IE 9 */
+	-webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */
+	transform: rotate(-45deg);
+}
+
+.nav-icon{
+	/*-ms-transform: rotate(180deg); /* IE 9 */
+	/*-webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+	/*transform: rotate(180deg); */
+
+
+
+	width: 80px;
+	margin-left: 30%;
+}
+
+.brand-logo img{
+	width: 80px!important;
+	margin-left: 10px;
+}
 
 .about{
-	float:center;
-	vertical-align: middle;
-	width: 450px;
-	text-align:left;
-	align: middle;
+	width: 80%;
 	background-image: url(images/photome.jpg);
+	margin: 0 auto;
 }
 
 .header-container{
-	width:99%;
+	width:100%;
 	margin: 0 auto;
-
-	justify-content: center;
-
-
-
+	text-align: center;
 }
 
-.header{
-	font-family: 'Nixie One', cursive;
-	font-size: 30px;
-
-
+.logo{
 	margin-top: 90px;
 	padding: 40px;
 	line-height: 50px;
-
 	text-align: center;
+	margin-bottom: 0px;
+}
 
+.logo img{
+	margin: 0 auto;
+}
 
+.subtitle-wrapper{
+	/*margin-top: -30px;*/
+}
+
+.subtitle{
+	margin-top: 0;
+	font-family: Proxima Nova;
+	font-size: 30px;
+}
+
+/*.reddy{
+	font-family: 'Proxima Nova', sans-serif;
+	font-weight: lighter;
+	font-size: 66px;
+}*/
+
+.project img{
+	width: 100%;
 
 }
 
-img{
+.project-description{
+}
+
+/*img{
 	width: 250px;
 	align: top;
 	float:right;
+}*/
+
+
+/*----------------------------------------------------------------------------------*/
+
+/*BLINKING CURSOR*/
+
+.blinking-cursor {
+  font-weight: 100;
+  font-size: 30px;
+
+  color: #2E3D48;
+  -webkit-animation: 1s blink step-end infinite;
+  -moz-animation: 1s blink step-end infinite;
+  -ms-animation: 1s blink step-end infinite;
+  -o-animation: 1s blink step-end infinite;
+  animation: 1s blink step-end infinite;
+}
+
+@keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-moz-keyframes blink {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-webkit-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-ms-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-o-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
 }
