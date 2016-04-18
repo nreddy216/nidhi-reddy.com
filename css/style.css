@@ -47,6 +47,7 @@ body{
 	margin: 0 auto;
 }
 
+
 .subtitle-wrapper{
 	/*margin-top: -30px;*/
 }
@@ -248,4 +249,8 @@ hr{
 
 .tech-heading{
 	font-weight: bold;
+}
+
+.antispam {
+	display:none;
 }

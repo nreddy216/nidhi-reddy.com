@@ -1,11 +1,14 @@
 $(document).ready(function(){
 
+  // split your email into two parts and remove the @ symbol
+  var first = "nidhi.sama.reddy";
+  var last = "gmail.com";
 
 
   // NAVIGATION ANIMATION
    $(".button-collapse").sideNav();
 
-   
+
   // $('.nav-hide').toggleClass('hide');
   //
   // $('.nav-show').on('click', function(){
@@ -54,5 +57,9 @@ $(document).ready(function(){
 
       }, humanize);
   }());
+
+
+
+  $('#developer').animate({color: 'red'}, 1000);
 
 });
