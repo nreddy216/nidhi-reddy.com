@@ -37,22 +37,23 @@ body{
   transform: rotate(45deg);
 }
 
+.nav:hover{
+	background-color: #f1665c;
+}
+
 
 .nav p{
 	-ms-transform: rotate(-45deg); /* IE 9 */
 	-webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */
 	transform: rotate(-45deg);
+
+	color: white;
+
+	text-align: center;
 }
 
 .nav-icon{
-	/*-ms-transform: rotate(180deg); /* IE 9 */
-	/*-webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
-	/*transform: rotate(180deg); */
-
-
-
-	width: 80px;
-	margin-left: 30%;
+	width: 100%;
 }
 
 .brand-logo img{
@@ -60,11 +61,7 @@ body{
 	margin-left: 10px;
 }
 
-.about{
-	width: 80%;
-	background-image: url(images/photome.jpg);
-	margin: 0 auto;
-}
+
 
 .header-container{
 	width:100%;
@@ -94,26 +91,86 @@ body{
 	font-size: 30px;
 }
 
+hr{
+	border: 1px black;
+}
+
+.right-middle-project{
+	top: 10px;
+}
+
+.about{
+	width: 80%;
+	background-image: url(images/photome.jpg);
+	margin: 0 auto;
+
+	margin-bottom: 5%;
+}
+
 /*.reddy{
 	font-family: 'Proxima Nova', sans-serif;
 	font-weight: lighter;
 	font-size: 66px;
 }*/
 
+.projects{
+	width: 80%;
+}
+
 .project img{
 	width: 100%;
 
 }
 
-.project-description{
+.project{
+ position:relative;
 }
 
-/*img{
-	width: 250px;
-	align: top;
-	float:right;
-}*/
+.project-image{
+	width:100%;
+	height:100%;
+}
 
+.image-overlay {
+	position:absolute;
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;
+	opacity: 0;
+	background-color: #d4d4d4;
+}
+
+.image-overlay-text{
+	z-index: 10;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	text-align: center;
+
+	width: 100%;
+
+	color: #000;
+
+	/*font-size: 1.4em;*/
+	font-family: 'Proxima Nova', sans-serif;
+	font-weight: bolder;
+}
+
+.image-overlay-text{
+	font-size: 2.3em;
+}
+
+.overlay-description{
+	font-size: 0.5em;
+	font-weight: lighter;
+}
+
+.footer{
+	text-align: center;
+	padding-top: 10%;
+	padding-bottom: 2%;
+}
 
 /*----------------------------------------------------------------------------------*/
 

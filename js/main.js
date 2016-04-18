@@ -12,15 +12,22 @@ $(document).ready(function(){
 
 
   //HOVER OVER LOGO
-  $(".logo img").hover(function() {
-		$(this).attr("src","./images/logo/fullname_pronunciation.svg");
-			}, function() {
-		$(this).attr("src","./images/logo/fullname_lowercase_logo_black.svg");
-	});
+  // $(".logo img").hover(function() {
+	// 	$(this).attr("src","./images/logo/fullname_pronunciation.svg");
+	// 		}, function() {
+	// 	$(this).attr("src","./images/logo/fullname_lowercase_logo_black.svg");
+	// });
 
 
+  //HOVER OVER thumbnail
+  $(".image-overlay").hover(function() {
+       $(this).animate({opacity: '0.8'}, 200)},
+       function() {
+       $(this).animate({opacity: '0'}, 200);
+  });
 
 
+  
 
   // tipewriter by roXon // modified by me
 
