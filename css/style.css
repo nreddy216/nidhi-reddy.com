@@ -254,3 +254,20 @@ hr{
 .antispam {
 	display:none;
 }
+
+/* INDIVIDUAL PROJECT PAGES */
+
+.subtitle-static{
+	margin-top: 0;
+	font-family: Proxima Nova;
+	font-size: 30px;
+}
+
+.project-show {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.project-show img{
+	width: 70%;
+}

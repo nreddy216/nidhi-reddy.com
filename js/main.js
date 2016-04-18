@@ -9,21 +9,6 @@ $(document).ready(function(){
    $(".button-collapse").sideNav();
 
 
-  // $('.nav-hide').toggleClass('hide');
-  //
-  // $('.nav-show').on('click', function(){
-  //   $('.nav-hide').toggleClass('hide');
-  //   $('.nav-show').toggleClass('nav-float-right');
-  // });
-
-
-  //HOVER OVER LOGO
-  // $(".logo img").hover(function() {
-	// 	$(this).attr("src","./images/logo/fullname_pronunciation.svg");
-	// 		}, function() {
-	// 	$(this).attr("src","./images/logo/fullname_lowercase_logo_black.svg");
-	// });
-
 
   //HOVER OVER thumbnail
   $(".image-overlay").hover(function() {
@@ -31,7 +16,6 @@ $(document).ready(function(){
        function() {
        $(this).animate({opacity: '0'}, 200);
   });
-
 
 
 
@@ -59,7 +43,7 @@ $(document).ready(function(){
   }());
 
 
-
-  $('#developer').animate({color: 'red'}, 1000);
+  // slider
+  $('.slider').slider({full_width: true});
 
 });
