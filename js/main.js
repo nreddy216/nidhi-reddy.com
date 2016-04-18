@@ -21,13 +21,13 @@ $(document).ready(function(){
 
   //HOVER OVER thumbnail
   $(".image-overlay").hover(function() {
-       $(this).animate({opacity: '0.8'}, 200)},
+       $(this).animate({opacity: '0.9'}, 200)},
        function() {
        $(this).animate({opacity: '0'}, 200);
   });
 
 
-  
+
 
   // tipewriter by roXon // modified by me
 
