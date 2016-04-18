@@ -3,12 +3,15 @@ $(document).ready(function(){
 
 
   // NAVIGATION ANIMATION
-  $('.nav-hide').toggleClass('hide');
+   $(".button-collapse").sideNav();
 
-  $('.nav-show').on('click', function(){
-    $('.nav-hide').toggleClass('hide');
-    $('.nav-show').toggleClass('nav-float-right');
-  });
+   
+  // $('.nav-hide').toggleClass('hide');
+  //
+  // $('.nav-show').on('click', function(){
+  //   $('.nav-hide').toggleClass('hide');
+  //   $('.nav-show').toggleClass('nav-float-right');
+  // });
 
 
   //HOVER OVER LOGO

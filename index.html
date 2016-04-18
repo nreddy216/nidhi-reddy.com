@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -58,42 +60,22 @@
 	</head>
 	<body>
 
-		<div class="nav-wrapper">
-			<div class="nav nav-show">
-				<p>
-					<i class="material-icons nav-icon">view_week</i>
-				</p>
-			</div>
-			<div class="nav nav-hide">
-				<a href="#"><p>
-					About
-				</p></a>
-			</div>
-			<div class="nav nav-hide">
-				<a href="#"><p>
-					Projects
-				</p></a>
-			</div>
-			<div class="nav nav-hide">
-				<a href="#"><p>
-					Resumé
-				</p></a>
-			</div>
-		</div>
-
-
-		<!-- <nav>
-			<div class="nav-wrapper">
-				<a href="#" class="brand-logo"><img src="./images/nidhi_lowercase_logo_whitepink.svg" alt="logo" /></a>
-				<ul id="nav-mobile" class="right hide-on-med-and-down">
-					<li><a href="#">Projects</a></li>
-					<li><a href="./about.html">About</a></li>
-				</ul>
-			</div>
-		</nav> -->
-
-		<!-- &nbsp;&nbsp;<span class="reddy">-REDDY</span> -->
-		<!-- <span class="blinking-cursor">|</span> -->
+		<nav>
+	    <div class="nav-wrapper">
+	      <a href="#!" class="brand-logo">Logo</a>
+	      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+	      <ul class="right hide-on-med-and-down">
+	        <li><a href="#about">About</a></li>
+	        <li><a href="#projects-container">Projects</a></li>
+					<li><a href="#contact">Contact</a></li>
+	      </ul>
+	      <ul class="side-nav" id="mobile-demo">
+					<li><a href="#about">About</a></li>
+	        <li><a href="#projects-container">Projects</a></li>
+					<li><a href="#contact">Contact</a></li>
+	      </ul>
+	    </div>
+	  </nav>
 
 
 		<div class="header-container">
@@ -103,13 +85,12 @@
 					<span class="subtitle">
 							web developer & designer / 🦄
 					</span><span class="blinking-cursor">|</span>
-					<hr />
 				</div>
 			</div>
 		</div>
 
 
-		<div class="projects-container">
+		<div class="projects-container" id="projects-container">
 			<div class="projects row row-1">
 					<div class="project col s12 m12 l8" id="main-project">
 						<a href="#">
@@ -118,8 +99,7 @@
 								<span class="image-overlay-text flow-text">
 									GULLIVER
 									<p class="overlay-description">
-										Create and view interactive stories using maps as the medium. <br />
-										[MongoDB, Express, Angular, Mapbox, Leaflet]
+										MEAN stack application to create and view interactive, geographic stories.
 									</p>
 								</span>
 								<img src="./images/image-hover.png" alt="test"></img>
@@ -215,22 +195,88 @@
 		</div>
 
 
+		<div class="about" id="about">
+				<hr />
 
+
+				<ul class="collection with-header">
+	        <li class="collection-header ">
+							<img class="" src="./images/headshot.jpg" alt="headshot" />
+						<p class="about-me">
+							<h4 class="name">Hi, I'm Nidhi (pronounced nid-thee)</h4>
+							I'm a full-stack web developer and designer located in the Bay Area with an educational background in both mathematics and film.  Most recently, I've worked as a freelance designer and a full-time fellow at <a href="https://www.khanacademy.org">Khan Academy</a>.  When I'm not coding or designing, I am reading, TV-ing, being outdoors, learning the ukulele, or playing an absurd amount of board games.
+						</p>
+					</li>
+					<div class="technologies">
+						<li class="collection-item"><div><span class="tech-heading">Languages:</span> JavaScript, Ruby, HTML5/CSS3, Spanish<a href="#!" class="secondary-content"></a></div></li>
+						<li class="collection-item"><div><span class="tech-heading">Frameworks:</span> Express, AngularJS, Rails, Sinatra<a href="#!" class="secondary-content"></a></div></li>
+						<li class="collection-item"><div><span class="tech-heading">Design:</span> Balsamiq, Illustrator, Photoshop, AfterEffects, SCSS/SASS, Bootstrap, Materialize<a href="#!" class="secondary-content"></a></div></li>
+						<li class="collection-item"><div><span class="tech-heading">Other technologies:</span> Github/Git, MongoDB, PostgreSQL, jQuery, AJAX<a href="#!" class="secondary-content"></a></div></li>
+					</div>
+
+	      </ul>
+		</div>
+
+		<div class="contact">
+
+				<title>Contact Form</title>
+
+				<style type="text/css">
+					.antispam { display:none;}
+				</style>
+
+				<script type="text/javascript">
+					// split your email into two parts and remove the @ symbol
+					var first = "nidhi.sama.reddy";
+					var last = "gmail.com";
+				</script>
+
+			</head>
+			<body>
+
+
+				<form method="post" action="submit.php">
+
+					<p>Your name:
+					<br /><input name="name" /></p>
+
+					<p>Your email:
+					<br /><input name="email" /></p>
+
+					<!-- Important: if you add any fields to this page, you will also need to update the php script -->
+
+					<p class="antispam">Leave this empty:
+					<br /><input name="url" /></p>
+
+					<p>Your message:
+					<br /><textarea name="message" rows="10" cols="50"></textarea></p>
+
+					<p><input type="submit" value="Send" /></p>
+
+				</form>
+
+
+				<p>My e-mail address:
+				<script type="text/javascript">
+					document.write('<a href="mailto:'+first + '@' + last+'">'+first + '@' + last+'<\/a>');
+				</script>
+				</p>
+		</div>
 
 		<div class="footer">
 			<div class="social-media col s12 m12 l12">
 				<ul>
-					<li><a href="https://www.linkedin.com/in/nidhireddy" class="wordpress"><img src="./images/social-media/wordpress.svg"></a></li>
-					<li><a href="https://neuroticrefactoring.wordpress.com" class="linkedin"><img src="./images/social-media/linkedin.svg"></a></li>
-					<li><a href="https://twitter.com/nerdyreddy" class="twitter"><img src="./images/social-media/twitter.svg"></a></li>
 					<li><a href="mailto:nreddy216@gmail.com" class="mail"><img src="./images/social-media/mail.svg"></a></li>
+					<li><a href="https://twitter.com/nerdyreddy" class="twitter"><img src="./images/social-media/twitter.svg"></a></li>
+					<li><a href="https://www.linkedin.com/in/nidhireddy" class="wordpress"><img src="./images/social-media/linkedin.svg"></a></li>
+					<li><a href="https://neuroticrefactoring.wordpress.com" class="linkedin"><img src="./images/social-media/wordpress.svg"></a></li>
 				</ul>
 			</div>
 			<p>
 				Handcrafted by Nidhi Reddy (with the help of Materialize and StackOverflow) © 2016
 			</p>
 		</div>
-
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	</body>
 
 
