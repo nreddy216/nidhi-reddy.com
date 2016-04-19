@@ -46,4 +46,10 @@ $(document).ready(function(){
   // slider
   $('.slider').slider({full_width: true});
 
+
+  //click project and show its information div
+  $('.project').on('click', function(){
+    $(this).closest('project-description').toggleClass('hide');
+  });
+
 });

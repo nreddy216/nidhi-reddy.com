@@ -65,17 +65,20 @@ hr{
 /*----------------------------------------------------------------------------------*/
 /*PROJECT THUMBNAILS*/
 
-.right-middle-project{
-	top: 10px;
+.col{
+
 }
 
 .projects{
-	width: 80%;
+	/*width: 80%;*/
 }
 
 .project img{
 	width: 100%;
 
+}
+
+.project-big{
 }
 
 .project{
@@ -116,8 +119,8 @@ hr{
 	font-weight: bolder!important;
 }
 
-.overlay-description{
-	font-size: 0.5em;
+.project-big p{
+	font-size: 1em;
 	font-weight: lighter;
 	margin-left: 20%;
 	margin-right: 20%;
