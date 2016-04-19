@@ -6,6 +6,14 @@ body{
 	visibility: hidden;
 }
 
+a{
+	color: black!important;
+}
+
+a:hover{
+	color: #f64e51!important;
+}
+
 /*----------------------------------------------------------------------------------*/
 
 /*NAVIGATION*/
@@ -69,6 +77,11 @@ hr{
 
 }
 
+.row{
+	/*border: #d3d3d3 solid;*/
+	margin-bottom: 20px!important;
+}
+
 .projects{
 	/*width: 80%;*/
 }
@@ -85,14 +98,14 @@ hr{
  position:relative;
 }
 
-.project-image{
-	width:100%;
-	height:100%;
+.project-description-wrapper{
 }
 
-.row-2{
-	margin-top: 0px;
+.project-description{
+
+	color: black;
 }
+
 
 .image-overlay {
 	position:absolute;
@@ -119,11 +132,27 @@ hr{
 	font-weight: bolder!important;
 }
 
-.project-big p{
+/*.project-big p{
 	font-size: 1em;
 	font-weight: lighter;
 	margin-left: 20%;
 	margin-right: 20%;
+}*/
+
+.overlay-description{
+	font-size: 0.5em;
+	font-weight: lighter;
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
+.chip{
+	margin-top: 5px!important;
+}
+
+.fa-external-link{
+	color: black;
+	font-size: 0.7em!important;
 }
 
 /*----------------------------------------------------------------------------------*/

@@ -1,26 +1,9 @@
 $(document).ready(function(){
 
-  // split your email into two parts and remove the @ symbol
-  var first = "nidhi.sama.reddy";
-  var last = "gmail.com";
-
-
-  // NAVIGATION ANIMATION
+  // NAVIGATION ANIMATION-----------------------------------------------------
    $(".button-collapse").sideNav();
 
-
-
-  //HOVER OVER thumbnail
-  $(".image-overlay").hover(function() {
-       $(this).animate({opacity: '0.9'}, 200)},
-       function() {
-       $(this).animate({opacity: '0'}, 200);
-  });
-
-
-
-  // tipewriter by roXon // modified by me
-
+  // tipewriter by roXon // modified by me------------------------------------
   var $el = $('.subtitle'),
       txt = $el.text(),
       txtLen = txt.length,
@@ -43,13 +26,30 @@ $(document).ready(function(){
   }());
 
 
-  // slider
-  $('.slider').slider({full_width: true});
-
-
-  //click project and show its information div
-  $('.project').on('click', function(){
-    $(this).closest('project-description').toggleClass('hide');
+  //HOVER OVER thumbnail-------------------------------------------------------
+  $(".image-overlay").hover(function() {
+       $(this).animate({opacity: '0.9'}, 200)},
+       function() {
+       $(this).animate({opacity: '0'}, 200);
   });
+
+
+
+
+
+
+  // slider-------------------------------------------------------
+  // $('.slider').slider({full_width: true});
+
+
+  // //click project and show its information div----------------------------------
+  // $('.project-big').click(function(){
+  //   $(this).siblings('.project-description').toggleClass('hide');
+  // });
+  //
+  // //click project and show its information div
+  // $('.project').click(function(){
+  //   $(this).children('.project-description').toggleClass('hide');
+  // });
 
 });
