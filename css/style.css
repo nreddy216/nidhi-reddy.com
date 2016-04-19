@@ -78,8 +78,9 @@ hr{
 }
 
 .row{
+	margin-top: -10px!important;
 	/*border: #d3d3d3 solid;*/
-	margin-bottom: 20px!important;
+	margin-bottom: 50px!important;
 }
 
 .projects{
@@ -95,10 +96,17 @@ hr{
 }
 
 .project{
+
  position:relative;
 }
 
 .project-description-wrapper{
+	font-family: 'Proxima Nova', sans-serif;
+}
+
+.project-title{
+	font-weight: bolder;
+	font-size: 1.7em;
 }
 
 .project-description{
@@ -127,6 +135,8 @@ hr{
 	width: 100%;
 
 	color: #000;
+
+	opacity: 0.6;
 
 	font-family: 'Proxima Nova', sans-serif;
 	font-weight: bolder!important;
@@ -168,6 +178,16 @@ hr{
 	display: inline-block;
 	padding: 2px;
 
+}
+
+.social-media-top li{
+	display: inline-block;
+	padding: 2px;
+}
+
+
+.social-media-top img{
+	width:20px;
 }
 
 /*----------------------------------------------------------------------------------*/
