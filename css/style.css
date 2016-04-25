@@ -31,14 +31,13 @@ a:hover{
 /*----------------------------------------------------------------------------------*/
 
 /*HEADER*/
-
+/*
 .brand-logo img{
 	width: 80px!important;
 	margin-left: 10px;
-}
+}*/
 
 .header-container{
-	margin-bottom: 200px;
 
   max-width: 700px;
 	min-width: 100px;
@@ -49,31 +48,36 @@ a:hover{
 .logo{
 	max-width: 600px;
 
-	margin-top: 45px;
-	padding: 40px;
-	line-height: 50px;
-	margin-bottom: 0px;
+	padding-top: 65px;
+	margin: 0 auto;
 
 }
 
 .logo img{
-	margin: 0 auto;
 	width: 100%;
+	display: inline-block;
+}
+
+.subtitle-wrapper{
+	text-align: center;
 }
 
 
 .subtitle{
-	margin-top: 0 auto;
 	font-family: "proxima-nova", sans-serif;
 	font-size: 26px;
-
-
 }
+
 
 @media only screen and (max-width: 500px) {
     .subtitle {
         font-size: 16px;
     }
+}
+
+#topline{
+	padding-bottom: 10%;
+	text-align: center;
 }
 
 /*----------------------------------------------------------------------------------*/
@@ -176,20 +180,23 @@ a:hover{
 
 .footer{
 	text-align: center;
-	padding-top: 10%;
 	padding-bottom: 2%;
 	font-family: "proxima-nova", sans-serif;
 }
 
 .contact {
-	background: #facb32;
+	/*background: #facb32;*/
+}
+
+.social-media{
+	padding-top: 10%;
+	text-align: center;
 }
 
 .social-media li{
 	display: inline-block;
 	padding: 2px;
 	font-size: 50px;
-	margin: 0 auto;
 
 }
 
@@ -199,6 +206,8 @@ a:hover{
 	border-radius: 10px;
 	font-size: 20px;
 }
+
+
 
 
 /*----------------------------------------------------------------------------------*/
