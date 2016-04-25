@@ -37,21 +37,6 @@
 		<script src="http://code.jquery.com/jquery-2.1.4.js" type="text/javascript"></script>
 		<script src='js/main.js' type="text/javascript"></script>
 
-		<!--BOOTSTRAP-->
-		<!-- Latest compiled and minified CSS -->
-		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-		integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
-		crossorigin="anonymous"> -->
-
-		<!-- Optional theme -->
-		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
-		integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
-		crossorigin="anonymous"> -->
-
-		<!-- Latest compiled and minified JavaScript -->
-		<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-		integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-		crossorigin="anonymous"></script> -->
 
 		<!-- Compiled and minified CSS -->
 	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
@@ -70,15 +55,16 @@
 	    <div class="nav-wrapper">
 	      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 	      <ul class="right hide-on-med-and-down">
-	        <li><a href="#about">About</a></li>
 	        <li><a href="/#projects-container">Projects</a></li>
-
+					<li><a href="#about">About</a></li>
 					<li><a href="#footer">Contact</a></li>
+					<li><a href="./images/Resume_04_19_16.pdf">Resumé</a></li>
 	      </ul>
 	      <ul class="side-nav" id="mobile-demo">
+					<li><a href="/#projects-container">Projects</a></li>
 					<li><a href="#about">About</a></li>
-	        <li><a href="/#projects-container">Projects</a></li>
 					<li><a href="#footer">Contact</a></li>
+					<li><a href="./images/Resume_04_19_16.pdf">Resumé</a></li>
 	      </ul>
 	    </div>
 	  </nav>
@@ -123,7 +109,7 @@
 							</h5>
 
 							<p>
-								I ideated, wireframed, and implemented this application, including the database architecture, authentication, API creation, CRUD functionality of stories and users, map and chapter renders, view templating, and detailed wireframing.
+								I ideated, <a href="https://github.com/nreddy216/gulliver-app"><u>wireframed</u></a>, and implemented this application, including the database architecture, authentication, API creation, CRUD functionality of stories and users, map and chapter renders, view templating, and detailed wireframing.
 							</p>
 							<p class="tech-used">
 								<div class="chip">MongoDB</div> <div class="chip">Express</div> <div class="chip">AngularJS</div> <div class="chip">Satellizer</div> <div class="chip">Mapbox</div> <div class="chip">Leaflet</div> <div class="chip">Balsamiq</div> <div class="chip">Github</div>
@@ -153,10 +139,10 @@
 									<div class="project-description  col s12 m12 l5 ">
 										<a href="https://mighty-spire-30674.herokuapp.com/" target="_blank"><h4 class="project-title">NETFLIX & CHILL</h4></a>
 										<h5 class="flow-text">Find a soulmate based on the important things in life.
-										<a href="https://github.com/takshingli810/NetlfixAndChill" target="_blank"><i class="fa fa-github"></i></a>
+										<a href="https://github.com/nreddy216/netflix-and-chill" target="_blank"><i class="fa fa-github"></i></a>
 										</h5>
 										<p>
-											To create this project, I worked on a team with two other developers. My contributions include detailed wireframing, client-side AJAX calls to retrieve movie data, server-side CRUD functionality to add/delete movies, and task management.
+											To create this project, I worked on a team with two other developers. My contributions include <a href="https://github.com/nreddy216/netflix-and-chill"><u>detailed wireframing</u></a>, client-side AJAX calls to retrieve movie data, server-side CRUD functionality to add/delete movies, and task management.
 										</p>
 										<p class="tech-used">
 											<div class="chip">MongoDB</div> <div class="chip">Express</div>   <div class="chip">AJAX</div> <div class="chip">Handlebars</div> <div class="chip">Balsamiq</div> <div class="chip">Github</div>
@@ -200,9 +186,9 @@
 
 		<div class="about" id="about">
 				<!-- <hr /> -->
-				<p id="about-line">
-					--------------------------------------
-				</p>
+				<div id="aboutline">
+					___________________________________________
+				</div>
 
 
 				<ul class="collection with-header">
@@ -218,29 +204,31 @@
 						<li class="collection-item"><div><span class="tech-heading">Frameworks:</span> Express, AngularJS, Rails, Sinatra<a href="#!" class="secondary-content"></a></div></li>
 						<li class="collection-item"><div><span class="tech-heading">Design:</span> Balsamiq, Illustrator, Photoshop, AfterEffects, SCSS/SASS, Bootstrap, Materialize<a href="#!" class="secondary-content"></a></div></li>
 						<li class="collection-item"><div><span class="tech-heading">Other technologies:</span> Github/Git, MongoDB, PostgreSQL, jQuery, AJAX<a href="#!" class="secondary-content"></a></div></li>
+						<li class="collection-item"><div><span class="tech-heading" id="resume-link"><a href="./images/Resume_04_19_16.pdf">Check out my resumé.</a></span></div></li>
 					</div>
 
 	      </ul>
 		</div>
 
-		<div class="contact">
-			<!-- <h4>Interested in working with me or just want to say hi?</h4> -->
-			<div class="social-media col s12 m12 l12">
-				<ul>
-					<li><a href="mailto:nreddy216@gmail.com" class="mail" target="_blank"><i class="fa fa-envelope-square" aria-hidden="true"></i></li>
-					<li><a href="https://twitter.com/nerdyreddy" class="twitter" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></li>
-					<li><a href="https://www.linkedin.com/in/nidhireddy" class="linkedin" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
-					<li><a href="https://github.com/nreddy216" class="github" target="_blank"><i class="fa fa-github-square" aria-hidden="true"></i></a></li>
-					<li><a href="https://behance.net/nidhireddy" class="behance" target="_blank"><i class="fa fa-behance-square" aria-hidden="true"></i></a></li>
-					<li><a href="https://neuroticrefactoring.wordpress.com" class="wordpress" target="_blank"><i class="fa fa-wordpress" aria-hidden="true"></i></a></li>
-					<li><a href="https://instagram.com/nidhisreddy" class="instagram" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-				</ul>
-			</div>
-		</div>
+
 
 
 
 		<div class="footer" id="footer">
+			<div class="contact">
+				<!-- <h4>Interested in working with me or just want to say hi?</h4> -->
+				<div class="social-media col s12 m12 l12">
+					<ul>
+						<li><a href="mailto:nreddy216@gmail.com" class="mail" target="_blank"><i class="fa fa-envelope-square" aria-hidden="true"></i></li>
+						<li><a href="https://twitter.com/nerdyreddy" class="twitter" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></li>
+						<li><a href="https://www.linkedin.com/in/nidhireddy" class="linkedin" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
+						<li><a href="https://github.com/nreddy216" class="github" target="_blank"><i class="fa fa-github-square" aria-hidden="true"></i></a></li>
+						<li><a href="https://behance.net/nidhireddy" class="behance" target="_blank"><i class="fa fa-behance-square" aria-hidden="true"></i></a></li>
+						<li><a href="https://neuroticrefactoring.wordpress.com" class="wordpress" target="_blank"><i class="fa fa-wordpress" aria-hidden="true"></i></a></li>
+						<li><a href="https://instagram.com/nidhisreddy" class="instagram" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+					</ul>
+				</div>
+			</div>
 			<p>
 				Handcrafted by Nidhi Reddy (with the help of Materialize and StackOverflow) © 2016
 			</p>
