@@ -40,9 +40,12 @@ a:hover{
 .header-container{
 
   max-width: 700px;
-	min-width: 100px;
+	min-width: 90px;
 
 	margin: 0 auto;
+
+	padding-left: 6%;
+	padding-right: 6%;
 }
 
 .logo{
@@ -187,35 +190,60 @@ a:hover{
 
 .footer{
 	text-align: center;
-	padding-bottom: 2%;
+	margin-top: 100px;
+	padding-top: 3%;
 	font-family: "proxima-nova", sans-serif;
+	background: #000;
+	color: white;
+
+	background-size: cover;
+
+	padding-bottom: 10px;
 }
 
-.contact {
-	/*background: #facb32;*/
+.footer h4{
+	font-size: 26px;
 }
 
 .social-media{
-	padding-top: 10%;
+	padding-top: 2%;
 	text-align: center;
+	padding-bottom: 5%;
 }
 
 .social-media li{
 	display: inline-block;
 	padding: 2px;
-	font-size: 50px;
+	font-size: 65px;
 
 }
 
-.wordpress li{
-	background: black;
-	color: white!important;
-	border-radius: 10px;
-	font-size: 20px;
+.social-media i{
+	color: #fff;
+}
+
+.social-media i:hover{
+	color: #f64e51;
+}
+
+#email a{
+	color: #f64e51!important;
+}
+
+#email a:hover{
+	color: #FFF!important;
 }
 
 
+@media only screen and (max-width: 500px) {
+    .footer h4 {
+        font-size: 16px;
+    }
 
+		.social-media i{
+				font-size: 30px;
+		}
+}
 
 /*----------------------------------------------------------------------------------*/
 
@@ -285,11 +313,11 @@ a:hover{
 
 .about {
 
-	width: 80%;
+	/*width: 84%;*/
 	background-image: url(images/photome.jpg);
 	margin: 0 auto;
-	/*margin-top: 9%;*/
-	/*margin-bottom: 5%;*/
+	padding-left: 8%;
+	padding-right: 8%;
 }
 
 .about img{
