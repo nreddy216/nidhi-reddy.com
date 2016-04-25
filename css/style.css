@@ -25,7 +25,7 @@ a:hover{
 
 .nav-wrapper a{
 	color: #000;
-	font-family: 'Proxima Nova';
+	font-family: "proxima-nova", sans-serif;
 }
 
 /*----------------------------------------------------------------------------------*/
@@ -64,7 +64,7 @@ a:hover{
 
 .subtitle{
 	margin-top: 0 auto;
-	font-family: Proxima Nova;
+	font-family: "proxima-nova", sans-serif;
 	font-size: 26px;
 
 
@@ -107,7 +107,7 @@ a:hover{
 }
 
 .project-description-wrapper{
-	font-family: 'Proxima Nova', sans-serif;
+	font-family: "proxima-nova", sans-serif;
 }
 
 .project-title{
@@ -144,7 +144,7 @@ a:hover{
 
 	opacity: 0.6;
 
-	font-family: 'Proxima Nova', sans-serif;
+	font-family: "proxima-nova", sans-serif;
 	font-weight: bolder!important;
 }
 
@@ -178,7 +178,7 @@ a:hover{
 	text-align: center;
 	padding-top: 10%;
 	padding-bottom: 2%;
-	font-family: 'Proxima Nova';
+	font-family: "proxima-nova", sans-serif;
 }
 
 .contact {
@@ -297,7 +297,7 @@ a:hover{
 }
 .collection.with-header{
 	border: white;
-	font-family: 'Proxima Nova';
+	font-family: "proxima-nova", sans-serif;
 }
 
 .collection.with-header img{
@@ -322,7 +322,7 @@ a:hover{
 
 .subtitle-static{
 	margin-top: 0;
-	font-family: Proxima Nova;
+	font-family: "proxima-nova", sans-serif;
 	font-size: 30px;
 }
 
