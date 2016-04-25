@@ -84,12 +84,6 @@ a:hover{
 	text-align: center;
 }
 
-#aboutline{
-	padding-top: 0%;
-	padding-bottom: 10%;
-	text-align: center;
-}
-
 /*----------------------------------------------------------------------------------*/
 /*PROJECT THUMBNAILS*/
 
@@ -186,6 +180,107 @@ a:hover{
 }
 
 /*----------------------------------------------------------------------------------*/
+
+/*ABOUT*/
+
+
+#aboutline{
+	padding-top: 0%;
+	padding-bottom: 5%;
+	text-align: center;
+}
+
+
+.about {
+
+	/*width: 84%;*/
+	background-image: url(images/photome.jpg);
+	margin: 0 auto;
+	padding-left: 8%;
+	padding-right: 8%;
+}
+
+#headshot img{
+	width: 25%;
+}
+
+
+.name{
+	font-size: 30px;
+}
+
+@media only screen and (max-width: 500px) {
+    .about {
+        padding-left: 0;
+				padding-right: 0;
+    }
+
+		#headshot img{
+			width: 100%;
+		}
+
+		.name{
+			margin-top: 30px;
+			font-size: 25px;
+		}
+}
+
+.collection-header p{
+	margin-top: 0px;
+}
+
+
+.collection.with-header{
+	border: white;
+	font-family: "proxima-nova", sans-serif;
+}
+
+.collection.with-header img{
+	float: left;
+	margin-right: 20px;
+	width: 250px;
+}
+
+.technologies{
+	margin-top: 20px;
+}
+
+.tech-heading{
+	font-weight: bold;
+}
+
+
+#resume-link a{
+	color: #f64e51!important;
+}
+
+#resume-link a:hover{
+	color: #000!important;
+}
+
+.antispam {
+	display:none;
+}
+
+/* INDIVIDUAL PROJECT PAGES */
+
+.subtitle-static{
+	margin-top: 0;
+	font-family: "proxima-nova", sans-serif;
+	font-size: 30px;
+}
+
+.project-show {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.project-show img{
+	width: 70%;
+}
+
+
+/*----------------------------------------------------------------------------------*/
 /*FOOTER*/
 
 .footer{
@@ -237,11 +332,15 @@ a:hover{
 
 @media only screen and (max-width: 500px) {
     .footer h4 {
-        font-size: 16px;
+        font-size: 20px;
     }
 
 		.social-media i{
 				font-size: 30px;
+		}
+
+		#copyright{
+			font-size: 12px;
 		}
 }
 
@@ -304,82 +403,4 @@ a:hover{
   50% {
     color: black;
   }
-}
-
-
-/*----------------------------------------------------------------------------------*/
-
-/*ABOUT*/
-
-.about {
-
-	/*width: 84%;*/
-	background-image: url(images/photome.jpg);
-	margin: 0 auto;
-	padding-left: 8%;
-	padding-right: 8%;
-}
-
-.about img{
-	min-width: 100px;
-	max-width: 250px;
-
-
-	text-align: center;
-}
-
-.name{
-	font-size: 26px;
-}
-
-.collection-header p{
-	margin-top: 0px;
-}
-.collection.with-header{
-	border: white;
-	font-family: "proxima-nova", sans-serif;
-}
-
-.collection.with-header img{
-	float: left;
-	margin-right: 20px;
-	width: 250px;
-}
-
-.technologies{
-	margin-top: 20px;
-}
-
-.tech-heading{
-	font-weight: bold;
-}
-
-
-#resume-link a{
-	color: #f64e51!important;
-}
-
-#resume-link a:hover{
-	color: #000!important;
-}
-
-.antispam {
-	display:none;
-}
-
-/* INDIVIDUAL PROJECT PAGES */
-
-.subtitle-static{
-	margin-top: 0;
-	font-family: "proxima-nova", sans-serif;
-	font-size: 30px;
-}
-
-.project-show {
-	width: 100%;
-	margin: 0 auto;
-}
-
-.project-show img{
-	width: 70%;
 }
