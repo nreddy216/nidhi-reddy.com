@@ -1,17 +1,30 @@
-body{
-	margin: 0 auto;
+.portfolio a{
+	color: black;
+}
+
+.portfolio a:hover{
+	color: #f64e51;
+}
+
+.portfolio .italicize {
+	color: #f64e51;
+	font-style: italic;
+}
+
+.portfolio .italicize:hover{
+	color: #000;
+}
+
+.portfolio .underline{
+	text-decoration: underline;
+}
+
+.portfolio .underline:hover{
+	text-decoration: none;
 }
 
 .hide{
 	visibility: hidden;
-}
-
-a{
-	color: black!important;
-}
-
-a:hover{
-	color: #f64e51!important;
 }
 
 /*----------------------------------------------------------------------------------*/
@@ -30,30 +43,19 @@ a:hover{
 
 /*----------------------------------------------------------------------------------*/
 
-/*HEADER*/
-/*
-.brand-logo img{
-	width: 80px!important;
-	margin-left: 10px;
-}*/
-
 .header-container{
 
   max-width: 700px;
 	min-width: 90px;
-
 	margin: 0 auto;
-
 	padding-left: 6%;
 	padding-right: 6%;
 }
 
 .logo{
 	max-width: 600px;
-
 	padding-top: 65px;
 	margin: 0 auto;
-
 }
 
 .logo img{
@@ -65,12 +67,10 @@ a:hover{
 	text-align: center;
 }
 
-
 .subtitle{
 	font-family: "proxima-nova", sans-serif;
 	font-size: 26px;
 }
-
 
 @media only screen and (max-width: 500px) {
     .subtitle {
@@ -93,12 +93,7 @@ a:hover{
 
 .row{
 	margin-top: -10px!important;
-	/*border: #d3d3d3 solid;*/
 	margin-bottom: 50px!important;
-}
-
-.projects{
-	/*width: 80%;*/
 }
 
 .project img{
@@ -145,23 +140,12 @@ a:hover{
 	top: 50%;
 	transform: translateY(-50%);
 	text-align: center;
-
 	width: 100%;
-
 	color: #000;
-
 	opacity: 0.6;
-
 	font-family: "proxima-nova", sans-serif;
 	font-weight: bolder!important;
 }
-
-/*.project-big p{
-	font-size: 1em;
-	font-weight: lighter;
-	margin-left: 20%;
-	margin-right: 20%;
-}*/
 
 .overlay-description{
 	font-size: 0.5em;
@@ -192,24 +176,17 @@ a:hover{
 
 
 .about {
-
-	/*width: 84%;*/
 	background-image: url(images/photome.jpg);
 	margin: 0 auto;
 	padding-left: 8%;
 	padding-right: 8%;
 }
 
-#headshot img{
-	width: 25%;
-}
-
-
 .name{
 	font-size: 30px;
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 700px) {
     .about {
         padding-left: 0;
 				padding-right: 0;
@@ -217,6 +194,7 @@ a:hover{
 
 		#headshot img{
 			width: 100%;
+			margin-bottom: 2em;
 		}
 
 		.name{
@@ -241,25 +219,20 @@ a:hover{
 	width: 250px;
 }
 
-.technologies{
-	margin-top: 20px;
-}
-
 .tech-heading{
 	font-weight: bold;
 }
 
-
 #resume-link a{
-	color: #f64e51!important;
+	color: #f64e51;
 }
 
 #resume-link a:hover{
-	color: #000!important;
+	color: #000;
 }
 
 .antispam {
-	display:none;
+	display: none;
 }
 
 /* INDIVIDUAL PROJECT PAGES */
@@ -290,9 +263,6 @@ a:hover{
 	font-family: "proxima-nova", sans-serif;
 	background: #000;
 	color: white;
-
-	background-size: cover;
-
 	padding-bottom: 10px;
 }
 
@@ -310,7 +280,6 @@ a:hover{
 	display: inline-block;
 	padding: 2px;
 	font-size: 65px;
-
 }
 
 .social-media i{
@@ -322,11 +291,11 @@ a:hover{
 }
 
 #email a{
-	color: #f64e51!important;
+	color: #f64e51;
 }
 
 #email a:hover{
-	color: #FFF!important;
+	color: #FFF;
 }
 
 
@@ -351,7 +320,6 @@ a:hover{
 .blinking-cursor {
   font-weight: 100;
   font-size: 30px;
-
   color: #2E3D48;
   -webkit-animation: 1s blink step-end infinite;
   -moz-animation: 1s blink step-end infinite;
