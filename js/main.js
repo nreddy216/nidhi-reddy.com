@@ -33,23 +33,4 @@ $(document).ready(function(){
        $(this).animate({opacity: '0'}, 200);
   });
 
-
-
-
-
-
-  // slider-------------------------------------------------------
-  // $('.slider').slider({full_width: true});
-
-
-  // //click project and show its information div----------------------------------
-  // $('.project-big').click(function(){
-  //   $(this).siblings('.project-description').toggleClass('hide');
-  // });
-  //
-  // //click project and show its information div
-  // $('.project').click(function(){
-  //   $(this).children('.project-description').toggleClass('hide');
-  // });
-
 });
