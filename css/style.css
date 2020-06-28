@@ -83,8 +83,22 @@ body {
 	font-family: "proxima-nova", sans-serif;
 }
 
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
 .content {
-	background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+	background: linear-gradient(-45deg, #FEAC5E, #C779D0, #4BC0C8);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
 	color: #fff;
 	clip-path: url(#wave);
 	height: 100%;
@@ -118,7 +132,7 @@ body {
 }
 
 #dusty {
-	color: #778899;
+	color: #d3d3d3;
 	text-shadow: 0px 0px 10px rgba(255,255,255,0.6), 0px 0px 30px rgba(255,255,255,0.4), 0px 0px 50px rgba(255,255,255,0.3), 0px 0px 180px rgba(255,255,255,0.3);
 }
 
