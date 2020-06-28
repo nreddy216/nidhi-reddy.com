@@ -79,14 +79,6 @@
 /*----------------------------------------------------------------------------------*/
 /*UNDER CONSTRUCTION*/
 
-#topline {
-	width: 100%;
-	padding-top: 32px;
-	padding-bottom: 32px;
-	position: relative;
-	text-align: center;
-}
-
 body {
 	font-family: "proxima-nova", sans-serif;
 }
@@ -95,6 +87,10 @@ body {
 	background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
 	color: #fff;
 	clip-path: url(#wave);
+	height: 100%;
+	margin-top: 32px;
+	min-height: 70vh;
+	position: relative;
 }
 
 .content__inner {
