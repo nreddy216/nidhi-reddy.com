@@ -1,29 +1,29 @@
-.portfolio a{
+.portfolio a {
 	color: black;
 }
 
-.portfolio a:hover{
-	color: #f64e51;
+.portfolio a:hover {
+	color: #af87a4;
 }
 
 .portfolio .italicize {
-	color: #f64e51;
+	color: #af87a4;
 	font-style: italic;
 }
 
-.portfolio .italicize:hover{
+.portfolio .italicize:hover {
 	color: #000;
 }
 
-.portfolio .underline{
+.portfolio .underline {
 	text-decoration: underline;
 }
 
-.portfolio .underline:hover{
+.portfolio .underline:hover {
 	text-decoration: none;
 }
 
-.hide{
+.hide {
 	visibility: hidden;
 }
 
@@ -32,18 +32,16 @@
 /*NAVIGATION*/
 
 
-.nav-wrapper{
+.nav-wrapper {
 	background-color: white;
 }
 
-.nav-wrapper a{
+.nav-wrapper a {
 	color: #000;
 	font-family: "proxima-nova", sans-serif;
 }
 
-/*----------------------------------------------------------------------------------*/
-
-.header-container{
+.header-container {
 
   max-width: 700px;
 	min-width: 90px;
@@ -52,22 +50,22 @@
 	padding-right: 6%;
 }
 
-.logo{
+.logo {
 	max-width: 600px;
 	padding-top: 65px;
 	margin: 0 auto;
 }
 
-.logo img{
+.logo img {
 	width: 100%;
 	display: inline-block;
 }
 
-.subtitle-wrapper{
+.subtitle-wrapper {
 	text-align: center;
 }
 
-.subtitle{
+.subtitle {
 	font-family: "proxima-nova", sans-serif;
 	font-size: 26px;
 }
@@ -78,222 +76,98 @@
     }
 }
 
-#topline{
-	padding-top: 10%;
-	padding-bottom: 10%;
-	text-align: center;
-}
-
 /*----------------------------------------------------------------------------------*/
-/*PROJECT THUMBNAILS*/
+/*UNDER CONSTRUCTION*/
 
-.col{
-
-}
-
-.row{
-	margin-top: -10px!important;
-	margin-bottom: 50px!important;
-}
-
-.project img{
+#topline {
 	width: 100%;
-
-}
-
-.project-big{
-}
-
-.project{
-
- position:relative;
-}
-
-.project-description-wrapper{
-	font-family: "proxima-nova", sans-serif;
-}
-
-.project-title{
-	font-weight: bolder;
-	font-size: 1.7em;
-}
-
-.project-description{
-
-	color: black;
-}
-
-
-.image-overlay {
-	position:absolute;
-	height:100%;
-	width:100%;
-	top:0;
-	left:0;
-	opacity: 0;
-	background-color: #d4d4d4;
-}
-
-.image-overlay-text{
-	z-index: 10;
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	text-align: center;
-	width: 100%;
-	color: #000;
-	opacity: 0.6;
-	font-family: "proxima-nova", sans-serif;
-	font-weight: bolder!important;
-}
-
-.overlay-description{
-	font-size: 0.5em;
-	font-weight: lighter;
-	margin-left: 20%;
-	margin-right: 20%;
-}
-
-.chip{
-	margin-top: 5px!important;
-}
-
-.fa-external-link{
-	color: black;
-	font-size: 0.7em!important;
-}
-
-/*----------------------------------------------------------------------------------*/
-
-/*ABOUT*/
-
-
-#aboutline{
-	padding-top: 0%;
-	padding-bottom: 5%;
+	padding-top: 32px;
+	padding-bottom: 32px;
+	position: relative;
 	text-align: center;
 }
 
-
-.about {
-	margin: 0 auto;
-	padding-left: 8%;
-	padding-right: 8%;
-}
-
-.name{
-	font-size: 30px;
-}
-
-@media only screen and (max-width: 700px) {
-    .about {
-        padding-left: 0;
-				padding-right: 0;
-    }
-
-		#headshot img{
-			width: 100%;
-			margin-bottom: 2em;
-		}
-
-		.name{
-			margin-top: 30px;
-			font-size: 25px;
-		}
-}
-
-.collection-header p{
-	margin-top: 0px;
-}
-
-
-.collection.with-header{
-	border: white;
+body {
 	font-family: "proxima-nova", sans-serif;
 }
 
-.collection.with-header img{
-	float: left;
-	margin-right: 20px;
-	width: 250px;
+.content {
+	background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+	color: #fff;
+	clip-path: url(#wave);
+	padding-top: 80px;
 }
 
-.tech-heading{
-	font-weight: bold;
-}
-
-#resume-link a{
-	color: #f64e51;
-}
-
-#resume-link a:hover{
-	color: #000;
-}
-
-.antispam {
-	display: none;
-}
-
-/* INDIVIDUAL PROJECT PAGES */
-
-.subtitle-static{
-	margin-top: 0;
-	font-family: "proxima-nova", sans-serif;
-	font-size: 30px;
-}
-
-.project-show {
-	width: 100%;
+.content__inner {
 	margin: 0 auto;
+	max-width: 600px;
+	padding: 18px 24px 120px;
+	text-align: center;
 }
 
-.project-show img{
-	width: 70%;
+.content h4 {
+	font-size: 1.6rem;
+	line-height: 1.5;
 }
 
+.content p {
+	font-size: 1rem;
+}
+
+.content #contact {
+	font-weight: 700;
+}
+
+.content svg {
+	height: 0;
+}
+
+#dusty {
+	color: #778899;
+	text-shadow: 0px 0px 10px rgba(255,255,255,0.6), 0px 0px 30px rgba(255,255,255,0.4), 0px 0px 50px rgba(255,255,255,0.3), 0px 0px 180px rgba(255,255,255,0.3);
+}
 
 /*----------------------------------------------------------------------------------*/
 /*FOOTER*/
 
-.footer{
+.footer {
 	text-align: center;
-	margin-top: 100px;
 	padding-top: 3%;
 	font-family: "proxima-nova", sans-serif;
 	background: #000;
 	color: white;
-	padding-bottom: 10px;
+	padding-bottom: 40px;
 }
 
-.footer h4{
+.footer h4 {
 	font-size: 26px;
 }
 
-.social-media{
+.social-media {
 	padding-top: 2%;
 	text-align: center;
 	padding-bottom: 5%;
 }
 
-.social-media li{
+.social-media li {
 	display: inline-block;
 	padding: 2px;
 	font-size: 65px;
 }
 
-.social-media i{
+.social-media i {
 	color: #fff;
 }
 
-.social-media i:hover{
+.social-media i:hover {
 	color: #f64e51;
 }
 
-#email a{
+#email a {
 	color: #f64e51;
 }
 
-#email a:hover{
+#email a:hover {
 	color: #FFF;
 }
 
@@ -303,11 +177,11 @@
         font-size: 20px;
     }
 
-		.social-media i{
+		.social-media i {
 				font-size: 30px;
 		}
 
-		#copyright{
+		#copyright {
 			font-size: 12px;
 		}
 }
