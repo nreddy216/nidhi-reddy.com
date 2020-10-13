@@ -1,11 +1,14 @@
 import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
-import Img from 'gatsby-image';
-import Link from 'gatsby-link';
-import { motion } from 'framer-motion';
+// import Img from 'gatsby-image';
+// import Link from 'gatsby-link';
+// import { motion } from 'framer-motion';
+// import FormatHtml from 'components/utils/FormatHtml';
+// import BlogPost from 'components/'
 
 import Container from 'components/ui/Container';
 import TitleSection from 'components/ui/TitleSection';
+import Post from 'components/Post';
 
 import * as Styled from './styles';
 
@@ -48,42 +51,23 @@ const Posts = () => {
     }
   `);
 
-  const sectionTitle = markdownRemark.frontmatter;
+  // const sectionTitle = markdownRemark.frontmatter;
   const posts = allMarkdownRemark.edges;
 
   return (
     <Container section>
-      <TitleSection title={sectionTitle.title} subtitle={sectionTitle.subtitle} center />
+      {/* <TitleSection title={sectionTitle.title} subtitle={sectionTitle.subtitle} center /> */}
       <Styled.Posts>
         {posts.map((item) => {
           const {
             id,
             fields: { slug },
-            frontmatter: { title, cover, description, date, tags }
+            frontmatter: { title, cover, description, date, tags },
+            html
           } = item.node;
 
           return (
-            <Styled.Post key={id}>
-              <Link to={slug}>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 1 }}>
-                  <Styled.Card>
-                    <Styled.Image>
-                      <Img fluid={cover.childImageSharp.fluid} alt={title} />
-                    </Styled.Image>
-                    <Styled.Content>
-                      <Styled.Date>{date}</Styled.Date>
-                      <Styled.Title>{title}</Styled.Title>
-                      <Styled.Description>{description}</Styled.Description>
-                    </Styled.Content>
-                    <Styled.Tags>
-                      {tags.map((item) => (
-                        <Styled.Tag key={item}>{item}</Styled.Tag>
-                      ))}
-                    </Styled.Tags>
-                  </Styled.Card>
-                </motion.div>
-              </Link>
-            </Styled.Post>
+            <Post key={id} title={title} date={date} html={html} />
           );
         })}
       </Styled.Posts>

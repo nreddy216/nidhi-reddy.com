@@ -62,4 +62,43 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     });
   });
+
+  const projectPostTemplate = path.resolve(`src/templates/ProjectPost/index.js`);
+
+  const projectRes = await graphql(`
+    query {
+      allMarkdownRemark(
+        filter: { frontmatter: { category: { eq: "projects" } } }
+        sort: { fields: frontmatter___date, order: DESC }
+      ) {
+        edges {
+          node {
+            fields {
+              slug
+            }
+            frontmatter {
+              title
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  const projects = projectRes.data.allMarkdownRemark.edges;
+
+  projects.forEach((project, index) => {
+    const previous = index === projects.length - 1 ? null : projects[index + 1].node;
+    const next = index === 0 ? null : projects[index - 1].node;
+
+    createPage({
+      path: `${project.node.fields.slug}`,
+      component: projectPostTemplate,
+      context: {
+        slug: `${project.node.fields.slug}`,
+        previous,
+        next
+      }
+    });
+  });
 };

@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
 
-export const Posts = styled.div`
+export const Projects = styled.div`
   ${tw`w-full flex flex-wrap`};
 `;
 
-export const Post = styled.div`
-  ${tw`w-full  p-3`};
+export const Project = styled.div`
+  ${tw`w-full sm:w-1/2 p-3`};
 `;
 
 export const Card = styled.div`
