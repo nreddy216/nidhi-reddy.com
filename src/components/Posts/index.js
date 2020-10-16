@@ -1,13 +1,7 @@
 import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
-// import Img from 'gatsby-image';
-// import Link from 'gatsby-link';
-// import { motion } from 'framer-motion';
-// import FormatHtml from 'components/utils/FormatHtml';
-// import BlogPost from 'components/'
 
 import Container from 'components/ui/Container';
-import TitleSection from 'components/ui/TitleSection';
 import Post from 'components/Post';
 
 import * as Styled from './styles';
@@ -51,12 +45,10 @@ const Posts = () => {
     }
   `);
 
-  // const sectionTitle = markdownRemark.frontmatter;
   const posts = allMarkdownRemark.edges;
 
   return (
     <Container section>
-      {/* <TitleSection title={sectionTitle.title} subtitle={sectionTitle.subtitle} center /> */}
       <Styled.Posts>
         {posts.map((item) => {
           const {
@@ -67,7 +59,14 @@ const Posts = () => {
           } = item.node;
 
           return (
-            <Post key={id} title={title} date={date} html={html} />
+            <div key={id}>
+              <Post title={title} date={date} html={html} />
+              <Styled.Tags>
+                {tags.map((item) => (
+                  <Styled.Tag key={item}>{item}</Styled.Tag>
+                ))}
+              </Styled.Tags>
+            </div>
           );
         })}
       </Styled.Posts>

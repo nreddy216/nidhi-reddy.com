@@ -27,9 +27,9 @@ const Logo = () => {
 
   return (
     <Styled.Logo to="/">
-      <Styled.Image>
+      {/* <Styled.Image>
         <Img fluid={logoImage} alt={logoTitle} />
-      </Styled.Image>
+      </Styled.Image> */}
       <Styled.Text>{logoTitle}</Styled.Text>
     </Styled.Logo>
   );

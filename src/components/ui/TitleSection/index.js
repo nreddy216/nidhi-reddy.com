@@ -13,7 +13,7 @@ const TitleSection = ({ center, title, subtitle }) => (
 
 TitleSection.propTypes = {
   center: PropTypes.bool,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   subtitle: PropTypes.string
 };
 

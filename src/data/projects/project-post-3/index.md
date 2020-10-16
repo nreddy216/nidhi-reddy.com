@@ -1,11 +1,13 @@
 ---
 category: 'projects'
+order: 3
 cover: './cover.jpg'
-title: 'Project Post 3'
-description: 'Mauris neque libero, aliquet vel mollis nec, euismod sed tellus. Mauris convallis dictum elit id volutpat.'
+title: 'Fastlane'
+description: 'A website for an open source platform aimed at simplifying Android and iOS deployment.'
 date: '2020-01-12'
-tags: ['Design', 'Photoshop']
+tags: ['Development', 'Motion']
 published: true
+featured: true
 ---
 
 _Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat._.

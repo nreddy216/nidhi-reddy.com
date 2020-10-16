@@ -1,6 +1,6 @@
 ---
 category: 'services'
-title: 'Web Design'
+title: 'Web development'
 icon: 'laptop-code'
-description: 'Mauris neque libero, aliquet vel mollis nec, euismod sed tellus. Mauris convallis dictum elit id volutpat.'
+description: 'I specialize in front-end development, ensuring that your website or application meets the latest standards in accessibility, security, and performance without complicating its design.'
 ---

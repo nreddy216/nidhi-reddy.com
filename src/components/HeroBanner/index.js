@@ -7,13 +7,11 @@ import Banner from 'components/ui/Banner';
 const HeroBanner = () => {
   const { markdownRemark } = useStaticQuery(graphql`
     query {
-      markdownRemark(frontmatter: { category: { eq: "hero section" } }) {
+      markdownRemark(frontmatter: { category: { eq: "hero banner" } }) {
         frontmatter {
           title
           subtitle
           content
-          linkTo
-          linkText
         }
       }
     }
@@ -26,18 +24,18 @@ const HeroBanner = () => {
       title={heroBanner.title}
       subtitle={heroBanner.subtitle}
       content={heroBanner.content}
-      linkTo={heroBanner.linkTo}
-      linkText={heroBanner.linkText}
+      linkTo={heroBanner.linkTo ? heroBanner.linkTo : null}
+      linkText={heroBanner.linkText ? heroBanner.linkText : null}
     />
   );
 };
 
 HeroBanner.propTypes = {
-  title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
-  linkTo: PropTypes.string.isRequired,
-  linkText: PropTypes.string.isRequired
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
+  content: PropTypes.string,
+  linkTo: PropTypes.string,
+  linkText: PropTypes.string
 };
 
 export default HeroBanner;

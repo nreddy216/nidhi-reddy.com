@@ -11,21 +11,23 @@ import * as Styled from './styles';
 const Banner = ({ title, subtitle, content, linkTo, linkText }) => (
   <Styled.Banner>
     <Container section>
-      <TitleSection title={title} subtitle={subtitle} />
-      <Styled.Content>{content}</Styled.Content>
-      <Link to={linkTo}>
-        <Button primary>{linkText}</Button>
-      </Link>
+      {title && <TitleSection title={title} subtitle={subtitle} />}
+      {content && <Styled.Content>{content}</Styled.Content>}
+      {(linkTo && linkText) && (<div>
+        {/* <Link to={linkTo && linkTo != null ? linkTo : '/'}> */}
+          <Button primary>{linkText}</Button>
+        {/* </Link> */}
+      </div>)}
     </Container>
   </Styled.Banner>
 );
 
 Banner.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   subtitle: PropTypes.string,
-  content: PropTypes.any.isRequired,
-  linkTo: PropTypes.string.isRequired,
-  linkText: PropTypes.string.isRequired
+  content: PropTypes.any,
+  linkTo: PropTypes.string,
+  linkText: PropTypes.string
 };
 
 export default Banner;

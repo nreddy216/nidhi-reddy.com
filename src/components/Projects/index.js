@@ -9,18 +9,20 @@ import TitleSection from 'components/ui/TitleSection';
 
 import * as Styled from './styles';
 
-const Projects = () => {
+const Projects = ({ featured }) => {
   const { markdownRemark, allMarkdownRemark } = useStaticQuery(graphql`
     query {
       markdownRemark(frontmatter: { category: { eq: "projects" } }) {
         frontmatter {
-          title
-          subtitle
+          title_featured
+          subtitle_featured
+          title_all
+          subtitle_all
         }
       }
       allMarkdownRemark(
         filter: { frontmatter: { category: { eq: "projects" }, published: { eq: true } } }
-        sort: { fields: frontmatter___date, order: DESC }
+        sort: { fields: frontmatter___order, order: ASC }
       ) {
         edges {
           node {
@@ -32,7 +34,8 @@ const Projects = () => {
             frontmatter {
               title
               description
-              date(formatString: "MMM DD, YYYY")
+              featured
+              date
               tags
               cover {
                 childImageSharp {
@@ -48,16 +51,21 @@ const Projects = () => {
     }
   `);
 
-  console.log("MARKDOWN REM ", markdownRemark);
-
   const sectionTitle = markdownRemark.frontmatter;
   const projects = allMarkdownRemark.edges;
 
   return (
     <Container section>
-      <TitleSection title={sectionTitle.title} subtitle={sectionTitle.subtitle} center />
+      {featured ? <TitleSection title={sectionTitle.title_featured} subtitle={sectionTitle.subtitle_featured} center /> : <TitleSection title={sectionTitle.title_all} subtitle={sectionTitle.subtitle_all} center />}
       <Styled.Projects>
-        {projects.map((item) => {
+        {projects.filter(item => {
+          if (featured) {
+            return item.node.frontmatter.featured;
+          } else {
+            return true;
+          }
+        }).map((item) => {
+
           const {
             id,
             fields: { slug },

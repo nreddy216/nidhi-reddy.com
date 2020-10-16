@@ -8,12 +8,8 @@ const mainNavItems = [
     slug: '/'
   },
   {
-    title: 'Blog',
-    slug: '/blog/'
-  },
-  {
-    title: 'Projects',
-    slug: '/projects/'
+    title: 'All projects',
+    slug: '/work/'
   },
   {
     title: 'Contact',
