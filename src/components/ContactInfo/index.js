@@ -7,7 +7,7 @@ import TitleSection from 'components/ui/TitleSection';
 
 import * as Styled from './styles';
 
-const ConctactInfo = () => {
+const ContactInfo = () => {
   const { markdownRemark, allMarkdownRemark } = useStaticQuery(graphql`
     query {
       markdownRemark(frontmatter: { category: { eq: "contact section" } }) {
@@ -53,4 +53,4 @@ const ConctactInfo = () => {
   );
 };
 
-export default ConctactInfo;
+export default ContactInfo;

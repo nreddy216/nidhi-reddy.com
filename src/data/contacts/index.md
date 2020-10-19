@@ -1,5 +1,5 @@
 ---
 category: 'contact section'
-title: 'Contacts'
+title: 'I am on the Internet! Surprise.'
 subtitle: 'For more info contact me'
 ---

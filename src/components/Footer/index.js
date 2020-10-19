@@ -12,6 +12,13 @@ const Footer = () => (
           GitHub
         </Styled.Link>
         <Styled.Link
+          href="https://www.linkedin.com/in/nidhireddy"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          LinkedIn
+        </Styled.Link>
+        <Styled.Link
           href="https://www.instagram.com/nidhisreddy"
           rel="noreferrer noopener"
           target="_blank"

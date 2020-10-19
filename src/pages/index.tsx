@@ -14,7 +14,7 @@ const IndexPage: React.FC = () => {
       <SEO title="About Me" />
       <HeroBanner />
       {/* <Services /> */}
-      <Experience />
+      {/* <Experience /> */}
       <hr />
       {/* <Testimonials /> */}
       <Projects featured />

@@ -5,14 +5,15 @@ import { Link } from 'gatsby';
 import Container from 'components/ui/Container';
 import Button from 'components/ui/Button';
 import TitleSection from 'components/ui/TitleSection';
+import FormatHtml from 'components/utils/FormatHtml';
 
 import * as Styled from './styles';
 
 const Banner = ({ title, subtitle, content, linkTo, linkText }) => (
   <Styled.Banner>
     <Container section>
-      {title && <TitleSection title={title} subtitle={subtitle} />}
-      {content && <Styled.Content>{content}</Styled.Content>}
+      {title && <TitleSection title={<FormatHtml content={title} />} subtitle={<FormatHtml content={subtitle} />} nocase />}
+      {content && <Styled.Content><FormatHtml content={content} /></Styled.Content>}
       {(linkTo && linkText) && (<div>
         {/* <Link to={linkTo && linkTo != null ? linkTo : '/'}> */}
           <Button primary>{linkText}</Button>
@@ -23,8 +24,8 @@ const Banner = ({ title, subtitle, content, linkTo, linkText }) => (
 );
 
 Banner.propTypes = {
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
+  title: PropTypes.any,
+  subtitle: PropTypes.any,
   content: PropTypes.any,
   linkTo: PropTypes.string,
   linkText: PropTypes.string
