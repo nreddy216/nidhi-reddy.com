@@ -1,11 +1,11 @@
-import React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import React from "react";
+import { useStaticQuery, graphql } from "gatsby";
 
-import InfoBlock from 'components/ui/InfoBlock';
-import Container from 'components/ui/Container';
-import TitleSection from 'components/ui/TitleSection';
+import InfoBlock from "components/ui/InfoBlock";
+import Container from "components/ui/Container";
+import TitleSection from "components/ui/TitleSection";
 
-import * as Styled from './styles';
+import * as Styled from "./styles";
 
 const Services = () => {
   const { markdownRemark, allMarkdownRemark } = useStaticQuery(graphql`
@@ -16,7 +16,10 @@ const Services = () => {
           subtitle
         }
       }
-      allMarkdownRemark(filter: { frontmatter: { category: { eq: "services" } } }, sort: { fields: fileAbsolutePath }) {
+      allMarkdownRemark(
+        filter: { frontmatter: { category: { eq: "services" } } }
+        sort: { fields: fileAbsolutePath }
+      ) {
         edges {
           node {
             id
@@ -36,12 +39,16 @@ const Services = () => {
 
   return (
     <Container section>
-      <TitleSection title={sectionTitle.title} subtitle={sectionTitle.subtitle} center />
+      <TitleSection
+        title={sectionTitle.title}
+        subtitle={sectionTitle.subtitle}
+        center
+      />
       <Styled.Services>
         {services.map((item) => {
           const {
             id,
-            frontmatter: { title, icon, description }
+            frontmatter: { title, icon, description },
           } = item.node;
 
           return (

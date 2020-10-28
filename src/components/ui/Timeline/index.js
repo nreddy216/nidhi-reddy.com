@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import * as Styled from './styles';
+import * as Styled from "./styles";
 
 const Timeline = ({ title, subtitle, content, startDate, endDate }) => (
   <Styled.Timeline>
@@ -22,7 +22,7 @@ Timeline.propTypes = {
   subtitle: PropTypes.string.isRequired,
   content: PropTypes.any.isRequired,
   startDate: PropTypes.string.isRequired,
-  endDate: PropTypes.string.isRequired
+  endDate: PropTypes.string.isRequired,
 };
 
 export default Timeline;

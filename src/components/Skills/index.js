@@ -1,11 +1,11 @@
-import React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import React from "react";
+import { useStaticQuery, graphql } from "gatsby";
 
-import Container from 'components/ui/Container';
-import TitleSection from 'components/ui/TitleSection';
-import ProgressBar from 'components/ui/ProgressBar';
+import Container from "components/ui/Container";
+import TitleSection from "components/ui/TitleSection";
+import ProgressBar from "components/ui/ProgressBar";
 
-import * as Styled from './styles';
+import * as Styled from "./styles";
 
 const Skills = () => {
   const { markdownRemark, allMarkdownRemark } = useStaticQuery(graphql`
@@ -16,7 +16,10 @@ const Skills = () => {
           subtitle
         }
       }
-      allMarkdownRemark(filter: { frontmatter: { category: { eq: "skills" } } }, sort: { fields: fileAbsolutePath }) {
+      allMarkdownRemark(
+        filter: { frontmatter: { category: { eq: "skills" } } }
+        sort: { fields: fileAbsolutePath }
+      ) {
         edges {
           node {
             id
@@ -35,12 +38,16 @@ const Skills = () => {
 
   return (
     <Container section>
-      <TitleSection title={sectionTitle.title} subtitle={sectionTitle.subtitle} center />
+      <TitleSection
+        title={sectionTitle.title}
+        subtitle={sectionTitle.subtitle}
+        center
+      />
       <Styled.Skills>
         {skills.map((item) => {
           const {
             id,
-            frontmatter: { title, percentage }
+            frontmatter: { title, percentage },
           } = item.node;
 
           return (

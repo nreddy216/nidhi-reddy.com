@@ -1,5 +1,5 @@
 ---
-category: 'skills'
-title: 'HTML'
+category: "skills"
+title: "HTML"
 percentage: 90
 ---

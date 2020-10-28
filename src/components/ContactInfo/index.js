@@ -1,11 +1,11 @@
-import React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import React from "react";
+import { useStaticQuery, graphql } from "gatsby";
 
-import InfoBlock from 'components/ui/InfoBlock';
-import Container from 'components/ui/Container';
-import TitleSection from 'components/ui/TitleSection';
+import InfoBlock from "components/ui/InfoBlock";
+import Container from "components/ui/Container";
+import TitleSection from "components/ui/TitleSection";
 
-import * as Styled from './styles';
+import * as Styled from "./styles";
 
 const ContactInfo = () => {
   const { markdownRemark, allMarkdownRemark } = useStaticQuery(graphql`
@@ -16,13 +16,17 @@ const ContactInfo = () => {
           subtitle
         }
       }
-      allMarkdownRemark(filter: { frontmatter: { category: { eq: "contact" } } }, sort: { fields: fileAbsolutePath }) {
+      allMarkdownRemark(
+        filter: { frontmatter: { category: { eq: "contact" } } }
+        sort: { fields: fileAbsolutePath }
+      ) {
         edges {
           node {
             id
             frontmatter {
               title
               icon
+              href
               content
             }
           }
@@ -36,16 +40,26 @@ const ContactInfo = () => {
 
   return (
     <Container section>
-      <TitleSection title={sectionTitle.title} subtitle={sectionTitle.subtitle} center />
+      <TitleSection
+        title={sectionTitle.title}
+        subtitle={sectionTitle.subtitle}
+        center
+      />
       {contacts.map((item) => {
         const {
           id,
-          frontmatter: { title, icon, content }
+          frontmatter: { title, icon, content, href },
         } = item.node;
 
         return (
           <Styled.ContactInfoItem key={id}>
-            <InfoBlock icon={icon} title={title} content={content} center />
+            <InfoBlock
+              href={href}
+              icon={icon}
+              title={title}
+              content={content}
+              center
+            />
           </Styled.ContactInfoItem>
         );
       })}

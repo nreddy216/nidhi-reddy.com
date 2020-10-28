@@ -1,5 +1,5 @@
 ---
-category: 'skills'
-title: 'Illustrator'
+category: "skills"
+title: "Illustrator"
 percentage: 41
 ---

@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import * as Styled from './styles';
+import * as Styled from "./styles";
 
 const ProgressBar = ({ title, percentage }) => (
   <Styled.ProgressBar>
@@ -17,7 +17,7 @@ const ProgressBar = ({ title, percentage }) => (
 
 ProgressBar.propTypes = {
   title: PropTypes.string.isRequired,
-  percentage: PropTypes.number.isRequired
+  percentage: PropTypes.number.isRequired,
 };
 
 export default ProgressBar;

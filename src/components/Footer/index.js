@@ -1,14 +1,18 @@
-import React from 'react';
+import React from "react";
 
-import Container from 'components/ui/Container';
+import Container from "components/ui/Container";
 
-import * as Styled from './styles';
+import * as Styled from "./styles";
 
 const Footer = () => (
   <Styled.Footer>
     <Container>
       <Styled.Links>
-        <Styled.Link href="https://github.com/nreddy216" rel="noreferrer noopener" target="_blank">
+        <Styled.Link
+          href="https://github.com/nreddy216"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
           GitHub
         </Styled.Link>
         <Styled.Link

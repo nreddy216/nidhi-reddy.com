@@ -1,10 +1,10 @@
 ---
-category: 'blog'
-cover: './cover.jpg'
-title: 'Blog Post 2'
-description: 'Mauris neque libero, aliquet vel mollis nec, euismod sed tellus. Mauris convallis dictum elit id volutpat.'
-date: '2019-12-24'
-tags: ['JavaScript', 'React']
+category: "blog"
+cover: "./cover.jpg"
+title: "Blog Post 2"
+description: "Mauris neque libero, aliquet vel mollis nec, euismod sed tellus. Mauris convallis dictum elit id volutpat."
+date: "2019-12-24"
+tags: ["JavaScript", "React"]
 published: true
 ---
 

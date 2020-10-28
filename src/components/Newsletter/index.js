@@ -1,11 +1,11 @@
-import React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import React from "react";
+import { useStaticQuery, graphql } from "gatsby";
 
-import Container from 'components/ui/Container';
-import Button from 'components/ui/Button';
-import TitleSection from 'components/ui/TitleSection';
+import Container from "components/ui/Container";
+import Button from "components/ui/Button";
+import TitleSection from "components/ui/TitleSection";
 
-import * as Styled from './styles';
+import * as Styled from "./styles";
 
 const Newsletter = () => {
   const { markdownRemark } = useStaticQuery(graphql`
@@ -27,10 +27,17 @@ const Newsletter = () => {
   return (
     <Styled.Newsletter>
       <Container section>
-        <TitleSection title={newsletter.title} subtitle={newsletter.subtitle} center />
+        <TitleSection
+          title={newsletter.title}
+          subtitle={newsletter.subtitle}
+          center
+        />
         <Styled.Form>
           <Styled.Input type="text" placeholder={newsletter.namePlaceholder} />
-          <Styled.Input type="email" placeholder={newsletter.emailPlaceholder} />
+          <Styled.Input
+            type="email"
+            placeholder={newsletter.emailPlaceholder}
+          />
           <Button primary block>
             {newsletter.submitPlaceholder}
           </Button>

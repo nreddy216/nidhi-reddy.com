@@ -1,5 +1,5 @@
 ---
-category: 'education section'
-title: 'Education'
-subtitle: 'djskfj'
+category: "education section"
+title: "Education"
+subtitle: "djskfj"
 ---

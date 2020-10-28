@@ -1,5 +1,5 @@
 ---
-category: 'experiences section'
-title: 'All Companies'
-subtitle: 'My Experience'
+category: "experiences section"
+title: "All Companies"
+subtitle: "My Experience"
 ---

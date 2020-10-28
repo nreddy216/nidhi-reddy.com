@@ -1,5 +1,5 @@
 ---
-category: 'skills'
-title: 'JavaScript'
+category: "skills"
+title: "JavaScript"
 percentage: 77
 ---

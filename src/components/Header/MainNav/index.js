@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import * as Styled from './styles';
+import * as Styled from "./styles";
 
 const mainNavItems = [
   {
-    title: 'About',
-    slug: '/'
+    title: "About",
+    slug: "/",
   },
   {
-    title: 'All projects',
-    slug: '/work/'
+    title: "All projects",
+    slug: "/projects",
   },
   {
-    title: 'Contact',
-    slug: '/contact/'
-  }
+    title: "Contact",
+    slug: "/contact",
+  },
 ];
 
 const MainNav = () => {
@@ -34,11 +34,15 @@ const MainNav = () => {
           </Styled.MainNavItem>
         ))}
       </Styled.MainNav>
-      <Styled.ToogleMainNav open={open} onClick={() => setOpen(!open)}>
+      <Styled.ToggleMainNav
+        aria-label={open ? "Close menu" : "Open menu"}
+        open={open}
+        onClick={() => setOpen(!open)}
+      >
         <span />
         <span />
         <span />
-      </Styled.ToogleMainNav>
+      </Styled.ToggleMainNav>
     </>
   );
 };

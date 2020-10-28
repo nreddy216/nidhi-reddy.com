@@ -1,8 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useStaticQuery, graphql } from 'gatsby';
+import React from "react";
+import PropTypes from "prop-types";
+import { useStaticQuery, graphql } from "gatsby";
 
-import Banner from 'components/ui/Banner';
+import Banner from "components/ui/Banner";
+import Container from "components/ui/Container";
+import FormatHtml from "components/utils/FormatHtml";
+
+import * as Styled from "./styles";
 
 const HeroBanner = () => {
   const { markdownRemark } = useStaticQuery(graphql`
@@ -17,16 +21,18 @@ const HeroBanner = () => {
     }
   `);
 
-  const heroBanner = markdownRemark.frontmatter;
+  const { title, subtitle, content } = markdownRemark.frontmatter;
 
   return (
-    <Banner
-      title={heroBanner.title}
-      subtitle={heroBanner.subtitle}
-      content={heroBanner.content}
-      linkTo={heroBanner.linkTo ? heroBanner.linkTo : null}
-      linkText={heroBanner.linkText ? heroBanner.linkText : null}
-    />
+    <Container>
+      <Styled.Title>{title}</Styled.Title>
+      <Styled.SubTitle>
+        <FormatHtml content={subtitle} />
+      </Styled.SubTitle>
+      <Styled.Content>
+        <FormatHtml content={content} />
+      </Styled.Content>
+    </Container>
   );
 };
 
@@ -35,7 +41,7 @@ HeroBanner.propTypes = {
   subtitle: PropTypes.string,
   content: PropTypes.string,
   linkTo: PropTypes.string,
-  linkText: PropTypes.string
+  linkText: PropTypes.string,
 };
 
 export default HeroBanner;

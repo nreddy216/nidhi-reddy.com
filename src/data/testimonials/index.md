@@ -1,5 +1,5 @@
 ---
-category: 'testimonials section'
-title: 'Testimonials'
-subtitle: 'What people are saying'
+category: "testimonials section"
+title: "Testimonials"
+subtitle: "What people are saying"
 ---

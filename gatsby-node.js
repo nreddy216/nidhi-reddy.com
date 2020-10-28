@@ -4,8 +4,8 @@ const { createFilePath } = require(`gatsby-source-filesystem`);
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
-      modules: [path.resolve(__dirname, `src`), `node_modules`]
-    }
+      modules: [path.resolve(__dirname, `src`), `node_modules`],
+    },
   });
 };
 
@@ -17,7 +17,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({
       name: `slug`,
       node,
-      value
+      value,
     });
   }
 };
@@ -58,12 +58,14 @@ exports.createPages = async ({ graphql, actions }) => {
       context: {
         slug: `${post.node.fields.slug}`,
         previous,
-        next
-      }
+        next,
+      },
     });
   });
 
-  const projectPostTemplate = path.resolve(`src/templates/ProjectPost/index.js`);
+  const projectPostTemplate = path.resolve(
+    `src/templates/ProjectPost/index.js`
+  );
 
   const projectRes = await graphql(`
     query {
@@ -88,7 +90,8 @@ exports.createPages = async ({ graphql, actions }) => {
   const projects = projectRes.data.allMarkdownRemark.edges;
 
   projects.forEach((project, index) => {
-    const previous = index === projects.length - 1 ? null : projects[index + 1].node;
+    const previous =
+      index === projects.length - 1 ? null : projects[index + 1].node;
     const next = index === 0 ? null : projects[index - 1].node;
 
     createPage({
@@ -97,8 +100,8 @@ exports.createPages = async ({ graphql, actions }) => {
       context: {
         slug: `${project.node.fields.slug}`,
         previous,
-        next
-      }
+        next,
+      },
     });
   });
 };

@@ -1,10 +1,10 @@
 ---
-category: 'blog'
-cover: './cover.jpg'
-title: 'Blog Post 5'
-description: 'Mauris neque libero, aliquet vel mollis nec, euismod sed tellus. Mauris convallis dictum elit id volutpat.'
-date: '2020-02-03'
-tags: ['Mobile', 'React Native']
+category: "blog"
+cover: "./cover.jpg"
+title: "Blog Post 5"
+description: "Mauris neque libero, aliquet vel mollis nec, euismod sed tellus. Mauris convallis dictum elit id volutpat."
+date: "2020-02-03"
+tags: ["Mobile", "React Native"]
 published: true
 ---
 

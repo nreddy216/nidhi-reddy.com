@@ -1,10 +1,10 @@
-import React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import React from "react";
+import { useStaticQuery, graphql } from "gatsby";
 
-import Timeline from 'components/ui/Timeline';
-import Container from 'components/ui/Container';
-import TitleSection from 'components/ui/TitleSection';
-import FormatHtml from 'components/utils/FormatHtml';
+import Timeline from "components/ui/Timeline";
+import Container from "components/ui/Container";
+import TitleSection from "components/ui/TitleSection";
+import FormatHtml from "components/utils/FormatHtml";
 
 const Experience = () => {
   const { markdownRemark, allMarkdownRemark } = useStaticQuery(graphql`
@@ -40,13 +40,16 @@ const Experience = () => {
 
   return (
     <Container section>
-      <TitleSection title={sectionTitle.title} subtitle={sectionTitle.subtitle} />
+      <TitleSection
+        title={sectionTitle.title}
+        subtitle={sectionTitle.subtitle}
+      />
 
       {experiences.map((item) => {
         const {
           id,
           html,
-          frontmatter: { company, position, startDate, endDate }
+          frontmatter: { company, position, startDate, endDate },
         } = item.node;
 
         return (

@@ -1,8 +1,8 @@
-import React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
-import Img from 'gatsby-image';
+import React from "react";
+import { useStaticQuery, graphql } from "gatsby";
+import Img from "gatsby-image";
 
-import * as Styled from './styles';
+import * as Styled from "./styles";
 
 const Logo = () => {
   const { site, placeholderImage } = useStaticQuery(graphql`

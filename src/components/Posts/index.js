@@ -1,10 +1,10 @@
-import React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import React from "react";
+import { useStaticQuery, graphql } from "gatsby";
 
-import Container from 'components/ui/Container';
-import Post from 'components/Post';
+import Container from "components/ui/Container";
+import Post from "components/Post";
 
-import * as Styled from './styles';
+import * as Styled from "./styles";
 
 const Posts = () => {
   const { markdownRemark, allMarkdownRemark } = useStaticQuery(graphql`
@@ -16,7 +16,9 @@ const Posts = () => {
         }
       }
       allMarkdownRemark(
-        filter: { frontmatter: { category: { eq: "blog" }, published: { eq: true } } }
+        filter: {
+          frontmatter: { category: { eq: "blog" }, published: { eq: true } }
+        }
         sort: { fields: frontmatter___date, order: DESC }
       ) {
         edges {
@@ -55,7 +57,7 @@ const Posts = () => {
             id,
             fields: { slug },
             frontmatter: { title, cover, description, date, tags },
-            html
+            html,
           } = item.node;
 
           return (

@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import tw from 'tailwind.macro';
-import { Link } from 'gatsby';
-import { motion } from 'framer-motion';
+import styled from "styled-components";
+import tw from "tailwind.macro";
+import { Link } from "gatsby";
+import { motion } from "framer-motion";
 
 export const MainNav = styled.nav`
   ${tw`sm:flex flex-col sm:flex-row sm:w-auto w-full order-last sm:order-none my-4 sm:my-0 hidden`};
@@ -18,7 +18,7 @@ export const MainNavItem = motion.custom(styled(Link)`
 
   &:before {
     ${tw`absolute w-full bg-green-500 h-px left-0 invisible`};
-    content: '';
+    content: "";
     bottom: -1px;
     transform: scaleX(0);
     transition: 0.2s;
@@ -30,9 +30,12 @@ export const MainNavItem = motion.custom(styled(Link)`
   }
 `);
 
-export const ToogleMainNav = styled.button`
-  ${tw`flex flex-col items-end justify-center cursor-pointer w-6 h-5 sm:hidden`};
+export const ToggleMainNav = styled.button`
+  ${tw`flex flex-col items-end justify-center cursor-pointer w-6 h-5 sm:hidden focus:bg-blue-200`};
   outline: none !important;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
 
   span {
     ${tw`bg-indigo-900 inline-block w-6 h-px`};
@@ -40,19 +43,19 @@ export const ToogleMainNav = styled.button`
 
     &:first-child {
       ${({ open }) => (open ? tw`-mb-px` : tw`mb-1`)};
-      transform: ${({ open }) => (open ? 'rotate(45deg)' : 'none')};
+      transform: ${({ open }) => (open ? "rotate(45deg)" : "none")};
     }
 
     &:last-child {
       ${({ open }) => (open ? tw`-mt-px` : tw`mt-1`)};
-      transform: ${({ open }) => (open ? 'rotate(-45deg)' : 'none')};
+      transform: ${({ open }) => (open ? "rotate(-45deg)" : "none")};
     }
 
     &:nth-child(2) {
       ${tw`bg-green-500 inline-block w-8 h-px`};
 
       ${({ open }) => (open ? tw`opacity-0` : tw`opacity-1`)};
-      transform: ${({ open }) => (open ? 'translate(20px)' : 'none')};
+      transform: ${({ open }) => (open ? "translate(20px)" : "none")};
     }
   }
 `;

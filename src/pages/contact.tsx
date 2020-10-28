@@ -8,7 +8,7 @@ const ContactPage: React.FC = () => {
   return (
     <Layout>
       <SEO title="Contact" />
-      <ContactInfo />
+      <ContactInfo as="a" />
     </Layout>
   );
 };

@@ -1,12 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import * as Styled from './styles';
+import * as Styled from "./styles";
 
-const Container = ({ section, children }) => <Styled.Container section={section}>{children}</Styled.Container>;
+const Container = ({ section, sectionY, children }) => (
+  <Styled.Container section={section} sectionY={sectionY}>
+    {children}
+  </Styled.Container>
+);
 
 Container.propTypes = {
   section: PropTypes.bool,
-  children: PropTypes.any.isRequired
+  sectionY: PropTypes.bool,
+  children: PropTypes.any.isRequired,
 };
 export default Container;

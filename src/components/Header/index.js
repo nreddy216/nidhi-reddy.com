@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import MainNav from './MainNav';
-import Logo from './Logo';
+import MainNav from "./MainNav";
+import Logo from "./Logo";
 
-import * as Styled from './styles';
+import * as Styled from "./styles";
 
 const Header = ({ siteTitle }) => (
   <Styled.Header>
@@ -16,11 +16,11 @@ const Header = ({ siteTitle }) => (
 );
 
 Header.defaultProps = {
-  siteTitle: ``
+  siteTitle: ``,
 };
 
 Header.propTypes = {
-  siteTitle: PropTypes.string.isRequired
+  siteTitle: PropTypes.string.isRequired,
 };
 
 export default Header;

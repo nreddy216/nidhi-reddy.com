@@ -7,17 +7,19 @@ import Services from 'components/Services';
 import Testimonials from 'components/Testimonials';
 import Experience from 'components/Experience';
 import Projects from 'components/Projects';
+import TitleSection from 'components/ui/TitleSection';
+import Container from 'components/ui/Container';
 
 const IndexPage: React.FC = () => {
   return (
     <Layout>
-      <SEO title="About Me" />
+      <SEO title="Nidhi Reddy, Freelance Web Developer" />
       <HeroBanner />
-      {/* <Services /> */}
-      {/* <Experience /> */}
       <hr />
-      {/* <Testimonials /> */}
-      <Projects featured />
+      <Container section>
+        <TitleSection title="projects" subtitle="featured" center />
+        <Projects featured showTags wide />
+      </Container>
     </Layout>
   );
 };

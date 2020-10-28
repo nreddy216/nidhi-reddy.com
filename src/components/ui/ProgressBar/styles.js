@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import tw from 'tailwind.macro';
+import styled from "styled-components";
+import tw from "tailwind.macro";
 
 export const ProgressBar = styled.div`
   ${tw`p-3`};

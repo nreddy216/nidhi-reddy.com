@@ -1,15 +1,83 @@
-import React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
-import Img from 'gatsby-image';
-import Link from 'gatsby-link';
-import { motion } from 'framer-motion';
+import React from "react";
+import { useStaticQuery, graphql } from "gatsby";
+import Img from "gatsby-image";
+import Link from "gatsby-link";
+import { motion } from "framer-motion";
 
-import Container from 'components/ui/Container';
-import TitleSection from 'components/ui/TitleSection';
+import Container from "components/ui/Container";
+import TitleSection from "components/ui/TitleSection";
 
-import * as Styled from './styles';
+import * as Styled from "./styles";
 
-const Projects = ({ featured }) => {
+const ProjectCard = ({
+  cover,
+  title,
+  date,
+  description,
+  hideTags,
+  tags,
+  filteredTags,
+}) => {
+  return (
+    <Styled.Card>
+      <Styled.Image>
+        <Img fluid={cover.childImageSharp.fluid} alt={title} />
+      </Styled.Image>
+      <Styled.Content>
+        <Styled.Date>{date}</Styled.Date>
+        <Styled.Title>{title}</Styled.Title>
+        <Styled.Description>{description}</Styled.Description>
+      </Styled.Content>
+      {!hideTags && (
+        <Styled.Tags>
+          {tags.map((tag) => {
+            if (filteredTags && filteredTags.includes(tag)) {
+              return null;
+            } else {
+              return <Styled.Tag key={tag}>{tag}</Styled.Tag>;
+            }
+          })}
+        </Styled.Tags>
+      )}
+    </Styled.Card>
+  );
+};
+
+const ProjectCardWide = ({
+  cover,
+  title,
+  date,
+  description,
+  hideTags,
+  tags,
+  filteredTags,
+}) => {
+  return (
+    <Styled.CardWide>
+      <Styled.ImageWide>
+        <Img fluid={cover.childImageSharp.fluid} alt={title} />
+      </Styled.ImageWide>
+      <Styled.Content>
+        <Styled.Date>{date}</Styled.Date>
+        <Styled.Title>{title}</Styled.Title>
+        <Styled.Description>{description}</Styled.Description>
+        {!hideTags && (
+          <Styled.TagsWide>
+            {tags.map((tag) => {
+              if (filteredTags && filteredTags.includes(tag)) {
+                return <span />;
+              } else {
+                return <Styled.Tag key={tag}>{tag}</Styled.Tag>;
+              }
+            })}
+          </Styled.TagsWide>
+        )}
+      </Styled.Content>
+    </Styled.CardWide>
+  );
+};
+
+const Projects = ({ featured, filteredTags, hideTags, wide }) => {
   const { markdownRemark, allMarkdownRemark } = useStaticQuery(graphql`
     query {
       markdownRemark(frontmatter: { category: { eq: "projects" } }) {
@@ -21,7 +89,9 @@ const Projects = ({ featured }) => {
         }
       }
       allMarkdownRemark(
-        filter: { frontmatter: { category: { eq: "projects" }, published: { eq: true } } }
+        filter: {
+          frontmatter: { category: { eq: "projects" }, published: { eq: true } }
+        }
         sort: { fields: frontmatter___order, order: ASC }
       ) {
         edges {
@@ -55,28 +125,37 @@ const Projects = ({ featured }) => {
   const projects = allMarkdownRemark.edges;
 
   return (
-    <Container section>
-      {featured ? <TitleSection title={sectionTitle.title_featured} subtitle={sectionTitle.subtitle_featured} center /> : <TitleSection title={sectionTitle.title_all} subtitle={sectionTitle.subtitle_all} center />}
-      <Styled.Projects>
-        {projects.filter(item => {
-          if (featured) {
+    <Styled.Projects>
+      {projects
+        .filter((item) => {
+          if (filteredTags) {
+            return filteredTags.some((i) =>
+              item.node.frontmatter.tags.includes(i)
+            );
+          } else if (featured) {
             return item.node.frontmatter.featured;
           } else {
             return true;
           }
-        }).map((item) => {
-
+        })
+        .map((item) => {
           const {
             id,
             fields: { slug },
-            frontmatter: { title, cover, description, date, tags }
+            frontmatter: { title, cover, description, date, tags },
           } = item.node;
 
           return (
-            <Styled.Project key={id}>
+            <Styled.Project
+              key={id}
+              className={wide ? "w-full" : "w-full sm:w-1/2"}
+            >
               <Link to={slug}>
-                <motion.div whileHover={{ scale: 1.05 }} whiletap={{ scale: 1 }}>
-                  <Styled.Card>
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whiletap={{ scale: 1 }}
+                >
+                  {/* <Styled.Card>
                     <Styled.Image>
                       <Img fluid={cover.childImageSharp.fluid} alt={title} />
                     </Styled.Image>
@@ -85,19 +164,45 @@ const Projects = ({ featured }) => {
                       <Styled.Title>{title}</Styled.Title>
                       <Styled.Description>{description}</Styled.Description>
                     </Styled.Content>
-                    <Styled.Tags>
-                      {tags.map((item) => (
-                        <Styled.Tag key={item}>{item}</Styled.Tag>
-                      ))}
-                    </Styled.Tags>
-                  </Styled.Card>
+                    {hideTags && (
+                      <Styled.Tags>
+                        {tags.map((tag) => {
+                          if (filteredTags && filteredTags.includes(tag)) {
+                            return (<span/>);
+                          } else {
+                            return (<Styled.Tag key={tag}>{tag}</Styled.Tag>);
+                          }
+                        })}
+                      </Styled.Tags>
+                    )}
+                  </Styled.Card> */}
+                  {wide ? (
+                    <ProjectCardWide
+                      date={date}
+                      title={title}
+                      description={description}
+                      cover={cover}
+                      filteredTags={filteredTags}
+                      hideTags={hideTags}
+                      tags={tags}
+                    />
+                  ) : (
+                    <ProjectCard
+                      date={date}
+                      title={title}
+                      description={description}
+                      cover={cover}
+                      filteredTags={filteredTags}
+                      hideTags={hideTags}
+                      tags={tags}
+                    />
+                  )}
                 </motion.div>
               </Link>
             </Styled.Project>
           );
         })}
-      </Styled.Projects>
-    </Container>
+    </Styled.Projects>
   );
 };
 

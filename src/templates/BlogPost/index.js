@@ -1,14 +1,14 @@
-import React from 'react';
-import { graphql } from 'gatsby';
-import Link from 'gatsby-link';
+import React from "react";
+import { graphql } from "gatsby";
+import Link from "gatsby-link";
 
-import Layout from 'components/Layout';
-import SEO from 'components/SEO';
-import Container from 'components/ui/Container';
-import TitleSection from 'components/ui/TitleSection';
-import FormatHtml from 'components/utils/FormatHtml';
+import Layout from "components/Layout";
+import SEO from "components/SEO";
+import Container from "components/ui/Container";
+import TitleSection from "components/ui/TitleSection";
+import FormatHtml from "components/utils/FormatHtml";
 
-import * as Styled from './styles';
+import * as Styled from "./styles";
 
 const BlogPost = ({ data, pageContext }) => {
   const post = data.markdownRemark;
@@ -18,7 +18,10 @@ const BlogPost = ({ data, pageContext }) => {
     <Layout>
       <SEO title={post.frontmatter.title} />
       <Container section>
-        <TitleSection title={post.frontmatter.date} subtitle={post.frontmatter.title} />
+        <TitleSection
+          title={post.frontmatter.date}
+          subtitle={post.frontmatter.title}
+        />
         <FormatHtml content={post.html} />
         <Styled.Links>
           <span>
