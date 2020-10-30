@@ -53,27 +53,29 @@ const ProjectCardWide = ({
   filteredTags,
 }) => {
   return (
-    <Styled.CardWide>
-      <Styled.ImageWide>
-        <Img fluid={cover.childImageSharp.fluid} alt={title} />
-      </Styled.ImageWide>
-      <Styled.Content>
-        <Styled.Date>{date}</Styled.Date>
-        <Styled.Title>{title}</Styled.Title>
-        <Styled.Description>{description}</Styled.Description>
-        {!hideTags && (
-          <Styled.TagsWide>
-            {tags.map((tag) => {
-              if (filteredTags && filteredTags.includes(tag)) {
-                return <span />;
-              } else {
-                return <Styled.Tag key={tag}>{tag}</Styled.Tag>;
-              }
-            })}
-          </Styled.TagsWide>
-        )}
-      </Styled.Content>
-    </Styled.CardWide>
+    // <motion.div whileHover={{ backgroundColor: '#fff' }}>
+      <Styled.CardWide>
+        <Styled.ImageWide>
+          <Img fluid={cover.childImageSharp.fluid} alt={title} />
+        </Styled.ImageWide>
+        <Styled.Content>
+          <Styled.Date>{date}</Styled.Date>
+          <Styled.Title>{title}</Styled.Title>
+          <Styled.Description>{description}</Styled.Description>
+          {!hideTags && (
+            <Styled.TagsWide>
+              {tags.map((tag) => {
+                if (filteredTags && filteredTags.includes(tag)) {
+                  return <span />;
+                } else {
+                  return <Styled.Tag key={tag}>{tag}</Styled.Tag>;
+                }
+              })}
+            </Styled.TagsWide>
+          )}
+        </Styled.Content>
+      </Styled.CardWide>
+    // </motion.div>
   );
 };
 
@@ -150,32 +152,11 @@ const Projects = ({ featured, filteredTags, hideTags, wide }) => {
               key={id}
               className={wide ? "w-full" : "w-full sm:w-1/2"}
             >
-              <Link to={slug}>
+              <Link to={slug} className={"project-link"}>
                 <motion.div
                   whileHover={{ scale: 1.03 }}
                   whiletap={{ scale: 1 }}
                 >
-                  {/* <Styled.Card>
-                    <Styled.Image>
-                      <Img fluid={cover.childImageSharp.fluid} alt={title} />
-                    </Styled.Image>
-                    <Styled.Content>
-                      <Styled.Date>{date}</Styled.Date>
-                      <Styled.Title>{title}</Styled.Title>
-                      <Styled.Description>{description}</Styled.Description>
-                    </Styled.Content>
-                    {hideTags && (
-                      <Styled.Tags>
-                        {tags.map((tag) => {
-                          if (filteredTags && filteredTags.includes(tag)) {
-                            return (<span/>);
-                          } else {
-                            return (<Styled.Tag key={tag}>{tag}</Styled.Tag>);
-                          }
-                        })}
-                      </Styled.Tags>
-                    )}
-                  </Styled.Card> */}
                   {wide ? (
                     <ProjectCardWide
                       date={date}

@@ -21,7 +21,7 @@ export const Image = styled.figure`
   ${tw`w-full`};
 `;
 export const CardWide = styled.div`
-  ${tw`w-full h-full rounded-lg flex flex-col sm:flex-row overflow-hidden border border-gray-300`};
+  ${tw`w-full h-full rounded-lg flex flex-col sm:flex-row overflow-hidden border border-gray-300 bg-grey-100`};
 `;
 
 export const ImageWide = styled.figure`

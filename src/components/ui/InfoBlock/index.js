@@ -5,10 +5,10 @@ import Icon from "components/ui/Icon";
 
 import * as Styled from "./styles";
 
-const InfoBlock = ({ icon, title, content, center, href }) => (
+const InfoBlock = ({ icon, iconText, title, content, center, href }) => (
   <Styled.InfoBlock center={center}>
     <Styled.Icon>
-      <Icon icon={icon} />
+      {icon ? <Icon icon={icon} /> : <span>{iconText}</span>}
     </Styled.Icon>
     <Styled.Wrapper center={center}>
       <Styled.Title>{title}</Styled.Title>
@@ -23,7 +23,8 @@ InfoBlock.propTypes = {
   center: PropTypes.bool,
   title: PropTypes.string.isRequired,
   content: PropTypes.any.isRequired,
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.string,
+  iconText: PropTypes.string,
   href: PropTypes.string,
 };
 

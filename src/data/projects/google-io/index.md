@@ -1,7 +1,7 @@
 ---
 category: "projects"
 order: 1
-cover: "./googleio2020.jpg"
+cover: "./cover-2019.jpg"
 title: "Google I/O Web App"
 description: "I was an engineer and eventually the technical lead for the annual Google developer conference web application over the span of three years."
 description_long: "I was an engineer and eventually the technical lead for the annual Google developer conference web application over the span of three years. This app provided attendees and livestream viewers information about the event, the ability to create their own schedule, an interactive map, and a livestream. Our team was embedded within Google and we worked with the agency Instrument who created the branding and design for these years."

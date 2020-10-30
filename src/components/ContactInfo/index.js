@@ -48,14 +48,14 @@ const ContactInfo = () => {
       {contacts.map((item) => {
         const {
           id,
-          frontmatter: { title, icon, content, href },
+          frontmatter: { title, iconText, content, href },
         } = item.node;
 
         return (
           <Styled.ContactInfoItem key={id}>
             <InfoBlock
               href={href}
-              icon={icon}
+              iconText={iconText}
               title={title}
               content={content}
               center

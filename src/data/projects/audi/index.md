@@ -2,25 +2,20 @@
 category: "projects"
 order: 5
 cover: "./cover.jpg"
-title: "Project Post 5"
-description: "Mauris neque libero, aliquet vel mollis nec, euismod sed tellus. Mauris convallis dictum elit id volutpat."
-date: "2020-02-03"
-tags: ["Mobile", "React Native"]
-published: false
+title: "Audi"
+description: "I worked on a large team within AKQA to build and maintain the AudiUSA website."
+description_long: "I worked on a large team within AKQA to build and maintain the AudiUSA website. This website had many moving parts: a  CMS, a backend database of the Audi car inventory and dealerships, and a complex front-end. Since our team was large, we had to communicate regularly across client-facing partners, content authors, QA testers, back-end developers, and front-end developers.<br><br> Technologies used included: Backbone, CoffeeScript, SASS, HTML, Mocha, Grunt, and Vagrant."
+date: "2016-2017"
+tags: ["Development", "Work"]
+url: https://www.audiusa.com/
+published: true
+featured: true
 ---
 
-_Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat._.
+## Overview
 
-**Sed ut perspiciatis unde omnis**
+In my time at AKQA, I worked on several different components of the website, including the car configurator, reusable carousels, navigations, shopping tools, bug fixes, and more. Our team was large and we were constantly iterating on improving the website. In addition to working on the existing site, my team and I created a prototype of the site using React in order to improve its performance and simplify the complex front-end in a time when most companies were moving away from JavaScript.
 
-"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-
-![Aliquet vel mollis nec](./cover.jpg)
-
-Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-
-**Nemo enim ipsam voluptatem**
-
-"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-
-Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+Below is a screenshot of the latest Audi homepage, which still contains some of the work my team and I did in previous years.
+<br><br>
+![AudiUSA homepage screenshot](./audi-homepage.png)

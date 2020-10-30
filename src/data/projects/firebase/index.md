@@ -1,11 +1,11 @@
 ---
 category: "projects"
-order: 4
-cover: "./cover.jpg"
-title: "Project Post 4"
-description: "Mauris neque libero, aliquet vel mollis nec, euismod sed tellus. Mauris convallis dictum elit id volutpat."
-date: "2020-01-21"
-tags: ["Web Design", "UX/UI"]
+order: 3
+cover: "./cover-2.png"
+title: "Firebase"
+description: "A marketing built on top of a Google platform called Devsite."
+date: "2018-2020"
+tags: ["Development", "Work"]
 published: true
 featured: true
 ---

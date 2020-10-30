@@ -1,18 +1,17 @@
 ---
 category: "projects"
-order: 3
+order: 4
 cover: "./cover.jpg"
 title: "Fastlane"
 description: "A website for an open source platform aimed at simplifying Android and iOS deployment."
-date: "2020-01-12"
-tags: ["Development", "Motion"]
+description_long: "My team and I developed a website for Fastlane, an open source platform aimed at simplifying Android and iOS deployment. In addition, I contributed to the motion design of the hero.<br><br> Technologies used include: Grow, HTML, SASS, and vanilla Javascript. "
+date: "2019"
+tags: ["Development", "Motion Design", "Work"]
 published: true
 featured: true
 ---
 
-_Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat._.
-
-**Sed ut perspiciatis unde omnis**
+## Sed ut perspiciatis unde omnis
 
 ![Aliquet vel mollis nec](./cover.jpg)
 
