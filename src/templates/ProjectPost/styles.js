@@ -10,5 +10,5 @@ export const Image = styled.figure`
 `;
 
 export const Links = styled.div`
-  ${tw`w-full flex justify-between mt-10`};
+  ${tw`w-full flex justify-between mt-10 lowercase`};
 `;

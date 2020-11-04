@@ -9,6 +9,7 @@ import TitleSection from "components/ui/TitleSection";
 import FormatHtml from "components/utils/FormatHtml";
 import Img from "gatsby-image";
 import Button from "components/ui/Button";
+import VimeoPlayer from "components/VimeoPlayer";
 
 import * as Styled from "./styles";
 import Icon from "components/ui/Icon";
@@ -21,6 +22,11 @@ const ProjectPost = ({ data, pageContext }) => {
     <Layout>
       <SEO title={post.frontmatter.title} scripts={post.frontmatter.scripts} />
       <Container section>
+        <Styled.Links>
+          <Link to={"/projects"} rel="projects">
+            ← back to all
+          </Link>
+        </Styled.Links>
         <Container sectionY>
           <TitleSection
             project
@@ -38,7 +44,13 @@ const ProjectPost = ({ data, pageContext }) => {
               />
             </em>
           )}
-          {post.frontmatter.cover && (
+          {post.frontmatter.video_id || post.frontmatter.video_url ? (
+            <VimeoPlayer
+              id={post.frontmatter.video_id}
+              url={post.frontmatter.video_url}
+              title={post.frontmatter.video_title}
+            ></VimeoPlayer>
+          ) : (
             <Styled.Image>
               <Img
                 fluid={post.frontmatter.cover.childImageSharp.fluid}
@@ -46,6 +58,7 @@ const ProjectPost = ({ data, pageContext }) => {
               />
             </Styled.Image>
           )}
+
           {post.frontmatter.url && (
             <Button as="a" primary href={post.frontmatter.url}>
               View site
@@ -82,6 +95,7 @@ export const query = graphql`
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       frontmatter {
+        order
         title
         date
         cover {
@@ -91,6 +105,9 @@ export const query = graphql`
             }
           }
         }
+        video_id
+        video_title
+        video_url
         url
         description
         description_long

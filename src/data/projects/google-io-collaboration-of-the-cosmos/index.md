@@ -2,6 +2,8 @@
 category: "projects"
 order: 2
 cover: "./cover.png"
+video_id: "472362339"
+video_title: Timelapse of Google I/O Date Reveal
 title: "Google I/O Collaboration of the Cosmos"
 description: "In order to unlock the dates for Google I/O, we created a cryptic, collaborative puzzle."
 description_long: "Each year, Google I/O has a virtual scavenger hunt for developers as a teaser to get folks excited about their event.  In early 2020, we created a collaborative puzzle that required a mass number of users to unlock the dates for this year's conference. I was the technical lead and a senior developer on this project.<br><br>Technologies used include Preact, PixiJS, Firestore, Cloud Functions, and App Engine."

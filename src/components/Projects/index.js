@@ -54,27 +54,27 @@ const ProjectCardWide = ({
 }) => {
   return (
     // <motion.div whileHover={{ backgroundColor: '#fff' }}>
-      <Styled.CardWide>
-        <Styled.ImageWide>
-          <Img fluid={cover.childImageSharp.fluid} alt={title} />
-        </Styled.ImageWide>
-        <Styled.Content>
-          <Styled.Date>{date}</Styled.Date>
-          <Styled.Title>{title}</Styled.Title>
-          <Styled.Description>{description}</Styled.Description>
-          {!hideTags && (
-            <Styled.TagsWide>
-              {tags.map((tag) => {
-                if (filteredTags && filteredTags.includes(tag)) {
-                  return <span />;
-                } else {
-                  return <Styled.Tag key={tag}>{tag}</Styled.Tag>;
-                }
-              })}
-            </Styled.TagsWide>
-          )}
-        </Styled.Content>
-      </Styled.CardWide>
+    <Styled.CardWide>
+      <Styled.ImageWide>
+        <Img fluid={cover.childImageSharp.fluid} alt={title} />
+      </Styled.ImageWide>
+      <Styled.Content>
+        <Styled.Date>{date}</Styled.Date>
+        <Styled.Title>{title}</Styled.Title>
+        <Styled.Description>{description}</Styled.Description>
+        {!hideTags && (
+          <Styled.TagsWide>
+            {tags.map((tag) => {
+              if (filteredTags && filteredTags.includes(tag)) {
+                return <span />;
+              } else {
+                return <Styled.Tag key={tag}>{tag}</Styled.Tag>;
+              }
+            })}
+          </Styled.TagsWide>
+        )}
+      </Styled.Content>
+    </Styled.CardWide>
     // </motion.div>
   );
 };

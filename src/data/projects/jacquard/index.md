@@ -1,13 +1,13 @@
 ---
 category: "projects"
 order: 6
-cover: "./jacquard-home.png"
+cover: "./jacquard-cover.jpg"
 title: "Jacquard by Google"
 description: "Jacquard is the first full-scale digital technology platform created for smart apparel. My team and I created this website before the launch of their Levi's collaboration."
 description_long: "Jacquard is the first full-scale digital technology platform created for smart apparel. My team and I created this a11y-friendly website before the launch of their Levi's collaboration.<br><br> Technologies used include: Grow, HTML, SASS, and vanilla Javascript. "
 date: "2018"
 tags: ["Development", "Work"]
-published: false
+published: true
 featured: false
 ---
 

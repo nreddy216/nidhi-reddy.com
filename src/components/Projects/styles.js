@@ -7,6 +7,10 @@ export const Projects = styled.div`
 
 export const Project = styled.div`
   ${tw`p-3`};
+
+  .project-link > div {
+    height: 100%;
+  }
 `;
 
 export const Card = styled.div`

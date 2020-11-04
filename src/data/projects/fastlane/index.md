@@ -1,11 +1,15 @@
 ---
 category: "projects"
 order: 4
-cover: "./cover.jpg"
+cover: "./fastlane-cover.png"
+video_id: "475576068"
+video_title: "Fastlane animated hero banner"
+video_url: "" #Temp
 title: "Fastlane"
 description: "A website for an open source platform aimed at simplifying Android and iOS deployment."
 description_long: "My team and I developed a website for Fastlane, an open source platform aimed at simplifying Android and iOS deployment. In addition, I contributed to the motion design of the hero.<br><br> Technologies used include: Grow, HTML, SASS, and vanilla Javascript. "
 date: "2019"
+url: https://fastlane.tools
 tags: ["Development", "Motion Design", "Work"]
 published: true
 featured: true

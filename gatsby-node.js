@@ -71,7 +71,7 @@ exports.createPages = async ({ graphql, actions }) => {
     query {
       allMarkdownRemark(
         filter: { frontmatter: { category: { eq: "projects" } } }
-        sort: { fields: frontmatter___date, order: DESC }
+        sort: { fields: frontmatter___order, order: ASC }
       ) {
         edges {
           node {
@@ -91,8 +91,13 @@ exports.createPages = async ({ graphql, actions }) => {
 
   projects.forEach((project, index) => {
     const previous =
-      index === projects.length - 1 ? null : projects[index + 1].node;
-    const next = index === 0 ? null : projects[index - 1].node;
+      index === 0
+        ? projects[projects.length - 1].node
+        : projects[index - 1].node;
+    const next =
+      index === projects.length - 1
+        ? projects[0].node
+        : projects[index + 1].node;
 
     createPage({
       path: `${project.node.fields.slug}`,
