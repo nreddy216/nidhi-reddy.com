@@ -5,16 +5,19 @@ import * as Styled from "./styles";
 
 const VimeoPlayer = ({ title, url, id, autoplay, loop, mute }) => {
   let link = id ? `https://player.vimeo.com/video/${id}` : `${url}`;
+
   link += `?byline=0&portrait=0&title=0&autoplay=${autoplay ? 1 : 0}&loop=${
     loop ? 1 : 0
   }&mute=${mute ? 1 : 0}`;
 
+  const isYouTube = url && url.includes("youtube");
+
   return (
-    <Styled.Player>
+    <Styled.Player isYouTube={isYouTube}>
       <Styled.Iframe
         src={link}
-        frameborder="0"
-        allow="autoplay; fullscreen"
+        frameborder={`0`}
+        allow={`autoplay; fullscreen; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture`}
         allowfullscreen
         title={title}
       ></Styled.Iframe>
@@ -23,7 +26,7 @@ const VimeoPlayer = ({ title, url, id, autoplay, loop, mute }) => {
 };
 
 VimeoPlayer.defaultProps = {
-  title: "Video",
+  title: `Video`,
   autoplay: true,
   loop: true,
   mute: true,

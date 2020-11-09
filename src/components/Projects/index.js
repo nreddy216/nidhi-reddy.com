@@ -20,9 +20,11 @@ const ProjectCard = ({
 }) => {
   return (
     <Styled.Card>
-      <Styled.Image>
-        <Img fluid={cover.childImageSharp.fluid} alt={title} />
-      </Styled.Image>
+      {cover && (
+        <Styled.Image>
+          <Img fluid={cover.childImageSharp.fluid} alt={title} />
+        </Styled.Image>
+      )}
       <Styled.Content>
         <Styled.Date>{date}</Styled.Date>
         <Styled.Title>{title}</Styled.Title>
@@ -30,7 +32,7 @@ const ProjectCard = ({
       </Styled.Content>
       {!hideTags && (
         <Styled.Tags>
-          {tags.map((tag) => {
+          {tags.sort().map((tag) => {
             if (filteredTags && filteredTags.includes(tag)) {
               return null;
             } else {
@@ -53,11 +55,12 @@ const ProjectCardWide = ({
   filteredTags,
 }) => {
   return (
-    // <motion.div whileHover={{ backgroundColor: '#fff' }}>
     <Styled.CardWide>
-      <Styled.ImageWide>
-        <Img fluid={cover.childImageSharp.fluid} alt={title} />
-      </Styled.ImageWide>
+      {cover && (
+        <Styled.ImageWide>
+          <Img fluid={cover.childImageSharp.fluid} alt={title} />
+        </Styled.ImageWide>
+      )}
       <Styled.Content>
         <Styled.Date>{date}</Styled.Date>
         <Styled.Title>{title}</Styled.Title>
@@ -75,7 +78,6 @@ const ProjectCardWide = ({
         )}
       </Styled.Content>
     </Styled.CardWide>
-    // </motion.div>
   );
 };
 

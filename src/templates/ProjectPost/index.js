@@ -22,11 +22,11 @@ const ProjectPost = ({ data, pageContext }) => {
     <Layout>
       <SEO title={post.frontmatter.title} scripts={post.frontmatter.scripts} />
       <Container section>
-        <Styled.Links>
+        <Styled.LinksNoMargin>
           <Link to={"/projects"} rel="projects">
             ← back to all
           </Link>
-        </Styled.Links>
+        </Styled.LinksNoMargin>
         <Container sectionY>
           <TitleSection
             project
@@ -49,6 +49,7 @@ const ProjectPost = ({ data, pageContext }) => {
               id={post.frontmatter.video_id}
               url={post.frontmatter.video_url}
               title={post.frontmatter.video_title}
+              autoplay={post.frontmatter.video_autoplay}
             ></VimeoPlayer>
           ) : (
             <Styled.Image>
@@ -61,7 +62,9 @@ const ProjectPost = ({ data, pageContext }) => {
 
           {post.frontmatter.url && (
             <Button as="a" primary href={post.frontmatter.url}>
-              View site
+              {post.frontmatter.url_text
+                ? post.frontmatter.url_text
+                : `View site`}
               <Icon icon={`external-link-alt`} />
             </Button>
           )}
@@ -108,7 +111,9 @@ export const query = graphql`
         video_id
         video_title
         video_url
+        video_autoplay
         url
+        url_text
         description
         description_long
         tags

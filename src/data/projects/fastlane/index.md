@@ -4,7 +4,6 @@ order: 4
 cover: "./fastlane-cover.png"
 video_id: "475576068"
 video_title: "Fastlane animated hero banner"
-video_url: "" #Temp
 title: "Fastlane"
 description: "A website for an open source platform aimed at simplifying Android and iOS deployment."
 description_long: "My team and I developed a website for Fastlane, an open source platform aimed at simplifying Android and iOS deployment. In addition, I contributed to the motion design of the hero.<br><br> Technologies used include: Grow, HTML, SASS, and vanilla Javascript. "
@@ -15,16 +14,8 @@ published: true
 featured: true
 ---
 
-## Sed ut perspiciatis unde omnis
+## Overview
 
-![Aliquet vel mollis nec](./cover.jpg)
+For this site, the main challenge was the animations. We weren't necessarily provided a mock for the motion of the hero banner (with flying dots and triangles), so as an amateur animator, I was happy to take on the task of figuring out its motion design. I also prototyped this banner in a variety of technologies, from WebGL to GSAP to AfterEffects, since this was honestly just a fun task to do.
 
-"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-
-Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-
-**Ut labore et dolore magnam**
-
-"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-
-Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+One test that I liked but ultimately wasn't the right feel for the flat design of the site was with WebGL, where the circle particles were lights that illuminated the triangles.

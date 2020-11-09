@@ -42,7 +42,7 @@ export default createGlobalStyle`
     ${tw`mb-4 w-full`}
   }
 
-  .format-html h2 {
+  .format-html h2:not(:first-child) {
     ${tw`mt-8`}
   }
 
