@@ -11,6 +11,7 @@ import * as Styled from "./styles";
 
 const ProjectCard = ({
   cover,
+  imageStyle,
   title,
   date,
   description,
@@ -21,7 +22,7 @@ const ProjectCard = ({
   return (
     <Styled.Card>
       {cover && (
-        <Styled.Image>
+        <Styled.Image imageStyle={imageStyle}>
           <Img fluid={cover.childImageSharp.fluid} alt={title} />
         </Styled.Image>
       )}
@@ -47,6 +48,7 @@ const ProjectCard = ({
 
 const ProjectCardWide = ({
   cover,
+  imageStyle,
   title,
   date,
   description,
@@ -57,7 +59,7 @@ const ProjectCardWide = ({
   return (
     <Styled.CardWide>
       {cover && (
-        <Styled.ImageWide>
+        <Styled.ImageWide imageStyle={imageStyle}>
           <Img fluid={cover.childImageSharp.fluid} alt={title} />
         </Styled.ImageWide>
       )}
@@ -118,6 +120,7 @@ const Projects = ({ featured, filteredTags, hideTags, wide }) => {
                   }
                 }
               }
+              image_style
             }
           }
         }
@@ -146,7 +149,7 @@ const Projects = ({ featured, filteredTags, hideTags, wide }) => {
           const {
             id,
             fields: { slug },
-            frontmatter: { title, cover, description, date, tags },
+            frontmatter: { title, cover, description, date, tags, image_style },
           } = item.node;
 
           return (
@@ -165,6 +168,7 @@ const Projects = ({ featured, filteredTags, hideTags, wide }) => {
                       title={title}
                       description={description}
                       cover={cover}
+                      imageStyle={image_style}
                       filteredTags={filteredTags}
                       hideTags={hideTags}
                       tags={tags}
@@ -175,6 +179,7 @@ const Projects = ({ featured, filteredTags, hideTags, wide }) => {
                       title={title}
                       description={description}
                       cover={cover}
+                      imageStyle={image_style}
                       filteredTags={filteredTags}
                       hideTags={hideTags}
                       tags={tags}

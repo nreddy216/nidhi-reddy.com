@@ -2,6 +2,7 @@
 category: "projects"
 order: 4
 cover: "./fastlane-cover.png"
+image_style: "& .gatsby-image-wrapper { margin-top: -27px; }"
 video_id: "475576068"
 video_title: "Fastlane animated hero banner"
 title: "Fastlane"

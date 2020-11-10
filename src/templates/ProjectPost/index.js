@@ -52,12 +52,14 @@ const ProjectPost = ({ data, pageContext }) => {
               autoplay={post.frontmatter.video_autoplay}
             ></VimeoPlayer>
           ) : (
-            <Styled.Image>
-              <Img
-                fluid={post.frontmatter.cover.childImageSharp.fluid}
-                alt={post.frontmatter.title}
-              />
-            </Styled.Image>
+            post.frontmatter.cover && (
+              <Styled.Image>
+                <Img
+                  fluid={post.frontmatter.cover.childImageSharp.fluid}
+                  alt={post.frontmatter.title}
+                />
+              </Styled.Image>
+            )
           )}
 
           {post.frontmatter.url && (

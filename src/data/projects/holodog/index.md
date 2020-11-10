@@ -1,7 +1,8 @@
 ---
 category: "projects"
-order: 8
+order: 200
 cover: "./holodog-cover.png"
+image_style: "filter: saturate(0.9)"
 video_title: "Holodog demo where dog sits and speaks"
 video_url: "https://www.youtube.com/embed/dm1FZWWMjO0"
 title: "Holodog"

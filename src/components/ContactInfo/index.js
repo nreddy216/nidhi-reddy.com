@@ -26,6 +26,7 @@ const ContactInfo = () => {
             frontmatter {
               title
               icon
+              iconText
               href
               content
             }

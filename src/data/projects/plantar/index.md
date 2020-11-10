@@ -1,7 +1,8 @@
 ---
 category: "projects"
-order: 9
+order: 400
 cover: "./plantar-cover.png"
+image_style: "filter: saturate(0.8) hue-rotate(-20deg)"
 video_title: "Augmented reality plant grows from image reference"
 video_url: "https://www.youtube.com/embed/vr2tmz4gjSc"
 title: "PlantAR"

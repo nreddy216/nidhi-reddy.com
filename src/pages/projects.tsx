@@ -15,7 +15,7 @@ const ProjectPage: React.FC = () => {
         <Projects filteredTags={["Work"]} showTags />
       </Container>
       <Container section>
-        <TitleSection title="Not Work" subtitle="Experiments, art, animation" center />
+        <TitleSection title="Not Work" subtitle="Experiments, art, animation, AR/VR" center />
         <Projects filteredTags={["NotWork"]} showTags />
       </Container>
     </Layout>

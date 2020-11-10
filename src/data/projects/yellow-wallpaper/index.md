@@ -1,9 +1,10 @@
 ---
 category: "projects"
-order: 12
+order: 600
 cover: "./yw-cover.png"
+image_style: "filter: saturate(1.5)"
 title: "Yellow Wallpaper"
-description: "An animation adaptation based on the epynomous short story."
+description: "An animation adaptation based on the eponymous short story."
 description_long: "In college, I double-majored in Film and Math, and it was there that I dove into animation. In a sense, this was my 'thesis' film project, which I based off a short story of the same name by Charlotte Perkins Gilman.  I rotoscoped this short animation in Flash, composited it in After Effects, and used archival footage of advertisements to texture the sound design.
 "
 url: https://londonfeministfilmfestival.com/lfff-archive/lfff2013/director-interviews/nidhi-reddy/
@@ -27,3 +28,5 @@ featured: false
 - [Longhorn Denius Showcase 2014](https://rtf.utexas.edu/scholarly-creative-works/showcase/longhorn-denius-film-showcase-2014)
 - Portobello Film Festival 2013
 - [Sojourn Montrose Studio Showing](https://houston.culturemap.com/eventdetail/sojourn-studio-residency-opening-reception-sojourn/)
+
+![Art installation at Sojourn Montrose Studio in Houston](./yw-sojourn-montrose.jpg)

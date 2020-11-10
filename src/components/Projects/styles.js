@@ -22,7 +22,23 @@ export const Content = styled.div`
 `;
 
 export const Image = styled.figure`
-  ${tw`w-full`};
+  ${tw`w-full relative overflow-hidden`};
+
+  max-height: 190px;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    padding-bottom: 120%;
+    box-shadow: inset 0px 0px 150px 60px rgba(25, 25, 25, 0.85);
+    border-radius: 50%;
+  }
+
+  ${({ imageStyle }) => imageStyle};
 `;
 export const CardWide = styled.div`
   ${tw`w-full h-full rounded-lg flex flex-col sm:flex-row overflow-hidden border border-gray-300 bg-grey-100`};
