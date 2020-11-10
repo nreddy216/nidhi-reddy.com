@@ -61,4 +61,21 @@ export default createGlobalStyle`
       ${tw`mr-4`}
     }
   }
+
+  /* TODO: Grid not working from tailwind */
+  .grid-row {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    grid-gap: .5rem;
+    gap: .5rem;
+
+    @media only screen and (max-width: 600px) {
+      grid-template-columns: repeat(1,minmax(0,1fr));
+    }
+
+    > span {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+  }
 `;
