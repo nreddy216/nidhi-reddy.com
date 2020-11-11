@@ -11,7 +11,7 @@ date: "2016"
 url: https://neuroticrefactoring.wordpress.com/2016/11/30/introducing-holodog/
 url_text: View blog post
 tags: ["Development", "AR/VR", "NotWork", "Experiments"]
-published: true
+published: false
 featured: false
 ---
 

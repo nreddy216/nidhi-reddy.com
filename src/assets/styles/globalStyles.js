@@ -22,6 +22,10 @@ export default createGlobalStyle`
     ${tw`list-disc`}
   }
 
+  ul > li li {
+    ${tw`list-circle`}
+  }
+
   ol > li {
     ${tw`list-decimal`}
   }
@@ -34,12 +38,23 @@ export default createGlobalStyle`
     ${tw`mb-8`}
   }
 
+  ul ul, ol ol {
+    ${tw`mb-0`}
+  }
+
   h2 {
     ${tw`mb-4 text-xl`}
   }
 
-  .format-html img, .format-html video {
-    ${tw`mb-4 w-full`}
+  .format-html img,
+  .format-html video,
+  .format-html .iframe-video {
+    ${tw`mb-6 mt-6 w-full`}
+  }
+
+  .format-html .iframe-video,
+  .format-html .gatsby-resp-image-wrapper {
+    ${tw`w-full relative rounded-2xl overflow-hidden border-gray-300 border p-0`}
   }
 
   .format-html h2:not(:first-child) {

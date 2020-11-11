@@ -90,10 +90,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const projects = projectRes.data.allMarkdownRemark.edges;
 
   projects.forEach((project, index) => {
-    const previous =
-      index === 0
-        ? projects[projects.length - 1].node
-        : projects[index - 1].node;
+    const previous = index === 0 ? null : projects[index - 1].node;
     const next =
       index === projects.length - 1
         ? projects[0].node

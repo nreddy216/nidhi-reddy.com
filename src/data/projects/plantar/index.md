@@ -11,7 +11,7 @@ date: "2017"
 url: https://neuroticrefactoring.wordpress.com/2017/04/01/plant-ar-experiment-for-ios/
 url_text: View blog post
 tags: ["Development", "AR/VR", "NotWork", "Experiments"]
-published: true
+published: false
 featured: false
 ---
 

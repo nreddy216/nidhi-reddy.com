@@ -13,19 +13,18 @@ featured: false
 
 ## Overview
 
-My team included a designer, Amy Ni Pan, and two developers, Fernando Guerrero and myself. The main goal was simplicity and accessibility while maintaining a strong brand story. Though this site has since been redesigned, below are a few screenshots of our work.
+My team included a designer, Amy Ni Pan, and two developers, Fernando Guerrero and myself. The main goal was simplicity and accessibility while maintaining a strong brand story. Though this site has since been redesigned, below are screenshots of two pages.
 
 ![Jacquard home page](./jacquard-home.png)
 
 ![Jacquard about page](./jacquard-about.png)
-
-![Jacquard and Levi collaboration page](./jacquard-levi.png)
 
 ## Accessibility lessons learned
 
 Though I had been working on projects in the past where accessibility was a _part_ of the requirements, this was a first of many projects where it was accessibility-first. Too many times, we are under the pressure of a deadline which allows less 'visible' requirements to be shoved on the wayside. Though we had a similar short deadline for this project, making a website a11y-friendly was core to the brand, as Jacquard is wearable tech that has the potential to help folks with visual impairments through touch.
 
 Below were my major takeaways for making a website accessible:
+<br><br>
 
 1. **Semantic HTML.** Not only does semantic HTML make code more readable, but it's necessary in order to alert screenreaders where links, buttons, and other important sections of a website are. So before you use an `<a>` for something that should be a `<button>`, consider how a screenreader would read it.
 
@@ -39,7 +38,7 @@ Below were my major takeaways for making a website accessible:
 
 6. **Design with accessibility in mind.** Not everything is able to be easily solved through JavaScript or HTML. In the design stages, you can ask yourselves a few questions to ensure that the site will be as easy to use with a screenreader than without one:
 
-- Are we using colors that can be easily distinguishable by someone who is color-blind?
-- Is there any interactivity that is superfluous? Does it easily work with a screenreader?
-- Is the majority of our website images? Would the alt text of the images be enough to convey the message by someone using a screenreader?
-- Does your navigation menu need to be hidden, or are there only a few links that can be visible at all times?
+   - Are we using colors that can be easily distinguishable by someone who is color-blind?
+   - Is there any interactivity that is superfluous? Does it easily work with a screenreader?
+   - Is the majority of the website images? Would the alt text of the images be enough to convey the message by someone using a screenreader?
+   - Does the navigation menu need to be hidden, or are there only a few links that can be visible at all times?

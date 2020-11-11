@@ -12,7 +12,7 @@ url_text: Read an interview
 video_id: "49109303"
 video_title: An animation adaptation of the short story Yellow Wallpaper
 video_autoplay: false
-date: "2013"
+# date: "2013"
 tags: ["Animation", "Art", "NotWork"]
 published: true
 featured: false

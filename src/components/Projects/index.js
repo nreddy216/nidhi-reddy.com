@@ -27,7 +27,7 @@ const ProjectCard = ({
         </Styled.Image>
       )}
       <Styled.Content>
-        <Styled.Date>{date}</Styled.Date>
+        {/* <Styled.Date>{date}</Styled.Date> */}
         <Styled.Title>{title}</Styled.Title>
         <Styled.Description>{description}</Styled.Description>
       </Styled.Content>
@@ -135,14 +135,20 @@ const Projects = ({ featured, filteredTags, hideTags, wide }) => {
     <Styled.Projects>
       {projects
         .filter((item) => {
-          if (filteredTags) {
+          if (featured) {
+            if (filteredTags) {
+              return (
+                filteredTags.some((i) =>
+                  item.node.frontmatter.tags.includes(i)
+                ) && item.node.frontmatter.featured
+              );
+            } else {
+              return item.node.frontmatter.featured;
+            }
+          } else if (filteredTags) {
             return filteredTags.some((i) =>
               item.node.frontmatter.tags.includes(i)
             );
-          } else if (featured) {
-            return item.node.frontmatter.featured;
-          } else {
-            return true;
           }
         })
         .map((item) => {

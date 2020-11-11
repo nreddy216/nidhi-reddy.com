@@ -4,7 +4,7 @@ import * as Styled from "./styles";
 
 const mainNavItems = [
   {
-    title: "About",
+    title: "Home",
     slug: "/",
   },
   {

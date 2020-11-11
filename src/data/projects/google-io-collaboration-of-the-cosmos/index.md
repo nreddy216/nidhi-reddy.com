@@ -6,7 +6,7 @@ video_id: "472362339"
 video_title: Timelapse of Google I/O Date Reveal
 title: "Google I/O Collaboration of the Cosmos"
 description: "In order to unlock the dates for Google I/O, we created a cryptic, collaborative puzzle."
-description_long: "Each year, Google I/O has a virtual scavenger hunt for developers as a teaser to get folks excited about their event.  In early 2020, we created a collaborative puzzle that required a mass number of users to unlock the dates for this year's conference. I was the technical lead and a senior developer on this project.<br><br>Technologies used include Preact, PixiJS, Firestore, Cloud Functions, and App Engine."
+description_long: "Each year, Google I/O has a virtual scavenger hunt for developers as a teaser to get folks excited about their event.  In early 2020, we created a collaborative puzzle that required a mass number of users to unlock the dates for this year's conference. I was a senior developer and technical lead on this project.<br><br>Technologies used include Preact, PixiJS, Firestore, Cloud Functions, and App Engine."
 url: https://events.google.com/io/mission
 date: "2020"
 tags: ["Tech Lead", "Creative Tech", "Work"]
@@ -53,15 +53,17 @@ The goal:
 
 Timelapse of date reveal:
 
-<div style="padding:54.38% 0 0 0;position:relative;margin-bottom:24px;"><iframe src="https://player.vimeo.com/video/472362339?autoplay=1&loop=1&title=0&byline=0&portrait=0&muted=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen title="Timelapse of date reveal"></iframe></div>
+<div class="iframe-video" style="padding:54.38% 0 0 0;position:relative;margin-bottom:24px;"><iframe
+title="Timelapse of date reveal"
+src="https://player.vimeo.com/video/472362339?autoplay=1&loop=1&title=0&byline=0&portrait=0&muted=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen title="Timelapse of date reveal"></iframe></div>
 
 Last level gameplay example:
 
-<div style="padding:54.38% 0 0 0;position:relative;margin-bottom:24px;"><iframe src="https://player.vimeo.com/video/472362285?autoplay=1&loop=1&title=0&byline=0&portrait=0&muted=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen title="Last level gameplay example"></iframe></div>
+<div class="iframe-video" style="padding:54.38% 0 0 0;position:relative;margin-bottom:24px;"><iframe title="Last level gameplay example" src="https://player.vimeo.com/video/472362285?autoplay=1&loop=1&title=0&byline=0&portrait=0&muted=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen title="Last level gameplay example"></iframe></div>
 
 Date reveal and panning around canvas:
 
-<div style="padding:56.25% 0 0 0;position:relative;margin-bottom:24px;"><iframe src="https://player.vimeo.com/video/472362262?autoplay=1&loop=1&color=ffffff&title=0&byline=0&portrait=0&muted=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen title="Date reveal and panning around canvas"></iframe></div>
+<div class="iframe-video" style="padding:56.25% 0 0 0;position:relative;margin-bottom:24px;"><iframe title="Date reveal and panning around canvas" src="https://player.vimeo.com/video/472362262?autoplay=1&loop=1&color=ffffff&title=0&byline=0&portrait=0&muted=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen title="Date reveal and panning around canvas"></iframe></div>
 
 Final date:
 ![Date reveal for Google I/O](./reveal.png)
@@ -89,3 +91,14 @@ Final date:
         <li>Use Jira for project management and use Netlify or App Engine staging links for QA.</li>
     </ul>
    </p>
+
+## Credits
+
+It took a lot of folks and groups to make this project happen:
+
+- Development: [Left Field Labs](//leftfieldlabs.com)
+  - Developers: Caliandra Harmon, Tom Slezakowski, Keren Megory-Cohen, Matt Masurka, Mikey Wagner, Daniel Hirsch
+  - Producer: Elisha Kersey
+  - QA: Altheria Weaver
+- Design: [Instrument](//www.instrument.com/)
+- Google Developer Marketing Team

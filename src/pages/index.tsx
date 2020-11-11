@@ -9,6 +9,7 @@ import Experience from 'components/Experience';
 import Projects from 'components/Projects';
 import TitleSection from 'components/ui/TitleSection';
 import Container from 'components/ui/Container';
+import Button from 'components/ui/Button';
 
 const IndexPage: React.FC = () => {
   return (
@@ -18,7 +19,11 @@ const IndexPage: React.FC = () => {
       <hr />
       <Container section>
         <TitleSection title="projects" subtitle="featured" center />
-        <Projects featured showTags wide />
+        <Projects filteredTags={["Work", "NotWork"]} featured showTags wide />
+        {/* <Button>
+          View more projects
+          <Link></Link>
+        </Button> */}
       </Container>
     </Layout>
   );

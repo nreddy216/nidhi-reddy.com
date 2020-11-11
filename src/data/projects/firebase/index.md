@@ -1,27 +1,25 @@
 ---
 category: "projects"
 order: 3
-cover: "./cover-2.png"
+cover: "./cover.png"
 title: "Firebase"
-description: "A marketing built on top of a Google platform called Devsite."
+description: "A marketing and documentation site built on top of an internal Google platform."
+description_long: "Firebase is a popular tool used by developers, particularly for its realtime database capabilities. My team at Left Field Labs and I built this highly visited marketing site using a hybrid of an internal platform called Devsite and an open-source static-site generator called Grow. I was a developer and eventually the tech lead for this project."
 date: "2018-2020"
-tags: ["Development", "Work"]
+tags: ["Development", "Tech Lead", "Work"]
+url: //firebase.google.com
 published: true
 featured: true
 ---
 
-_Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat._.
+![Firebase homepage screenshot](./fb-home.png)
 
-**Sed ut perspiciatis unde omnis**
+## Credits
 
-"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+My team at LFL was embedded within Google, and there were many folks besides me involved in the implementation of the site.
 
-Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-
-![Aliquet vel mollis nec](./cover.jpg)
-
-**Ut enim ad minima veniam**
-
-"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-
-Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+- Development: [Left Field Labs](//leftfieldlabs.com)
+  - Developers: Fernando Guerrero (former Tech Lead), Steve Geer
+  - Producers: Magali Devic, Shauna Lacoste
+  - QA: Carolina Machado, Altheria Weaver, C.J. Quick
+- Design and marketing: Google Developer Marketing Team, headed by Monica Bagagem and Kerry Murrill
