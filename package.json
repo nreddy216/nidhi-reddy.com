@@ -47,7 +47,9 @@
     "react-slick": "^0.27.12",
     "styled-components": "^5.2.0",
     "tailwind.macro": "^1.0.0-alpha.10",
-    "tailwindcss": "^2.0.0-alpha.11"
+    "tailwindcss": "^2.0.0-alpha.11",
+    "three": "^0.122.0",
+    "three-loaders": "^1.0.9"
   },
   "devDependencies": {
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.13",
