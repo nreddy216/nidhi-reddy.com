@@ -2,13 +2,15 @@ import styled from "styled-components";
 import tw from "tailwind.macro";
 
 export const SliderWrapper = styled.section`
-  ${tw`relative flex flex-none items-start justify-center w-full`};
+  ${tw`relative flex flex-none items-start justify-center w-full overflow-hidden`};
+
+
 
   ${({ sliderSize }) => sliderSize && `height: calc(${sliderSize}px + 4rem);`};
 `;
 
 export const Slider = styled.section`
-  ${tw`absolute`};
+  ${tw`absolute md:relative top-0 left-0`};
 `;
 
 export const AnimationWrapper = styled.section`
@@ -16,18 +18,18 @@ export const AnimationWrapper = styled.section`
 
   z-index: -1;
   clip-path: circle(50%);
+  max-width: 100%;
 
   ${({ sliderSize }) =>
     sliderSize &&
     `
     border-radius: ${sliderSize}px;
-    width: ${sliderSize}px;
-    height: ${sliderSize}px;
+    max-width: 100%;
+    max-height: 100%;
     
     canvas {
-      height: ${sliderSize}px !important;
-      width: auto !important;
-      border-radius: ${sliderSize}px;
+      height: 100% !important;
+      width: 100% !important;
       overflow: hidden;
     }`};
 `;

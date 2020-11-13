@@ -10,6 +10,8 @@ import Container from "components/ui/Container";
 
 import * as Styled from "./styles";
 
+const sliderSize = 600;
+
 class ThreeAnimation extends React.Component {
   componentDidMount() {
     let scene,
@@ -33,8 +35,8 @@ class ThreeAnimation extends React.Component {
       1000
     );
     camera.position.z = 70;
-    camera.position.x = 0.5;
-    camera.position.y = 0;
+    camera.position.x = 2;
+    camera.position.y = 2;
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -100,7 +102,7 @@ class ThreeAnimation extends React.Component {
       }
       if (resizeRendererToDisplaySize(renderer)) {
         const canvas = renderer.domElement;
-        camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        // camera.aspect = canvas.clientWidth / canvas.clientHeight;
         camera.updateProjectionMatrix();
       }
       renderer.render(scene, camera);
@@ -111,6 +113,7 @@ class ThreeAnimation extends React.Component {
 
     function resizeRendererToDisplaySize(renderer) {
       const canvas = renderer.domElement;
+      camera.aspect = canvas.clientWidth / canvas.clientHeight;
       let width = window.innerWidth;
       let height = window.innerHeight;
       let canvasPixelWidth = canvas.width / window.devicePixelRatio;
@@ -282,6 +285,7 @@ const HeroAnimation = () => {
   const [endingValue, setEndingValue] = useState();
   const [time, setTime] = useState(new Date());
   const [value1, setValue1] = useState(time.getHours());
+  const size = useWindowSize();
 
   useEffect(() => {
     let timerID = setInterval(() => tick(), 1000 * 60);
@@ -294,16 +298,17 @@ const HeroAnimation = () => {
     setTime(new Date());
   }
 
-  const sliderSize = 600;
+  
+  const padding = 40;
+  let width = (size.width - padding) >= sliderSize ? sliderSize : (size.width - padding);
 
   return (
     <>
       <Container className="relative">
-        <Styled.SliderWrapper sliderSize={sliderSize}>
+        <Styled.SliderWrapper sliderSize={width}>
           <Styled.Slider>
             <CircularSlider
-              style={`position: absolute;`}
-              size={sliderSize}
+              size={width}
               minValue={0}
               maxValue={24}
               handle1={{
@@ -317,11 +322,9 @@ const HeroAnimation = () => {
               arcBackgroundColor="#3c366b"
             />
           </Styled.Slider>
-          <div style={`overflow: hidden; width: 600px; border-radius: 600px;`}>
             <Styled.AnimationWrapper sliderSize={sliderSize}>
               <ThreeAnimation />
             </Styled.AnimationWrapper>
-          </div>
         </Styled.SliderWrapper>
       </Container>
     </>
@@ -329,5 +332,33 @@ const HeroAnimation = () => {
 };
 
 // HeroAnimation.propTypes = {};
+
+function useWindowSize() {
+    // Initialize state with undefined width so server and client renders match
+    const [windowSize, setWindowSize] = useState({
+      width: 600
+    });
+  
+    useEffect(() => {
+      // Handler to call on window resize
+      function handleResize() {
+        // Set window width/height to state
+        setWindowSize({
+          width: window.innerWidth
+        });
+      }
+      
+      // Add event listener
+      window.addEventListener("resize", handleResize);
+      
+      // Call handler right away so state gets updated with initial window size
+      handleResize();
+      
+      // Remove event listener on cleanup
+      return () => window.removeEventListener("resize", handleResize);
+    }, []); // Empty array ensures that effect is only run on mount
+  
+    return windowSize;
+  }
 
 export default HeroAnimation;
