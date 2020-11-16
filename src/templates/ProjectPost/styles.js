@@ -10,9 +10,13 @@ export const Image = styled.figure`
 `;
 
 export const Links = styled.div`
-  ${tw`w-full flex justify-between mt-10 lowercase`};
+  ${tw`w-full flex sm:flex-row flex-col md:justify-between items-center mt-10 lowercase text-sm sm:text-base`};
+
+  span {
+    margin-bottom: 1rem;
+  }
 `;
 
 export const LinksNoMargin = styled.div`
-  ${tw`w-full flex justify-between lowercase`};
+  ${tw`w-full flex justify-between lowercase text-sm sm:text-base`};
 `;

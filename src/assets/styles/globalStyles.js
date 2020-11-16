@@ -68,6 +68,10 @@ export default createGlobalStyle`
   .twitter-tweet {
     max-width: 350px !important;
   }
+  
+  .twitter-tweet iframe {
+    max-width: 100%;
+  }
 
   .flex-row {
     ${tw`flex flex-col sm:flex-row`}

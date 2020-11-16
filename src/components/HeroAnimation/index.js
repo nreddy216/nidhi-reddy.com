@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CircularSlider from "react-circular-slider-svg";
-import { useState, useEffect } from "preact/hooks";
+import { useState, useEffect } from "react";
 
 import * as THREE from "three";
 import { THREEGLTFLoader } from "three-loaders";
@@ -25,7 +25,8 @@ class ThreeAnimation extends React.Component {
       idle, // Idle, the default state our character returns to
       clock = new THREE.Clock(), // Used for anims, which run to a clock instead of frame rate
       currentlyAnimating = false, // Used to check whether characters neck is being used in another anim
-      raycaster = new THREE.Raycaster(); // Used to detect the click on our character
+      raycaster = new THREE.Raycaster(), // Used to detect the click on our character
+      canvas;
 
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(
@@ -49,19 +50,6 @@ class ThreeAnimation extends React.Component {
 
     // Append to DOM
     this.mount.appendChild(renderer.domElement);
-
-    // var geometry = new THREE.BoxGeometry(1, 1, 1);
-    // var material = new THREE.MeshBasicMaterial({ color: "#0099CC" });
-    // var cube = new THREE.Mesh(geometry, material);
-    // scene.add(cube);
-
-    // camera.position.z = 5;
-    // var animate = function() {
-    //   requestAnimationFrame(animate);
-    //   cube.rotation.x += 0.01;
-    //   cube.rotation.y += 0.01;
-    //   renderer.render(scene, camera);
-    // };
 
     // Add lights
     let hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.61);
@@ -87,7 +75,7 @@ class ThreeAnimation extends React.Component {
     let floorGeometry = new THREE.PlaneGeometry(400, 150, 1, 1);
     let floorMaterial = new THREE.MeshPhongMaterial({
       color: 0xfa8072,
-      shininess: 0
+      shininess: 0,
     });
 
     let floor = new THREE.Mesh(floorGeometry, floorMaterial);
@@ -101,8 +89,8 @@ class ThreeAnimation extends React.Component {
         mixer.update(clock.getDelta());
       }
       if (resizeRendererToDisplaySize(renderer)) {
-        const canvas = renderer.domElement;
-        // camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        canvas = renderer.domElement;
+        camera.aspect = canvas.clientWidth / canvas.clientHeight;
         camera.updateProjectionMatrix();
       }
       renderer.render(scene, camera);
@@ -112,22 +100,19 @@ class ThreeAnimation extends React.Component {
     update();
 
     function resizeRendererToDisplaySize(renderer) {
-      const canvas = renderer.domElement;
+      canvas = renderer.domElement;
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
-      let width = window.innerWidth;
-      let height = window.innerHeight;
-      let canvasPixelWidth = canvas.width / window.devicePixelRatio;
-      let canvasPixelHeight = canvas.height / window.devicePixelRatio;
+      camera.updateProjectionMatrix();
+      const pixelRatio = window.devicePixelRatio;
+      let width = ((canvas.clientWidth / 3) * pixelRatio) | 0;
+      let height = ((canvas.clientHeight / 3) * pixelRatio) | 0;
 
-      const needResize =
-        canvasPixelWidth !== width || canvasPixelHeight !== height;
+      const needResize = canvas.width !== width || canvas.height !== height;
       if (needResize) {
         renderer.setSize(width, height, false);
       }
       return needResize;
     }
-
-    // animate();
 
     let geometrySphere = new THREE.SphereGeometry(8, 32, 32);
     let materialSphere = new THREE.MeshPhysicalMaterial({ color: 0xf2ce2e }); // 0xf2ce2e
@@ -150,19 +135,19 @@ class ThreeAnimation extends React.Component {
     const stacy_mtl = new THREE.MeshPhongMaterial({
       map: stacy_txt,
       color: 0xffffff,
-      skinning: true
+      skinning: true,
     });
 
     var loader = new THREEGLTFLoader();
     var self = this;
     loader.load(
       MODEL_PATH,
-      function(gltf) {
+      function (gltf) {
         // A lot is going to happen here
         model = gltf.scene;
         let fileAnimations = gltf.animations;
 
-        model.traverse(o => {
+        model.traverse((o) => {
           if (o.isMesh) {
             o.castShadow = true;
             o.receiveShadow = true;
@@ -197,12 +182,12 @@ class ThreeAnimation extends React.Component {
         idle.play();
       },
       undefined, // We don't need this function
-      function(error) {
+      function (error) {
         console.error(error);
       }
     );
 
-    document.addEventListener("mousemove", function(e) {
+    document.addEventListener("mousemove", function (e) {
       var mousecoords = getMousePos(e);
       if (neck && waist) {
         moveJoint(mousecoords, neck, 50);
@@ -271,9 +256,9 @@ class ThreeAnimation extends React.Component {
 
   render() {
     return (
-      <div ref={ref => (this.mount = ref)}>
+      <div ref={(ref) => (this.mount = ref)}>
         {/* TODO: Add loading animation */}
-        <Styled.LoaderAnim ref={ref => (this.loaderAnim = ref)}>
+        <Styled.LoaderAnim ref={(ref) => (this.loaderAnim = ref)}>
           <Styled.Loader>Loading...</Styled.Loader>
         </Styled.LoaderAnim>
       </div>
@@ -298,9 +283,11 @@ const HeroAnimation = () => {
     setTime(new Date());
   }
 
-  
-  const padding = 40;
-  let width = (size.width - padding) >= sliderSize ? sliderSize : (size.width - padding);
+  const padding = 120;
+  let width =
+    size.width - padding >= sliderSize ? sliderSize : size.width - padding;
+
+  console.log("WIDTH ", width);
 
   return (
     <>
@@ -313,18 +300,18 @@ const HeroAnimation = () => {
               maxValue={24}
               handle1={{
                 value: value1,
-                onChange: v => {
+                onChange: (v) => {
                   setValue1(v);
-                }
+                },
               }}
               onControlFinished={() => setEndingValue(value1)}
               arcColor="#48bb78"
               arcBackgroundColor="#3c366b"
             />
           </Styled.Slider>
-            <Styled.AnimationWrapper sliderSize={sliderSize}>
-              <ThreeAnimation />
-            </Styled.AnimationWrapper>
+          <Styled.AnimationWrapper sliderSize={width}>
+            <ThreeAnimation />
+          </Styled.AnimationWrapper>
         </Styled.SliderWrapper>
       </Container>
     </>
@@ -334,31 +321,33 @@ const HeroAnimation = () => {
 // HeroAnimation.propTypes = {};
 
 function useWindowSize() {
-    // Initialize state with undefined width so server and client renders match
-    const [windowSize, setWindowSize] = useState({
-      width: 600
-    });
-  
-    useEffect(() => {
-      // Handler to call on window resize
-      function handleResize() {
-        // Set window width/height to state
-        setWindowSize({
-          width: window.innerWidth
-        });
-      }
-      
-      // Add event listener
-      window.addEventListener("resize", handleResize);
-      
-      // Call handler right away so state gets updated with initial window size
-      handleResize();
-      
-      // Remove event listener on cleanup
-      return () => window.removeEventListener("resize", handleResize);
-    }, []); // Empty array ensures that effect is only run on mount
-  
-    return windowSize;
-  }
+  // Initialize state with undefined width so server and client renders match
+  const [windowSize, setWindowSize] = useState({
+    width: 600,
+  });
+
+  useEffect(() => {
+    // Handler to call on window resize
+    function handleResize() {
+      // Set window width/height to state
+      setWindowSize({
+        width: window.innerWidth,
+      });
+
+      console.log("RESIZE ", windowSize);
+    }
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Call handler right away so state gets updated with initial window size
+    handleResize();
+
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, [windowSize]); // Empty array ensures that effect is only run on mount
+
+  return windowSize;
+}
 
 export default HeroAnimation;
