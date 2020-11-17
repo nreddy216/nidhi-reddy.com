@@ -15,20 +15,26 @@ export const Slider = styled.section`
 export const AnimationWrapper = styled.section`
   ${tw`absolute`};
 
-  clip-path: circle(30% at 50% 42%);
+  clip-path: circle(30% at 50% 50%);
+  top: 0;
   z-index: -1;
 
-  ${({ sliderSize }) =>
-    sliderSize &&
-    `
-    top: ${sliderSize / 12}px;
+  @media (min-width: 768px) {
+    clip-path: circle(30% at 50% 350px);
+  }
 
+  @media (min-width: 1440px) {
+    clip-path: circle(25% at 50% 350px);
+  }
+
+  ${({ animationWidth, windowHeight }) =>
+  (animationWidth && windowHeight) &&
+    `
     canvas {
-      width: 100% !important;
-      // max-width: 100% !important;
-      // max-height: 100% !important;
-      height: auto !important;
-      overflow: hidden;
+      max-width: 100% !important;
+      max-height: 100% !important;
+      width: ${animationWidth}px !important;
+      height: ${animationWidth}px !important;
     }`};
 `;
 
@@ -39,3 +45,4 @@ export const LoaderAnim = styled.section`
 export const Loader = styled.section`
   ${tw`w-full`};
 `;
+

@@ -4,13 +4,13 @@ import CircularSlider from "react-circular-slider-svg";
 import { useState, useEffect } from "react";
 
 import * as THREE from "three";
-import { THREEGLTFLoader } from "three-loaders";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 import Container from "components/ui/Container";
 
 import * as Styled from "./styles";
 
-const sliderSize = 600;
+const SLIDER_SIZE = 700;
 
 class ThreeAnimation extends React.Component {
   componentDidMount() {
@@ -105,7 +105,8 @@ class ThreeAnimation extends React.Component {
       camera.updateProjectionMatrix();
       const pixelRatio = window.devicePixelRatio;
       let width = ((canvas.clientWidth / 3) * pixelRatio) | 0;
-      let height = ((canvas.clientHeight / 3) * pixelRatio) | 0;
+    //   let height = ((canvas.clientHeight / 3) * pixelRatio) | 0;
+        let height = width;
 
       const needResize = canvas.width !== width || canvas.height !== height;
       if (needResize) {
@@ -138,7 +139,7 @@ class ThreeAnimation extends React.Component {
       skinning: true,
     });
 
-    var loader = new THREEGLTFLoader();
+    var loader = new GLTFLoader();
     var self = this;
     loader.load(
       MODEL_PATH,
@@ -283,9 +284,10 @@ const HeroAnimation = () => {
     setTime(new Date());
   }
 
-  const padding = 120;
+  const padding = 40;
   let width =
-    size.width - padding >= sliderSize ? sliderSize : size.width - padding;
+    size.width - padding >= SLIDER_SIZE ? SLIDER_SIZE : size.width - padding;
+  let animationWidth = size.width >= SLIDER_SIZE * 2 ? SLIDER_SIZE * 2 - padding : size.width - padding;
 
   console.log("WIDTH ", width);
 
@@ -309,7 +311,7 @@ const HeroAnimation = () => {
               arcBackgroundColor="#3c366b"
             />
           </Styled.Slider>
-          <Styled.AnimationWrapper sliderSize={width}>
+          <Styled.AnimationWrapper animationWidth={animationWidth} windowHeight={size.height}>
             <ThreeAnimation />
           </Styled.AnimationWrapper>
         </Styled.SliderWrapper>
@@ -323,7 +325,8 @@ const HeroAnimation = () => {
 function useWindowSize() {
   // Initialize state with undefined width so server and client renders match
   const [windowSize, setWindowSize] = useState({
-    width: 600,
+    width: SLIDER_SIZE,
+    height: SLIDER_SIZE
   });
 
   useEffect(() => {
@@ -332,6 +335,7 @@ function useWindowSize() {
       // Set window width/height to state
       setWindowSize({
         width: window.innerWidth,
+        height: window.innerHeight,
       });
 
       console.log("RESIZE ", windowSize);
