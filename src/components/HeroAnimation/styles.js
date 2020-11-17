@@ -5,26 +5,25 @@ export const SliderWrapper = styled.section`
   ${tw`relative w-full overflow-hidden max-h-full flex justify-center items-center`};
 
   ${({ sliderSize }) =>
-    sliderSize && `height: calc(${sliderSize}px); margin-bottom: 4rem;`};
+    sliderSize && `height: ${sliderSize}px; margin-bottom: 2rem;`};
 `;
 
 export const Slider = styled.section`
   ${tw`absolute md:relative top-0 left-0`};
+
+  circle {
+    cursor: pointer;
+  }
 `;
 
 export const AnimationWrapper = styled.section`
   ${tw`absolute`};
 
-  clip-path: circle(30% at 50% 50%);
-  top: 0;
+  clip-path: circle(38% at 50% 50%);
   z-index: -1;
 
-  @media (min-width: 768px) {
-    clip-path: circle(30% at 50% 350px);
-  }
-
-  @media (min-width: 1440px) {
-    clip-path: circle(25% at 50% 350px);
+  @media (min-width: 1024px) {
+    clip-path: circle(35% at 50% 50%);
   }
 
   ${({ animationWidth, windowHeight }) =>
@@ -32,7 +31,7 @@ export const AnimationWrapper = styled.section`
     `
     canvas {
       max-width: 100% !important;
-      max-height: 100% !important;
+      max-height: ${animationWidth * 0.65 < 300 ? 300 : animationWidth * 0.65}px !important;
       width: ${animationWidth}px !important;
       height: ${animationWidth}px !important;
     }`};

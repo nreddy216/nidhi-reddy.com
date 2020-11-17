@@ -10,7 +10,7 @@ import Container from "components/ui/Container";
 
 import * as Styled from "./styles";
 
-const SLIDER_SIZE = 700;
+const SLIDER_SIZE = 600;
 
 class ThreeAnimation extends React.Component {
   componentDidMount() {
@@ -289,8 +289,6 @@ const HeroAnimation = () => {
     size.width - padding >= SLIDER_SIZE ? SLIDER_SIZE : size.width - padding;
   let animationWidth = size.width >= SLIDER_SIZE * 2 ? SLIDER_SIZE * 2 - padding : size.width - padding;
 
-  console.log("WIDTH ", width);
-
   return (
     <>
       <Container className="relative">
@@ -337,8 +335,6 @@ function useWindowSize() {
         width: window.innerWidth,
         height: window.innerHeight,
       });
-
-      console.log("RESIZE ", windowSize);
     }
 
     // Add event listener
