@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useStaticQuery, graphql } from "gatsby";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { isInBrowser } from "../../helpers/constants";
 import Header from "components/Header";
 import Footer from "components/Footer";
 
@@ -28,9 +29,9 @@ const Layout = ({ children }) => {
       <Styled.Layout>
         <Header siteTitle={data.site.siteMetadata.title} />
         <motion.div
-          initial={{ y: 30, opacity: 0 }}
+          initial={{ y: (isInBrowser ? 30 : 0), opacity: (isInBrowser ? 0 : 1) }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ opacity: 0 }}
+          exit={{ opacity: (isInBrowser ? 0 : 1) }}
           transition={{ delay: 0.2 }}
         >
           {children}
