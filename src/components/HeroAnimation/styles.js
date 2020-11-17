@@ -27,11 +27,14 @@ export const AnimationWrapper = styled.section`
   }
 
   ${({ animationWidth, windowHeight }) =>
-  (animationWidth && windowHeight) &&
+    animationWidth &&
+    windowHeight &&
     `
     canvas {
       max-width: 100% !important;
-      max-height: ${animationWidth * 0.65 < 300 ? 300 : animationWidth * 0.65}px !important;
+      max-height: ${
+        animationWidth * 0.65 < 300 ? 300 : animationWidth * 0.65
+      }px !important;
       width: ${animationWidth}px !important;
       height: ${animationWidth}px !important;
     }`};
@@ -44,4 +47,3 @@ export const LoaderAnim = styled.section`
 export const Loader = styled.section`
   ${tw`w-full`};
 `;
-

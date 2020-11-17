@@ -35,7 +35,7 @@ class ThreeAnimation extends React.Component {
       0.1,
       1000
     );
-    camera.position.z = 70;
+    camera.position.z = 60;
     camera.position.x = 2;
     camera.position.y = 2;
     renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -81,7 +81,7 @@ class ThreeAnimation extends React.Component {
     let floor = new THREE.Mesh(floorGeometry, floorMaterial);
     floor.rotation.x = -0.5 * Math.PI; // This is 90 degrees by the way
     floor.receiveShadow = true;
-    floor.position.y = -30;
+    floor.position.y = -10;
     scene.add(floor);
 
     function update() {
@@ -105,8 +105,8 @@ class ThreeAnimation extends React.Component {
       camera.updateProjectionMatrix();
       const pixelRatio = window.devicePixelRatio;
       let width = ((canvas.clientWidth / 3) * pixelRatio) | 0;
-    //   let height = ((canvas.clientHeight / 3) * pixelRatio) | 0;
-        let height = width;
+      //   let height = ((canvas.clientHeight / 3) * pixelRatio) | 0;
+      let height = width;
 
       const needResize = canvas.width !== width || canvas.height !== height;
       if (needResize) {
@@ -166,6 +166,7 @@ class ThreeAnimation extends React.Component {
 
         // Set the models initial scale
         model.scale.set(20, 20, 20);
+        model.position.x = 2.5;
         model.position.y = -30;
         model.position.z = 30;
 
@@ -287,7 +288,10 @@ const HeroAnimation = () => {
   const padding = 40;
   let width =
     size.width - padding >= SLIDER_SIZE ? SLIDER_SIZE : size.width - padding;
-  let animationWidth = size.width >= SLIDER_SIZE * 2 ? SLIDER_SIZE * 2 - padding : size.width - padding;
+  let animationWidth =
+    size.width >= SLIDER_SIZE * 2
+      ? SLIDER_SIZE * 2 - padding
+      : size.width - padding;
 
   return (
     <>
@@ -309,7 +313,10 @@ const HeroAnimation = () => {
               arcBackgroundColor="#3c366b"
             />
           </Styled.Slider>
-          <Styled.AnimationWrapper animationWidth={animationWidth} windowHeight={size.height}>
+          <Styled.AnimationWrapper
+            animationWidth={animationWidth}
+            windowHeight={size.height}
+          >
             <ThreeAnimation />
           </Styled.AnimationWrapper>
         </Styled.SliderWrapper>
@@ -324,7 +331,7 @@ function useWindowSize() {
   // Initialize state with undefined width so server and client renders match
   const [windowSize, setWindowSize] = useState({
     width: SLIDER_SIZE,
-    height: SLIDER_SIZE
+    height: SLIDER_SIZE,
   });
 
   useEffect(() => {

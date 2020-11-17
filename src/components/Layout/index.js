@@ -29,9 +29,9 @@ const Layout = ({ children }) => {
       <Styled.Layout>
         <Header siteTitle={data.site.siteMetadata.title} />
         <motion.div
-          initial={{ y: (isInBrowser ? 30 : 0), opacity: (isInBrowser ? 0 : 1) }}
+          initial={{ y: isInBrowser ? 30 : 0, opacity: isInBrowser ? 0 : 1 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ opacity: (isInBrowser ? 0 : 1) }}
+          exit={{ opacity: isInBrowser ? 0 : 1 }}
           transition={{ delay: 0.2 }}
         >
           {children}
