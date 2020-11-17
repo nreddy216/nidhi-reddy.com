@@ -5,15 +5,20 @@ import { useState, useEffect } from "react";
 
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { Sky } from 'three/examples/jsm/objects/Sky.js';
 
 import Container from "components/ui/Container";
 
 import * as Styled from "./styles";
 
 const SLIDER_SIZE = 600;
+const MAX_HOURS = 24;
 
 class ThreeAnimation extends React.Component {
   componentDidMount() {
+    let props = this.props;
+
     let scene,
       renderer,
       camera,
@@ -27,6 +32,7 @@ class ThreeAnimation extends React.Component {
       currentlyAnimating = false, // Used to check whether characters neck is being used in another anim
       raycaster = new THREE.Raycaster(), // Used to detect the click on our character
       canvas;
+    let sky, sun, skyEffectValues;
 
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(
@@ -48,6 +54,56 @@ class ThreeAnimation extends React.Component {
     // scene.background = new THREE.Color(0xbfe3dd);
     scene.fog = new THREE.Fog(0xbfe3dd, 60, 100);
 
+
+    function initSky() {
+        sky = new Sky();
+        sky.scale.setScalar( 450000 );
+        scene.add( sky );
+
+        sun = new THREE.Vector3();
+
+        // skyEffectValues = {
+        //     turbidity: 10,
+        //     rayleigh: 3,
+        //     mieCoefficient: 0.005,
+        //     mieDirectionalG: 0.7,
+        //     inclination: 0.49, // elevation / inclination
+        //     azimuth: 0.25, // Facing front,
+        //     exposure: renderer.toneMappingExposure
+        // };
+        skyEffectValues = {
+            turbidity: 10,
+            rayleigh: 3,
+            mieCoefficient: 0.005,
+            mieDirectionalG: 0.9,
+            inclination: 0.51, // elevation / inclination
+            // azimuth: 0.28, // Facing front, // NOTE: Can be used to darken sky
+            azimuth: props.sliderValue / MAX_HOURS / 2,
+            exposure: renderer.toneMappingExposure
+        };
+
+        console.log('AZIMUTE ', props.sliderValue / MAX_HOURS / 2);
+        console.log("SLIDER ", props.sliderValue);
+
+        const uniforms = sky.material.uniforms;
+        uniforms[ "turbidity" ].value = skyEffectValues.turbidity;
+        uniforms[ "rayleigh" ].value = skyEffectValues.rayleigh;
+        uniforms[ "mieCoefficient" ].value = skyEffectValues.mieCoefficient;
+        uniforms[ "mieDirectionalG" ].value = skyEffectValues.mieDirectionalG;
+
+        const theta = Math.PI * ( skyEffectValues.inclination - 0.5 );
+        const phi = 2 * Math.PI * ( skyEffectValues.azimuth - 0.5 );
+
+        sun.x = Math.cos( phi );
+        sun.y = Math.sin( phi ) * Math.sin( theta );
+        sun.z = Math.sin( phi ) * Math.cos( theta );
+
+        uniforms[ "sunPosition" ].value.copy( sun );
+
+        renderer.toneMappingExposure = skyEffectValues.exposure;
+    }
+    initSky();
+
     // Append to DOM
     this.mount.appendChild(renderer.domElement);
 
@@ -57,32 +113,32 @@ class ThreeAnimation extends React.Component {
     // Add hemisphere light to scene
     scene.add(hemiLight);
 
-    let d = 8.25;
-    let dirLight = new THREE.DirectionalLight(0xffffff, 0.54);
-    dirLight.position.set(-8, 12, 8);
-    dirLight.castShadow = true;
-    dirLight.shadow.mapSize = new THREE.Vector2(1024, 1024);
-    dirLight.shadow.camera.near = 0.1;
-    dirLight.shadow.camera.far = 1500;
-    dirLight.shadow.camera.left = d * -1;
-    dirLight.shadow.camera.right = d;
-    dirLight.shadow.camera.top = d;
-    dirLight.shadow.camera.bottom = d * -1;
-    // Add directional Light to scene
-    scene.add(dirLight);
+    // let d = 8.25;
+    // let dirLight = new THREE.DirectionalLight(0xffffff, 0.04);
+    // dirLight.position.set(-8, 18, 8);
+    // dirLight.castShadow = true;
+    // dirLight.shadow.mapSize = new THREE.Vector2(1024, 1024);
+    // dirLight.shadow.camera.near = 0.1;
+    // dirLight.shadow.camera.far = 1500;
+    // dirLight.shadow.camera.left = d * -1;
+    // dirLight.shadow.camera.right = d;
+    // dirLight.shadow.camera.top = d;
+    // dirLight.shadow.camera.bottom = d * -1;
+    // // Add directional Light to scene
+    // scene.add(dirLight);
 
     // Floor
-    let floorGeometry = new THREE.PlaneGeometry(400, 150, 1, 1);
-    let floorMaterial = new THREE.MeshPhongMaterial({
-      color: 0xfa8072,
-      shininess: 0,
-    });
+    // let floorGeometry = new THREE.PlaneGeometry(400, 150, 1, 1);
+    // let floorMaterial = new THREE.MeshPhysicalMaterial({
+    //   color: 0xffffff,
+    // //   flatShading: true,
+    // });
 
-    let floor = new THREE.Mesh(floorGeometry, floorMaterial);
-    floor.rotation.x = -0.5 * Math.PI; // This is 90 degrees by the way
-    floor.receiveShadow = true;
-    floor.position.y = -10;
-    scene.add(floor);
+    // let floor = new THREE.Mesh(floorGeometry, floorMaterial);
+    // floor.rotation.x = -0.5 * Math.PI; // This is 90 degrees by the way
+    // floor.receiveShadow = true;
+    // floor.position.y = -10;
+    // scene.add(floor);
 
     function update() {
       if (mixer) {
@@ -115,14 +171,14 @@ class ThreeAnimation extends React.Component {
       return needResize;
     }
 
-    let geometrySphere = new THREE.SphereGeometry(8, 32, 32);
-    let materialSphere = new THREE.MeshPhysicalMaterial({ color: 0xf2ce2e }); // 0xf2ce2e
-    let sphere = new THREE.Mesh(geometrySphere, materialSphere);
-    sphere.position.z = -80;
-    sphere.position.y = -3;
-    sphere.position.x = -30;
-    sphere.scale.set(0.5, 0.5, 0.5);
-    scene.add(sphere);
+    // let geometrySphere = new THREE.SphereGeometry(8, 32, 32);
+    // let materialSphere = new THREE.MeshPhysicalMaterial({ color: 0xf2ce2e }); // 0xf2ce2e
+    // let sphere = new THREE.Mesh(geometrySphere, materialSphere);
+    // sphere.position.z = -80;
+    // sphere.position.y = -3;
+    // sphere.position.x = -30;
+    // sphere.scale.set(0.5, 0.5, 0.5);
+    // scene.add(sphere);
 
     const MODEL_PATH =
       "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy_lightweight.glb";
@@ -169,6 +225,7 @@ class ThreeAnimation extends React.Component {
         model.position.x = 2.5;
         model.position.y = -30;
         model.position.z = 30;
+        model.castShadow = true;
 
         // Add model to scene
         scene.add(model);
@@ -271,7 +328,7 @@ class ThreeAnimation extends React.Component {
 const HeroAnimation = () => {
   const [endingValue, setEndingValue] = useState();
   const [time, setTime] = useState(new Date());
-  const [value1, setValue1] = useState(time.getHours());
+  const [sliderValue, setSliderValue] = useState(time.getHours());
   const size = useWindowSize();
 
   useEffect(() => {
@@ -301,14 +358,14 @@ const HeroAnimation = () => {
             <CircularSlider
               size={width}
               minValue={0}
-              maxValue={24}
+              maxValue={MAX_HOURS}
               handle1={{
-                value: value1,
+                value: sliderValue,
                 onChange: (v) => {
-                  setValue1(v);
+                  setSliderValue(v);
                 },
               }}
-              onControlFinished={() => setEndingValue(value1)}
+              onControlFinished={() => setEndingValue(sliderValue)}
               arcColor="#48bb78"
               arcBackgroundColor="#3c366b"
             />
@@ -317,7 +374,7 @@ const HeroAnimation = () => {
             animationWidth={animationWidth}
             windowHeight={size.height}
           >
-            <ThreeAnimation />
+            <ThreeAnimation sliderValue={sliderValue} />
           </Styled.AnimationWrapper>
         </Styled.SliderWrapper>
       </Container>
