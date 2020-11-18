@@ -56,6 +56,14 @@ class ThreeAnimation extends React.Component {
     this.sky = new Sky();
     this.sky.scale.setScalar(450000);
     this.scene.add(this.sky);
+    this.circlePath = new THREE.EllipseCurve(
+        0,  0,            // ax, aY
+        10, 10,           // xRadius, yRadius
+        0,  2 * Math.PI,  // aStartAngle, aEndAngle
+        false,            // aClockwise
+        0                 // aRotation
+    );
+    this.circlePathPoints = this.circlePath.getPoints(120);
 
     this.sun = new THREE.Vector3();
 
@@ -69,15 +77,13 @@ class ThreeAnimation extends React.Component {
     //     exposure: this.renderer.toneMappingExposure
     // };
     this.skyEffectValues = {
-      turbidity: 10,
+      turbidity: Math.abs(this.props.sliderValue / 2),
       rayleigh: 3,
       mieCoefficient: 0.005,
       mieDirectionalG: 0.7,
-      //   inclination: 0.49,
-      inclination: Math.abs(this.props.sliderValue / MAX_HOURS), // elevation / inclination
-      //   azimuth: 0.28, // Facing front, // NOTE: Can be used to darken sky
+      inclination: Math.abs(this.props.sliderValue / MAX_HOURS / 2), // elevation / inclination
       azimuth: Math.abs(this.props.sliderValue / MAX_HOURS / 2),
-      exposure: this.renderer.toneMappingExposure,
+      exposure: this.renderer.toneMappingExposure
     };
 
     const uniforms = this.sky.material.uniforms;
@@ -86,11 +92,11 @@ class ThreeAnimation extends React.Component {
     uniforms["mieCoefficient"].value = this.skyEffectValues.mieCoefficient;
     uniforms["mieDirectionalG"].value = this.skyEffectValues.mieDirectionalG;
 
-    const theta = Math.PI * (this.skyEffectValues.inclination - 0.5);
-    const phi = 2 * Math.PI * (this.skyEffectValues.azimuth - 0.5);
+    const theta = Math.PI * this.skyEffectValues.inclination - 0.5;
+    const phi = 2 * Math.PI * this.skyEffectValues.azimuth - 0.5;
 
-    this.sun.x = Math.cos(phi);
-    this.sun.y = Math.sin(phi) * Math.sin(theta);
+    this.sun.x = Math.cos(phi) * 0.5;
+    this.sun.y = Math.cos(phi) * Math.cos(theta) * 0.15;
     this.sun.z = Math.sin(phi) * Math.cos(theta);
 
     console.log("ORIGINAL SUN ", this.sun, this.props.sliderValue);
@@ -135,7 +141,7 @@ class ThreeAnimation extends React.Component {
     // floor.receiveShadow = true;
     // floor.position.y = -10;
     // this.scene.add(floor);
-    const resizeRendererToDisplaySize = (renderer) => {
+    const resizeRendererToDisplaySize = renderer => {
       canvas = renderer.domElement;
       this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
       this.camera.updateProjectionMatrix();
@@ -187,19 +193,19 @@ class ThreeAnimation extends React.Component {
     const stacy_mtl = new THREE.MeshPhongMaterial({
       map: stacy_txt,
       color: 0xffffff,
-      skinning: true,
+      skinning: true
     });
 
     var self = this;
     var loader = new GLTFLoader();
     loader.load(
       MODEL_PATH,
-      function (gltf) {
+      function(gltf) {
         // A lot is going to happen here
         model = gltf.scene;
         let fileAnimations = gltf.animations;
 
-        model.traverse((o) => {
+        model.traverse(o => {
           if (o.isMesh) {
             o.castShadow = true;
             o.receiveShadow = true;
@@ -236,12 +242,12 @@ class ThreeAnimation extends React.Component {
         idle.play();
       },
       undefined, // We don't need this function
-      function (error) {
+      function(error) {
         console.error(error);
       }
     );
 
-    document.addEventListener("mousemove", function (e) {
+    document.addEventListener("mousemove", function(e) {
       var mousecoords = getMousePos(e);
       if (neck && waist) {
         moveJoint(mousecoords, neck, 50);
@@ -305,20 +311,11 @@ class ThreeAnimation extends React.Component {
   }
 
   componentDidUpdate(nextProps, nextState) {
-    // return nextProps.sliderValue !== this.props.sliderValue;
     if (nextProps.sliderValue !== this.props.sliderValue) {
-      const interval = [0, 1];
 
       let azimuth = Math.abs(nextProps.sliderValue / MAX_HOURS / 2);
       let inclination = Math.abs(nextProps.sliderValue / MAX_HOURS) / 2;
 
-      //   if (inclination < 0.5) {
-      //       inclination = 0.5;
-      //   } else if (inclination > 0.9) {
-      //       inclination = 0.9;
-      //   }
-
-      console.log("sliderValue ", nextProps.sliderValue);
       console.log("AZIMUTH ", azimuth);
       console.log("INCLINATION ", inclination);
 
@@ -328,36 +325,25 @@ class ThreeAnimation extends React.Component {
       const uniforms = this.sky.material.uniforms;
       uniforms["turbidity"].value = Math.abs(nextProps.sliderValue / 2);
 
-      let x = Math.cos(phi) * 2;
+      let x = Math.cos(phi) * 0.5;
+      let y = Math.cos(phi) * Math.cos(theta) * 0.15;
+      
       this.sun.setX(x);
-      console.log("SUN ", this.sun);
-
-      //   let y = Math.abs(Math.sin(phi) * Math.sin(theta));
-      //   if (y < 0.5) {
-      //     y = 0.5;
-      //   }
-      let y = Math.cos(phi) * Math.cos(theta) * 0.05;
-
       this.sun.setY(y);
-      //   this.sun.setZ(Math.cos(phi) * Math.sin(theta));
-
+    //   this.sun.setZ(Math.sin(phi) * Math.cos(theta));
+      
       uniforms["sunPosition"].value.copy(this.sun);
 
-      console.log({
-        x: x,
-        y: y,
-        z: Math.sin(phi) * Math.cos(theta),
-      });
-
+      console.log("SUN ", this.sun);
       console.log("sliderValue NEXT PROPS ", nextProps.sliderValue);
     }
   }
 
   render() {
     return (
-      <div ref={(ref) => (this.mount = ref)}>
+      <div ref={ref => (this.mount = ref)}>
         {/* TODO: Add loading animation */}
-        <Styled.LoaderAnim ref={(ref) => (this.loaderAnim = ref)}>
+        <Styled.LoaderAnim ref={ref => (this.loaderAnim = ref)}>
           <Styled.Loader>Loading...</Styled.Loader>
         </Styled.LoaderAnim>
       </div>
@@ -401,9 +387,9 @@ const HeroAnimation = () => {
               maxValue={MAX_HOURS}
               handle1={{
                 value: sliderValue,
-                onChange: (v) => {
+                onChange: v => {
                   setSliderValue(v);
-                },
+                }
               }}
               onControlFinished={() => setEndingValue(sliderValue)}
               arcColor="#48bb78"
@@ -428,7 +414,7 @@ function useWindowSize() {
   // Initialize state with undefined width so server and client renders match
   const [windowSize, setWindowSize] = useState({
     width: SLIDER_SIZE,
-    height: SLIDER_SIZE,
+    height: SLIDER_SIZE
   });
 
   useEffect(() => {
@@ -437,7 +423,7 @@ function useWindowSize() {
       // Set window width/height to state
       setWindowSize({
         width: window.innerWidth,
-        height: window.innerHeight,
+        height: window.innerHeight
       });
     }
 
