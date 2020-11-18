@@ -19,12 +19,12 @@ export const Slider = styled.section`
 export const AnimationWrapper = styled.section`
   ${tw`absolute`};
 
-  clip-path: circle(38% at 50% 50%);
+  // clip-path: circle(38% at 50% 50%);
   z-index: -1;
 
-  @media (min-width: 1024px) {
-    clip-path: circle(35% at 50% 50%);
-  }
+  // @media (min-width: 1024px) {
+  //   clip-path: circle(35% at 50% 50%);
+  // }
 
   ${({ animationWidth, windowHeight }) =>
     animationWidth &&

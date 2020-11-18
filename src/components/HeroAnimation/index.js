@@ -5,24 +5,23 @@ import { useState, useEffect } from "react";
 
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { Sky } from 'three/examples/jsm/objects/Sky.js';
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { Sky } from "three/examples/jsm/objects/Sky.js";
 
 import Container from "components/ui/Container";
 
 import * as Styled from "./styles";
 
 const SLIDER_SIZE = 600;
-const MAX_HOURS = 24;
+const MAX_HOURS = 12;
 
 class ThreeAnimation extends React.Component {
-  componentDidMount() {
-    let props = this.props;
+  constructor(props) {
+    super(props);
+  }
 
-    let scene,
-      renderer,
-      camera,
-      model, // Our character
+  componentDidMount() {
+    let model, // Our character
       neck, // Reference to the neck bone in the skeleton
       waist, // Reference to the waist bone in the skeleton
       possibleAnims, // Animations found in our file
@@ -32,86 +31,83 @@ class ThreeAnimation extends React.Component {
       currentlyAnimating = false, // Used to check whether characters neck is being used in another anim
       raycaster = new THREE.Raycaster(), // Used to detect the click on our character
       canvas;
-    let sky, sun, skyEffectValues;
 
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(
       50,
       window.innerWidth / window.innerHeight,
       0.1,
       1000
     );
-    camera.position.z = 60;
-    camera.position.x = 2;
-    camera.position.y = 2;
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.outputEncoding = THREE.sRGBEncoding;
-    renderer.shadowMap.enabled = true;
-    renderer.setPixelRatio(window.devicePixelRatio);
+    this.camera.position.z = 60;
+    this.camera.position.x = 2;
+    this.camera.position.y = 2;
+    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.outputEncoding = THREE.sRGBEncoding;
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.setPixelRatio(window.devicePixelRatio);
 
-    // scene.background = new THREE.Color(0xbfe3dd);
-    scene.fog = new THREE.Fog(0xbfe3dd, 60, 100);
+    // this.scene.background = new THREE.Color(0xbfe3dd);
+    this.scene.fog = new THREE.Fog(0xbfe3dd, 60, 100);
 
+    // SKY & SUN
+    this.sky = new Sky();
+    this.sky.scale.setScalar(450000);
+    this.scene.add(this.sky);
 
-    function initSky() {
-        sky = new Sky();
-        sky.scale.setScalar( 450000 );
-        scene.add( sky );
+    this.sun = new THREE.Vector3();
 
-        sun = new THREE.Vector3();
+    // skyEffectValues = {
+    //     turbidity: 10,
+    //     rayleigh: 3,
+    //     mieCoefficient: 0.005,
+    //     mieDirectionalG: 0.7,
+    //     inclination: 0.49, // elevation / inclination
+    //     azimuth: 0.25, // Facing front,
+    //     exposure: this.renderer.toneMappingExposure
+    // };
+    this.skyEffectValues = {
+      turbidity: 10,
+      rayleigh: 3,
+      mieCoefficient: 0.005,
+      mieDirectionalG: 0.7,
+      //   inclination: 0.49,
+      inclination: Math.abs(this.props.sliderValue / MAX_HOURS), // elevation / inclination
+      //   azimuth: 0.28, // Facing front, // NOTE: Can be used to darken sky
+      azimuth: Math.abs(this.props.sliderValue / MAX_HOURS / 2),
+      exposure: this.renderer.toneMappingExposure,
+    };
 
-        // skyEffectValues = {
-        //     turbidity: 10,
-        //     rayleigh: 3,
-        //     mieCoefficient: 0.005,
-        //     mieDirectionalG: 0.7,
-        //     inclination: 0.49, // elevation / inclination
-        //     azimuth: 0.25, // Facing front,
-        //     exposure: renderer.toneMappingExposure
-        // };
-        skyEffectValues = {
-            turbidity: 10,
-            rayleigh: 3,
-            mieCoefficient: 0.005,
-            mieDirectionalG: 0.9,
-            inclination: 0.51, // elevation / inclination
-            // azimuth: 0.28, // Facing front, // NOTE: Can be used to darken sky
-            azimuth: props.sliderValue / MAX_HOURS / 2,
-            exposure: renderer.toneMappingExposure
-        };
+    const uniforms = this.sky.material.uniforms;
+    uniforms["turbidity"].value = this.skyEffectValues.turbidity;
+    uniforms["rayleigh"].value = this.skyEffectValues.rayleigh;
+    uniforms["mieCoefficient"].value = this.skyEffectValues.mieCoefficient;
+    uniforms["mieDirectionalG"].value = this.skyEffectValues.mieDirectionalG;
 
-        console.log('AZIMUTE ', props.sliderValue / MAX_HOURS / 2);
-        console.log("SLIDER ", props.sliderValue);
+    const theta = Math.PI * (this.skyEffectValues.inclination - 0.5);
+    const phi = 2 * Math.PI * (this.skyEffectValues.azimuth - 0.5);
 
-        const uniforms = sky.material.uniforms;
-        uniforms[ "turbidity" ].value = skyEffectValues.turbidity;
-        uniforms[ "rayleigh" ].value = skyEffectValues.rayleigh;
-        uniforms[ "mieCoefficient" ].value = skyEffectValues.mieCoefficient;
-        uniforms[ "mieDirectionalG" ].value = skyEffectValues.mieDirectionalG;
+    this.sun.x = Math.cos(phi);
+    this.sun.y = Math.sin(phi) * Math.sin(theta);
+    this.sun.z = Math.sin(phi) * Math.cos(theta);
 
-        const theta = Math.PI * ( skyEffectValues.inclination - 0.5 );
-        const phi = 2 * Math.PI * ( skyEffectValues.azimuth - 0.5 );
+    console.log("ORIGINAL SUN ", this.sun, this.props.sliderValue);
 
-        sun.x = Math.cos( phi );
-        sun.y = Math.sin( phi ) * Math.sin( theta );
-        sun.z = Math.sin( phi ) * Math.cos( theta );
+    uniforms["sunPosition"].value.copy(this.sun);
 
-        uniforms[ "sunPosition" ].value.copy( sun );
-
-        renderer.toneMappingExposure = skyEffectValues.exposure;
-    }
-    initSky();
+    this.renderer.toneMappingExposure = this.skyEffectValues.exposure;
+    // END OF SKY
 
     // Append to DOM
-    this.mount.appendChild(renderer.domElement);
+    this.mount.appendChild(this.renderer.domElement);
 
     // Add lights
     let hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.61);
     hemiLight.position.set(0, 50, 0);
-    // Add hemisphere light to scene
-    scene.add(hemiLight);
+    // Add hemisphere light to this.scene
+    this.scene.add(hemiLight);
 
     // let d = 8.25;
     // let dirLight = new THREE.DirectionalLight(0xffffff, 0.04);
@@ -124,8 +120,8 @@ class ThreeAnimation extends React.Component {
     // dirLight.shadow.camera.right = d;
     // dirLight.shadow.camera.top = d;
     // dirLight.shadow.camera.bottom = d * -1;
-    // // Add directional Light to scene
-    // scene.add(dirLight);
+    // // Add directional Light to this.scene
+    // this.scene.add(dirLight);
 
     // Floor
     // let floorGeometry = new THREE.PlaneGeometry(400, 150, 1, 1);
@@ -138,27 +134,11 @@ class ThreeAnimation extends React.Component {
     // floor.rotation.x = -0.5 * Math.PI; // This is 90 degrees by the way
     // floor.receiveShadow = true;
     // floor.position.y = -10;
-    // scene.add(floor);
-
-    function update() {
-      if (mixer) {
-        mixer.update(clock.getDelta());
-      }
-      if (resizeRendererToDisplaySize(renderer)) {
-        canvas = renderer.domElement;
-        camera.aspect = canvas.clientWidth / canvas.clientHeight;
-        camera.updateProjectionMatrix();
-      }
-      renderer.render(scene, camera);
-      requestAnimationFrame(update);
-    }
-
-    update();
-
-    function resizeRendererToDisplaySize(renderer) {
+    // this.scene.add(floor);
+    const resizeRendererToDisplaySize = (renderer) => {
       canvas = renderer.domElement;
-      camera.aspect = canvas.clientWidth / canvas.clientHeight;
-      camera.updateProjectionMatrix();
+      this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
+      this.camera.updateProjectionMatrix();
       const pixelRatio = window.devicePixelRatio;
       let width = ((canvas.clientWidth / 3) * pixelRatio) | 0;
       //   let height = ((canvas.clientHeight / 3) * pixelRatio) | 0;
@@ -169,7 +149,22 @@ class ThreeAnimation extends React.Component {
         renderer.setSize(width, height, false);
       }
       return needResize;
-    }
+    };
+
+    const update = () => {
+      if (mixer) {
+        mixer.update(clock.getDelta());
+      }
+      if (resizeRendererToDisplaySize(this.renderer)) {
+        canvas = this.renderer.domElement;
+        this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        this.camera.updateProjectionMatrix();
+      }
+      this.renderer.render(this.scene, this.camera);
+      requestAnimationFrame(update);
+    };
+
+    update();
 
     // let geometrySphere = new THREE.SphereGeometry(8, 32, 32);
     // let materialSphere = new THREE.MeshPhysicalMaterial({ color: 0xf2ce2e }); // 0xf2ce2e
@@ -178,7 +173,7 @@ class ThreeAnimation extends React.Component {
     // sphere.position.y = -3;
     // sphere.position.x = -30;
     // sphere.scale.set(0.5, 0.5, 0.5);
-    // scene.add(sphere);
+    // this.scene.add(sphere);
 
     const MODEL_PATH =
       "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy_lightweight.glb";
@@ -195,8 +190,8 @@ class ThreeAnimation extends React.Component {
       skinning: true,
     });
 
-    var loader = new GLTFLoader();
     var self = this;
+    var loader = new GLTFLoader();
     loader.load(
       MODEL_PATH,
       function (gltf) {
@@ -227,8 +222,8 @@ class ThreeAnimation extends React.Component {
         model.position.z = 30;
         model.castShadow = true;
 
-        // Add model to scene
-        scene.add(model);
+        // Add model to this.scene
+        self.scene.add(model);
 
         // Remove loader
         self.loaderAnim.remove();
@@ -309,8 +304,53 @@ class ThreeAnimation extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return false;
+  componentDidUpdate(nextProps, nextState) {
+    // return nextProps.sliderValue !== this.props.sliderValue;
+    if (nextProps.sliderValue !== this.props.sliderValue) {
+      const interval = [0, 1];
+
+      let azimuth = Math.abs(nextProps.sliderValue / MAX_HOURS / 2);
+      let inclination = Math.abs(nextProps.sliderValue / MAX_HOURS) / 2;
+
+      //   if (inclination < 0.5) {
+      //       inclination = 0.5;
+      //   } else if (inclination > 0.9) {
+      //       inclination = 0.9;
+      //   }
+
+      console.log("sliderValue ", nextProps.sliderValue);
+      console.log("AZIMUTH ", azimuth);
+      console.log("INCLINATION ", inclination);
+
+      const theta = Math.PI * inclination - 0.5;
+      const phi = 2 * Math.PI * azimuth - 0.5;
+
+      const uniforms = this.sky.material.uniforms;
+      uniforms["turbidity"].value = Math.abs(nextProps.sliderValue / 2);
+
+      let x = Math.cos(phi) * 2;
+      this.sun.setX(x);
+      console.log("SUN ", this.sun);
+
+      //   let y = Math.abs(Math.sin(phi) * Math.sin(theta));
+      //   if (y < 0.5) {
+      //     y = 0.5;
+      //   }
+      let y = Math.cos(phi) * Math.cos(theta) * 0.05;
+
+      this.sun.setY(y);
+      //   this.sun.setZ(Math.cos(phi) * Math.sin(theta));
+
+      uniforms["sunPosition"].value.copy(this.sun);
+
+      console.log({
+        x: x,
+        y: y,
+        z: Math.sin(phi) * Math.cos(theta),
+      });
+
+      console.log("sliderValue NEXT PROPS ", nextProps.sliderValue);
+    }
   }
 
   render() {
@@ -328,7 +368,7 @@ class ThreeAnimation extends React.Component {
 const HeroAnimation = () => {
   const [endingValue, setEndingValue] = useState();
   const [time, setTime] = useState(new Date());
-  const [sliderValue, setSliderValue] = useState(time.getHours());
+  const [sliderValue, setSliderValue] = useState(time.getHours() - MAX_HOURS);
   const size = useWindowSize();
 
   useEffect(() => {
@@ -357,7 +397,7 @@ const HeroAnimation = () => {
           <Styled.Slider>
             <CircularSlider
               size={width}
-              minValue={0}
+              minValue={-MAX_HOURS}
               maxValue={MAX_HOURS}
               handle1={{
                 value: sliderValue,
