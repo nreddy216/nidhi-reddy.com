@@ -8,7 +8,8 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { Sky } from "three/examples/jsm/objects/Sky.js";
 
-import StarrySkyShader from "./starrySkyShader";
+// TODO: Remove if not needed
+// import StarrySkyShader from "./starrySkyShader";
 import Container from "components/ui/Container";
 
 import * as Styled from "./styles";
@@ -40,9 +41,9 @@ class ThreeAnimation extends React.Component {
       0.1,
       1000
     );
-    this.camera.position.z = 60;
     this.camera.position.x = 2;
     this.camera.position.y = 2;
+    this.camera.position.z = 30;
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -50,7 +51,7 @@ class ThreeAnimation extends React.Component {
     this.renderer.shadowMap.enabled = true;
     this.renderer.setPixelRatio(window.devicePixelRatio);
 
-    // this.scene.background = new THREE.Color(0xbfe3dd);
+    this.scene.background = new THREE.Color(0xefd1b5);
     // this.scene.fog = new THREE.Fog(0xbfe3dd, 60, 100);
 
     // SKY & SUN
@@ -104,37 +105,43 @@ class ThreeAnimation extends React.Component {
     this.mount.appendChild(this.renderer.domElement);
 
     // Add lights
-    let hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.61);
-    hemiLight.position.set(0, 50, 0);
+    let hemiLight = new THREE.HemisphereLight(0xfed8b1, 0xfed8b1, 0.3);
+    hemiLight.position.set(0, 0, 0);
     // Add hemisphere light to this.scene
     this.scene.add(hemiLight);
 
-    // let d = 8.25;
-    // let dirLight = new THREE.DirectionalLight(0xffffff, 0.04);
-    // dirLight.position.set(-8, 18, 8);
-    // dirLight.castShadow = true;
-    // dirLight.shadow.mapSize = new THREE.Vector2(1024, 1024);
-    // dirLight.shadow.camera.near = 0.1;
-    // dirLight.shadow.camera.far = 1500;
-    // dirLight.shadow.camera.left = d * -1;
-    // dirLight.shadow.camera.right = d;
-    // dirLight.shadow.camera.top = d;
-    // dirLight.shadow.camera.bottom = d * -1;
-    // // Add directional Light to this.scene
-    // this.scene.add(dirLight);
+    let d = 8.25;
+    this.dirLightIntensity = Math.abs(this.props.sliderValue / MAX_HOURS) + 0.5;
+    this.dirLight = new THREE.DirectionalLight(
+      0xffffff,
+      this.dirLightIntensity
+    );
+    this.dirLight.position.set(-3, 10, 2);
+    this.dirLight.castShadow = false;
+    this.dirLight.shadow.mapSize = new THREE.Vector2(1024, 1024);
+    this.dirLight.shadow.camera.near = 0.1;
+    this.dirLight.shadow.camera.far = 1500;
+    this.dirLight.shadow.camera.left = d * -1;
+    this.dirLight.shadow.camera.right = d;
+    this.dirLight.shadow.camera.top = d;
+    this.dirLight.shadow.camera.bottom = d * -1;
+    // Add directional Light to this.scene
+    this.scene.add(this.dirLight);
 
     // Floor
-    // let floorGeometry = new THREE.PlaneGeometry(400, 150, 1, 1);
-    // let floorMaterial = new THREE.MeshPhysicalMaterial({
-    //   color: 0xffffff,
-    // //   flatShading: true,
-    // });
+    let floorGeometry = new THREE.PlaneBufferGeometry(400, 150, 1, 1);
+    let floorMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0x48bb78
+      //   depthWrite: false,
+    });
 
-    // let floor = new THREE.Mesh(floorGeometry, floorMaterial);
-    // floor.rotation.x = -0.5 * Math.PI; // This is 90 degrees by the way
-    // floor.receiveShadow = true;
-    // floor.position.y = -10;
-    // this.scene.add(floor);
+    let floor = new THREE.Mesh(floorGeometry, floorMaterial);
+    floor.rotation.x = -0.5 * Math.PI; // 90 deg rotation
+    floor.receiveShadow = true;
+    floor.position.y = -12;
+    floor.position.z = 0;
+    this.scene.add(floor);
+
     const resizeRendererToDisplaySize = renderer => {
       canvas = renderer.domElement;
       this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
@@ -220,12 +227,12 @@ class ThreeAnimation extends React.Component {
         model.scale.set(20, 20, 20);
         model.position.x = 2.5;
         model.position.y = -30;
-        model.position.z = 30;
+        // model.position.z = 0;
         model.castShadow = true;
 
         // TODO: Uncomment when ready
         // Add model to this.scene
-        // self.scene.add(model);
+        self.scene.add(model);
 
         // Remove loader
         self.loaderAnim.remove();
@@ -306,11 +313,13 @@ class ThreeAnimation extends React.Component {
     }
   }
 
-  componentDidUpdate(nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     if (nextProps.sliderValue !== this.props.sliderValue) {
       let rayleigh = Math.abs(nextProps.sliderValue / MAX_HOURS) * 3 + 0.6;
       let azimuth = Math.abs(nextProps.sliderValue / MAX_HOURS / 2);
       let inclination = Math.abs(nextProps.sliderValue / MAX_HOURS) / 2;
+      let dirLightIntensity =
+        -Math.abs(nextProps.sliderValue / MAX_HOURS) + 0.85;
 
       console.log("AZIMUTH ", azimuth);
       console.log("INCLINATION ", inclination);
@@ -324,12 +333,17 @@ class ThreeAnimation extends React.Component {
 
       let x = Math.cos(phi) * 0.5;
       let y = Math.cos(phi) * Math.cos(theta) * 0.15;
+      let z = Math.sin(phi) * Math.cos(theta);
 
       this.sun.setX(x);
       this.sun.setY(y);
-      this.sun.setZ(Math.sin(phi) * Math.cos(theta));
+      this.sun.setZ(z);
 
       uniforms["sunPosition"].value.copy(this.sun);
+
+      // Light
+      this.dirLight.intensity = dirLightIntensity;
+      console.log("DIR LIGHT ", this.dirLight);
 
       console.log("SUN ", this.sun);
       console.log("sliderValue NEXT PROPS ", nextProps.sliderValue);
