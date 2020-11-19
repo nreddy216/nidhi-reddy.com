@@ -8,6 +8,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { Sky } from "three/examples/jsm/objects/Sky.js";
 
+import StarrySkyShader from "./starrySkyShader";
 import Container from "components/ui/Container";
 
 import * as Styled from "./styles";
@@ -50,20 +51,12 @@ class ThreeAnimation extends React.Component {
     this.renderer.setPixelRatio(window.devicePixelRatio);
 
     // this.scene.background = new THREE.Color(0xbfe3dd);
-    this.scene.fog = new THREE.Fog(0xbfe3dd, 60, 100);
+    // this.scene.fog = new THREE.Fog(0xbfe3dd, 60, 100);
 
     // SKY & SUN
     this.sky = new Sky();
     this.sky.scale.setScalar(450000);
     this.scene.add(this.sky);
-    this.circlePath = new THREE.EllipseCurve(
-        0,  0,            // ax, aY
-        10, 10,           // xRadius, yRadius
-        0,  2 * Math.PI,  // aStartAngle, aEndAngle
-        false,            // aClockwise
-        0                 // aRotation
-    );
-    this.circlePathPoints = this.circlePath.getPoints(120);
 
     this.sun = new THREE.Vector3();
 
@@ -77,8 +70,8 @@ class ThreeAnimation extends React.Component {
     //     exposure: this.renderer.toneMappingExposure
     // };
     this.skyEffectValues = {
-      turbidity: Math.abs(this.props.sliderValue / 2),
-      rayleigh: 3,
+      turbidity: 10,
+      rayleigh: Math.abs(this.props.sliderValue / MAX_HOURS) * 2 + 0.6,
       mieCoefficient: 0.005,
       mieDirectionalG: 0.7,
       inclination: Math.abs(this.props.sliderValue / MAX_HOURS / 2), // elevation / inclination
@@ -104,6 +97,7 @@ class ThreeAnimation extends React.Component {
     uniforms["sunPosition"].value.copy(this.sun);
 
     this.renderer.toneMappingExposure = this.skyEffectValues.exposure;
+
     // END OF SKY
 
     // Append to DOM
@@ -172,14 +166,15 @@ class ThreeAnimation extends React.Component {
 
     update();
 
-    // let geometrySphere = new THREE.SphereGeometry(8, 32, 32);
-    // let materialSphere = new THREE.MeshPhysicalMaterial({ color: 0xf2ce2e }); // 0xf2ce2e
-    // let sphere = new THREE.Mesh(geometrySphere, materialSphere);
-    // sphere.position.z = -80;
-    // sphere.position.y = -3;
-    // sphere.position.x = -30;
-    // sphere.scale.set(0.5, 0.5, 0.5);
-    // this.scene.add(sphere);
+    // TODO: Make sample sun?
+    let geometrySphere = new THREE.SphereGeometry(8, 32, 32);
+    let materialSphere = new THREE.MeshPhysicalMaterial({ color: 0xf2ce2e }); // 0xf2ce2e
+    let sphere = new THREE.Mesh(geometrySphere, materialSphere);
+    sphere.position.z = -80;
+    sphere.position.y = -3;
+    sphere.position.x = -30;
+    sphere.scale.set(0.5, 0.5, 0.5);
+    this.scene.add(sphere);
 
     const MODEL_PATH =
       "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy_lightweight.glb";
@@ -228,8 +223,9 @@ class ThreeAnimation extends React.Component {
         model.position.z = 30;
         model.castShadow = true;
 
+        // TODO: Uncomment when ready
         // Add model to this.scene
-        self.scene.add(model);
+        // self.scene.add(model);
 
         // Remove loader
         self.loaderAnim.remove();
@@ -312,26 +308,27 @@ class ThreeAnimation extends React.Component {
 
   componentDidUpdate(nextProps, nextState) {
     if (nextProps.sliderValue !== this.props.sliderValue) {
-
+      let rayleigh = Math.abs(nextProps.sliderValue / MAX_HOURS) * 3 + 0.6;
       let azimuth = Math.abs(nextProps.sliderValue / MAX_HOURS / 2);
       let inclination = Math.abs(nextProps.sliderValue / MAX_HOURS) / 2;
 
       console.log("AZIMUTH ", azimuth);
       console.log("INCLINATION ", inclination);
+      console.log("RAYLEIGH ", rayleigh);
 
       const theta = Math.PI * inclination - 0.5;
       const phi = 2 * Math.PI * azimuth - 0.5;
 
       const uniforms = this.sky.material.uniforms;
-      uniforms["turbidity"].value = Math.abs(nextProps.sliderValue / 2);
+      uniforms["rayleigh"].value = rayleigh;
 
       let x = Math.cos(phi) * 0.5;
       let y = Math.cos(phi) * Math.cos(theta) * 0.15;
-      
+
       this.sun.setX(x);
       this.sun.setY(y);
-    //   this.sun.setZ(Math.sin(phi) * Math.cos(theta));
-      
+      this.sun.setZ(Math.sin(phi) * Math.cos(theta));
+
       uniforms["sunPosition"].value.copy(this.sun);
 
       console.log("SUN ", this.sun);
