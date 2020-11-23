@@ -69,7 +69,7 @@ class ThreeAnimation extends React.Component {
       mieDirectionalG: 0.7, // 0.7
       inclination: Math.abs(this.props.sliderValue / MAX_HOURS / 2), // 0.49
       azimuth: Math.abs(this.props.sliderValue / MAX_HOURS / 2), // 0.25
-      exposure: this.renderer.toneMappingExposure // this.renderer.toneMappingExposure
+      exposure: this.renderer.toneMappingExposure, // this.renderer.toneMappingExposure
     };
 
     const uniforms = this.sky.material.uniforms;
@@ -84,8 +84,6 @@ class ThreeAnimation extends React.Component {
     this.sun.x = Math.cos(phi) * 0.5;
     this.sun.y = Math.cos(phi) * Math.cos(theta) * 0.15;
     this.sun.z = Math.sin(phi) * Math.cos(theta);
-
-    console.log("ORIGINAL SUN ", this.sun, this.props.sliderValue);
 
     uniforms["sunPosition"].value.copy(this.sun);
 
@@ -123,18 +121,17 @@ class ThreeAnimation extends React.Component {
     // Floor
     let floorGeometry = new THREE.PlaneBufferGeometry(400, 150, 1, 1);
     let floorMaterial = new THREE.MeshPhysicalMaterial({
-      color: 0x48bb78
-      //   depthWrite: false,
+      color: 0x48bb78,
     });
 
     let floor = new THREE.Mesh(floorGeometry, floorMaterial);
     floor.rotation.x = -0.5 * Math.PI; // 90 deg rotation
     floor.receiveShadow = true;
-    floor.position.y = -12;
+    floor.position.y = -5;
     floor.position.z = 0;
     this.scene.add(floor);
 
-    const resizeRendererToDisplaySize = renderer => {
+    const resizeRendererToDisplaySize = (renderer) => {
       canvas = renderer.domElement;
       this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
       this.camera.updateProjectionMatrix();
@@ -170,11 +167,11 @@ class ThreeAnimation extends React.Component {
     let materialSphere = new THREE.MeshPhysicalMaterial({ color: 0xf2ce2e }); // 0xf2ce2e
     this.fakeSun = new THREE.Mesh(geometrySphere, materialSphere);
 
-    const r = (12 / Math.PI);
+    const r = 12 / Math.PI;
     let fakeSunTheta = this.props.sliderValueTotal / r;
 
-     this.fakeSun.position.x = r * Math.sin(fakeSunTheta) * 6;
-     this.fakeSun.position.y = r * Math.cos(fakeSunTheta) * 6;
+    this.fakeSun.position.x = r * Math.sin(fakeSunTheta) * 6;
+    this.fakeSun.position.y = r * Math.cos(fakeSunTheta) * 6;
     this.fakeSun.position.z = -80;
     this.fakeSun.scale.set(0.5, 0.5, 0.5);
     this.scene.add(this.fakeSun);
@@ -191,8 +188,6 @@ class ThreeAnimation extends React.Component {
     // const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
     // this.scene.add(clouds);
 
-
-
     const MODEL_PATH =
       "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy_lightweight.glb";
 
@@ -205,19 +200,19 @@ class ThreeAnimation extends React.Component {
     const stacy_mtl = new THREE.MeshPhongMaterial({
       map: stacy_txt,
       color: 0xffffff,
-      skinning: true
+      skinning: true,
     });
 
     var self = this;
     var loader = new GLTFLoader();
     loader.load(
       MODEL_PATH,
-      function(gltf) {
+      function (gltf) {
         // A lot is going to happen here
         model = gltf.scene;
         let fileAnimations = gltf.animations;
 
-        model.traverse(o => {
+        model.traverse((o) => {
           if (o.isMesh) {
             o.castShadow = true;
             o.receiveShadow = true;
@@ -255,12 +250,12 @@ class ThreeAnimation extends React.Component {
         idle.play();
       },
       undefined, // We don't need this function
-      function(error) {
+      function (error) {
         console.error(error);
       }
     );
 
-    document.addEventListener("mousemove", function(e) {
+    document.addEventListener("mousemove", function (e) {
       var mousecoords = getMousePos(e);
       if (neck && waist) {
         moveJoint(mousecoords, neck, 50);
@@ -354,26 +349,24 @@ class ThreeAnimation extends React.Component {
       // Light
       this.dirLight.intensity = dirLightIntensity;
 
+      // Update position of fake sun
+      const r = 12 / Math.PI;
+      let fakeSunTheta = nextProps.sliderValueTotal / r;
 
-    const r = (12 / Math.PI);
-    let fakeSunTheta = nextProps.sliderValueTotal / r;
-
-     this.fakeSun.position.x = r * Math.sin(fakeSunTheta) * 6;
-     this.fakeSun.position.y = r * Math.cos(fakeSunTheta) * 6;
+      this.fakeSun.position.x = r * Math.sin(fakeSunTheta) * 6;
+      this.fakeSun.position.y = r * Math.cos(fakeSunTheta) * 6;
 
       console.log("sliderValueTotal NEXT PROPS ", nextProps.sliderValueTotal);
     }
   }
 
-  componentWillUnmount() {
-
-  }
+  componentWillUnmount() {}
 
   render() {
     return (
-      <div ref={ref => (this.mount = ref)}>
+      <div ref={(ref) => (this.mount = ref)}>
         {/* TODO: Add loading animation */}
-        <Styled.LoaderAnim ref={ref => (this.loaderAnim = ref)}>
+        <Styled.LoaderAnim ref={(ref) => (this.loaderAnim = ref)}>
           <Styled.Loader>Loading...</Styled.Loader>
         </Styled.LoaderAnim>
       </div>
@@ -384,8 +377,12 @@ class ThreeAnimation extends React.Component {
 const HeroAnimation = memo(() => {
   const [time, setTime] = useState(new Date());
   const [sliderValue, setSliderValue] = useState(time.getHours() - MAX_HOURS);
-  const [sliderValueTotal, setSliderValueTotal] = useState(time.getHours());
+  const [sliderValueTotal, setSliderValueTotal] = useState(
+    time.getHours() - MAX_HOURS
+  );
   const size = useWindowSize();
+
+  console.log("sliderValueTotal CURRENT: ", sliderValueTotal);
 
   useEffect(() => {
     let timerID = setInterval(() => tick(), 1000 * 60);
@@ -395,7 +392,6 @@ const HeroAnimation = memo(() => {
   }, []);
 
   function tick() {
-    console.log("TICK ");
     setTime(new Date());
   }
 
@@ -418,11 +414,11 @@ const HeroAnimation = memo(() => {
               maxValue={MAX_HOURS}
               handle1={{
                 value: sliderValue,
-                onChange: v => {
+                onChange: (v) => {
                   setSliderValue(v);
                   const vTotal = v < 0 ? v + MAX_HOURS * 2 : v;
                   setSliderValueTotal(vTotal);
-                }
+                },
               }}
               arcColor="#48bb78"
               arcBackgroundColor="#3c366b"
@@ -432,7 +428,10 @@ const HeroAnimation = memo(() => {
             animationWidth={animationWidth}
             windowHeight={size.height}
           >
-            <ThreeAnimation sliderValue={sliderValue} sliderValueTotal={sliderValueTotal} />
+            <ThreeAnimation
+              sliderValue={sliderValue}
+              sliderValueTotal={sliderValueTotal}
+            />
           </Styled.AnimationWrapper>
         </Styled.SliderWrapper>
       </Container>
@@ -446,7 +445,7 @@ const useWindowSize = () => {
   // Initialize state with undefined width so server and client renders match
   const [windowSize, setWindowSize] = useState({
     width: SLIDER_SIZE,
-    height: SLIDER_SIZE
+    height: SLIDER_SIZE,
   });
 
   useEffect(() => {
@@ -455,7 +454,7 @@ const useWindowSize = () => {
       // Set window width/height to state
       setWindowSize({
         width: window.innerWidth,
-        height: window.innerHeight
+        height: window.innerHeight,
       });
     }
 
@@ -470,6 +469,6 @@ const useWindowSize = () => {
   }, []); // Empty array ensures that effect is only run on mount
 
   return windowSize;
-}
+};
 
 export default HeroAnimation;
