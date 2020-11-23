@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CircularSlider from "react-circular-slider-svg";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
@@ -52,7 +52,7 @@ class ThreeAnimation extends React.Component {
     this.renderer.setPixelRatio(window.devicePixelRatio);
 
     this.scene.background = new THREE.Color(0xefd1b5);
-    // this.scene.fog = new THREE.Fog(0xbfe3dd, 60, 100);
+    this.scene.fog = new THREE.Fog(0xbfe3dd, 60, 10);
 
     // SKY & SUN
     this.sky = new Sky();
@@ -61,23 +61,15 @@ class ThreeAnimation extends React.Component {
 
     this.sun = new THREE.Vector3();
 
-    // skyEffectValues = {
-    //     turbidity: 10,
-    //     rayleigh: 3,
-    //     mieCoefficient: 0.005,
-    //     mieDirectionalG: 0.7,
-    //     inclination: 0.49, // elevation / inclination
-    //     azimuth: 0.25, // Facing front,
-    //     exposure: this.renderer.toneMappingExposure
-    // };
+    // Comments are original values
     this.skyEffectValues = {
-      turbidity: 10,
-      rayleigh: Math.abs(this.props.sliderValue / MAX_HOURS) * 2 + 0.6,
-      mieCoefficient: 0.005,
-      mieDirectionalG: 0.7,
-      inclination: Math.abs(this.props.sliderValue / MAX_HOURS / 2), // elevation / inclination
-      azimuth: Math.abs(this.props.sliderValue / MAX_HOURS / 2),
-      exposure: this.renderer.toneMappingExposure
+      turbidity: 10, // 10
+      rayleigh: Math.abs(this.props.sliderValue / MAX_HOURS) * 2 + 0.6, // 3
+      mieCoefficient: 0.005, // 0.005
+      mieDirectionalG: 0.7, // 0.7
+      inclination: Math.abs(this.props.sliderValue / MAX_HOURS / 2), // 0.49
+      azimuth: Math.abs(this.props.sliderValue / MAX_HOURS / 2), // 0.25
+      exposure: this.renderer.toneMappingExposure // this.renderer.toneMappingExposure
     };
 
     const uniforms = this.sky.material.uniforms;
@@ -173,15 +165,33 @@ class ThreeAnimation extends React.Component {
 
     update();
 
-    // TODO: Make sample sun?
+    // TODO: Make fake sun?
     let geometrySphere = new THREE.SphereGeometry(8, 32, 32);
     let materialSphere = new THREE.MeshPhysicalMaterial({ color: 0xf2ce2e }); // 0xf2ce2e
-    let sphere = new THREE.Mesh(geometrySphere, materialSphere);
-    sphere.position.z = -80;
-    sphere.position.y = -3;
-    sphere.position.x = -30;
-    sphere.scale.set(0.5, 0.5, 0.5);
-    this.scene.add(sphere);
+    this.fakeSun = new THREE.Mesh(geometrySphere, materialSphere);
+
+    const r = (12 / Math.PI);
+    let fakeSunTheta = this.props.sliderValueTotal / r;
+
+     this.fakeSun.position.x = r * Math.sin(fakeSunTheta) * 6;
+     this.fakeSun.position.y = r * Math.cos(fakeSunTheta) * 6;
+    this.fakeSun.position.z = -80;
+    this.fakeSun.scale.set(0.5, 0.5, 0.5);
+    this.scene.add(this.fakeSun);
+
+    // const cloudGeometry = new THREE.SphereGeometry(10.3,  50, 50);
+    // const cloudMaterial = new THREE.MeshPhongMaterial({
+    //     // map: new THREE.ImageUtils.loadTexture("/images/clouds_2.jpg"),
+    //     color: 0xffffff,
+    //     transparent: true,
+    //     opacity: 0.1
+    // });
+
+    // //Create a cloud mesh and add it to the scene.
+    // const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
+    // this.scene.add(clouds);
+
+
 
     const MODEL_PATH =
       "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy_lightweight.glb";
@@ -232,7 +242,7 @@ class ThreeAnimation extends React.Component {
 
         // TODO: Uncomment when ready
         // Add model to this.scene
-        self.scene.add(model);
+        // self.scene.add(model);
 
         // Remove loader
         self.loaderAnim.remove();
@@ -313,6 +323,10 @@ class ThreeAnimation extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.sliderValue !== this.props.sliderValue;
+  }
+
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.sliderValue !== this.props.sliderValue) {
       let rayleigh = Math.abs(nextProps.sliderValue / MAX_HOURS) * 3 + 0.6;
@@ -320,10 +334,6 @@ class ThreeAnimation extends React.Component {
       let inclination = Math.abs(nextProps.sliderValue / MAX_HOURS) / 2;
       let dirLightIntensity =
         -Math.abs(nextProps.sliderValue / MAX_HOURS) + 0.85;
-
-      console.log("AZIMUTH ", azimuth);
-      console.log("INCLINATION ", inclination);
-      console.log("RAYLEIGH ", rayleigh);
 
       const theta = Math.PI * inclination - 0.5;
       const phi = 2 * Math.PI * azimuth - 0.5;
@@ -343,11 +353,20 @@ class ThreeAnimation extends React.Component {
 
       // Light
       this.dirLight.intensity = dirLightIntensity;
-      console.log("DIR LIGHT ", this.dirLight);
 
-      console.log("SUN ", this.sun);
-      console.log("sliderValue NEXT PROPS ", nextProps.sliderValue);
+
+    const r = (12 / Math.PI);
+    let fakeSunTheta = nextProps.sliderValueTotal / r;
+
+     this.fakeSun.position.x = r * Math.sin(fakeSunTheta) * 6;
+     this.fakeSun.position.y = r * Math.cos(fakeSunTheta) * 6;
+
+      console.log("sliderValueTotal NEXT PROPS ", nextProps.sliderValueTotal);
     }
+  }
+
+  componentWillUnmount() {
+
   }
 
   render() {
@@ -362,10 +381,10 @@ class ThreeAnimation extends React.Component {
   }
 }
 
-const HeroAnimation = () => {
-  const [endingValue, setEndingValue] = useState();
+const HeroAnimation = memo(() => {
   const [time, setTime] = useState(new Date());
   const [sliderValue, setSliderValue] = useState(time.getHours() - MAX_HOURS);
+  const [sliderValueTotal, setSliderValueTotal] = useState(time.getHours());
   const size = useWindowSize();
 
   useEffect(() => {
@@ -373,9 +392,10 @@ const HeroAnimation = () => {
     return function cleanup() {
       clearInterval(timerID);
     };
-  });
+  }, []);
 
   function tick() {
+    console.log("TICK ");
     setTime(new Date());
   }
 
@@ -400,9 +420,10 @@ const HeroAnimation = () => {
                 value: sliderValue,
                 onChange: v => {
                   setSliderValue(v);
+                  const vTotal = v < 0 ? v + MAX_HOURS * 2 : v;
+                  setSliderValueTotal(vTotal);
                 }
               }}
-              onControlFinished={() => setEndingValue(sliderValue)}
               arcColor="#48bb78"
               arcBackgroundColor="#3c366b"
             />
@@ -411,17 +432,17 @@ const HeroAnimation = () => {
             animationWidth={animationWidth}
             windowHeight={size.height}
           >
-            <ThreeAnimation sliderValue={sliderValue} />
+            <ThreeAnimation sliderValue={sliderValue} sliderValueTotal={sliderValueTotal} />
           </Styled.AnimationWrapper>
         </Styled.SliderWrapper>
       </Container>
     </>
   );
-};
+});
 
 // HeroAnimation.propTypes = {};
 
-function useWindowSize() {
+const useWindowSize = () => {
   // Initialize state with undefined width so server and client renders match
   const [windowSize, setWindowSize] = useState({
     width: SLIDER_SIZE,
@@ -446,7 +467,7 @@ function useWindowSize() {
 
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleResize);
-  }, [windowSize]); // Empty array ensures that effect is only run on mount
+  }, []); // Empty array ensures that effect is only run on mount
 
   return windowSize;
 }
