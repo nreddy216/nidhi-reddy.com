@@ -52,7 +52,7 @@ class ThreeAnimation extends React.Component {
     this.renderer.setPixelRatio(window.devicePixelRatio);
 
     this.scene.background = new THREE.Color(0xefd1b5);
-    this.scene.fog = new THREE.Fog(0xbfe3dd, 60, 10);
+    // this.scene.fog = new THREE.Fog(0xbfe3dd, 60, 10);
 
     // SKY & SUN
     this.sky = new Sky();
@@ -101,7 +101,7 @@ class ThreeAnimation extends React.Component {
     this.scene.add(hemiLight);
 
     let d = 8.25;
-    this.dirLightIntensity = Math.abs(this.props.sliderValue / MAX_HOURS) + 0.5;
+    this.dirLightIntensity = -Math.abs(this.props.sliderValue / MAX_HOURS) + 0.85;
     this.dirLight = new THREE.DirectionalLight(
       0xffffff,
       this.dirLightIntensity
@@ -163,19 +163,17 @@ class ThreeAnimation extends React.Component {
     update();
 
     // TODO: Make fake sun?
-    let geometrySphere = new THREE.SphereGeometry(8, 32, 32);
-    const sunLuminosity = Math.abs(this.props.sliderValue / MAX_HOURS);
-    let materialSphere = new THREE.MeshStandardMaterial(
+    let fakeSunGeometrySphere = new THREE.SphereBufferGeometry(8, 12, 12);
+    const sunLuminosity = Math.abs(this.props.sliderValueTotal / (MAX_HOURS * 2));
+    let fakeSunMaterialSphere = new THREE.MeshStandardMaterial(
       { color: 0xf2ce2e,
         // fog: false, // affected by fog or not
         shadowSide: THREE.BackSide,
         emissive: '#F8CE3B',
-        emissiveIntensity: sunLuminosity,
-        // opacity: sunLuminosity,
-        // transparent: true,
+        // emissiveIntensity: sunLuminosity,
       }
     );
-    this.fakeSun = new THREE.Mesh(geometrySphere, materialSphere);
+    this.fakeSun = new THREE.Mesh(fakeSunGeometrySphere, fakeSunMaterialSphere);
 
     const fakeSunRadius = 12 / Math.PI;
     let fakeSunTheta = this.props.sliderValueTotal / fakeSunRadius;
@@ -273,7 +271,7 @@ class ThreeAnimation extends React.Component {
 
         // TODO: Uncomment when ready
         // Add model to this.scene
-        // self.scene.add(model);
+        self.scene.add(model);
 
         // Remove loader
         self.loaderAnim.remove();
@@ -389,8 +387,8 @@ class ThreeAnimation extends React.Component {
       const fakeSunRadius = 12 / Math.PI;
       let fakeSunTheta = nextProps.sliderValueTotal / fakeSunRadius;
 
-      const sunLuminosity = Math.abs(nextProps.sliderValue / MAX_HOURS);
-      this.fakeSun.material.emissiveIntensity = sunLuminosity;
+      // const sunLuminosity = Math.abs(MAX_HOURS * (Math.ceil(Math.random() * nextProps.sliderValue)));
+      // this.fakeSun.material.emissiveIntensity = sunLuminosity;
 
       this.fakeSun.position.x = fakeSunRadius * Math.sin(fakeSunTheta) * 6;
       this.fakeSun.position.y = fakeSunRadius * Math.cos(fakeSunTheta) * 6;
@@ -425,7 +423,7 @@ class ThreeAnimation extends React.Component {
 }
 
 const HeroAnimation = memo(() => {
-  const [time, setTime] = useState(new Date());
+  const time = new Date();
   const [sliderValue, setSliderValue] = useState(time.getHours() - MAX_HOURS);
   const [sliderValueTotal, setSliderValueTotal] = useState(
     time.getHours() - MAX_HOURS
@@ -433,17 +431,6 @@ const HeroAnimation = memo(() => {
   const size = useWindowSize();
 
   console.log("sliderValueTotal CURRENT: ", sliderValueTotal);
-
-  useEffect(() => {
-    let timerID = setInterval(() => tick(), 1000 * 60);
-    return function cleanup() {
-      clearInterval(timerID);
-    };
-  }, []);
-
-  function tick() {
-    setTime(new Date());
-  }
 
   const padding = 40;
   let width =
