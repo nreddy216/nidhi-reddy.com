@@ -222,17 +222,18 @@ class ThreeAnimation extends React.Component {
     // const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
     // this.scene.add(clouds);
 
-    const MODEL_PATH =
-      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy_lightweight.glb";
+    // const MODEL_PATH =
+    //   "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy_lightweight.glb"
+    const MODEL_PATH = "https://s3.us-east-2.amazonaws.com/nidhi-reddy.com/models/mixamo-big-hair-001.glb";
 
-    let stacy_txt = new THREE.TextureLoader().load(
-      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy.jpg"
+    let nidhi_txt = new THREE.TextureLoader().load(
+      "https://s3.us-east-2.amazonaws.com/nidhi-reddy.com/models/mixamo-big-hair-001-texture.png"
     );
 
-    stacy_txt.flipY = false; // we flip the texture so that its the right way up
+    nidhi_txt.flipY = false; // we flip the texture so that its the right way up
 
-    const stacy_mtl = new THREE.MeshPhongMaterial({
-      map: stacy_txt,
+    const nidhi_mtl = new THREE.MeshPhongMaterial({
+      map: nidhi_txt,
       color: 0xffffff,
       skinning: true,
     });
@@ -242,6 +243,7 @@ class ThreeAnimation extends React.Component {
     loader.load(
       MODEL_PATH,
       function (gltf) {
+        console.log("MODEL ", gltf);
         // A lot is going to happen here
         model = gltf.scene;
         let fileAnimations = gltf.animations;
@@ -250,7 +252,7 @@ class ThreeAnimation extends React.Component {
           if (o.isMesh) {
             o.castShadow = true;
             o.receiveShadow = true;
-            o.material = stacy_mtl;
+            o.material = nidhi_mtl;
           }
 
           // Reference the neck and waist bones
@@ -263,10 +265,11 @@ class ThreeAnimation extends React.Component {
         });
 
         // Set the models initial scale
-        model.scale.set(20, 20, 20);
-        model.position.x = 2.5;
-        model.position.y = -30;
-        // model.position.z = 0;
+        const MODEL_SCALE = 12;
+        model.scale.set(MODEL_SCALE, MODEL_SCALE, MODEL_SCALE);
+        model.position.x = 1.5;
+        model.position.y = -12;
+        model.position.z = 0;
         model.castShadow = true;
 
         // TODO: Uncomment when ready
@@ -282,6 +285,11 @@ class ThreeAnimation extends React.Component {
         idleAnim.tracks.splice(9, 3);
         idle = mixer.clipAction(idleAnim);
         idle.play();
+
+        let walkAnim = THREE.AnimationClip.findByName(fileAnimations, "femaleWalk");
+        walkAnim.tracks.splice(3, 3);
+        walkAnim.tracks.splice(9, 3);
+        self.walk = mixer.clipAction(walkAnim);
       },
       undefined, // We don't need this function
       function (error) {
@@ -358,6 +366,8 @@ class ThreeAnimation extends React.Component {
 
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.sliderValue !== this.props.sliderValue) {
+      this.walk.play();
+
       let rayleigh = Math.abs(nextProps.sliderValue / MAX_HOURS) * 3 + 0.6;
       let azimuth = Math.abs(nextProps.sliderValue / MAX_HOURS / 2);
       let inclination = Math.abs(nextProps.sliderValue / MAX_HOURS) / 2;
