@@ -164,17 +164,53 @@ class ThreeAnimation extends React.Component {
 
     // TODO: Make fake sun?
     let geometrySphere = new THREE.SphereGeometry(8, 32, 32);
-    let materialSphere = new THREE.MeshPhysicalMaterial({ color: 0xf2ce2e }); // 0xf2ce2e
+    const sunLuminosity = Math.abs(this.props.sliderValue / MAX_HOURS);
+    let materialSphere = new THREE.MeshStandardMaterial(
+      { color: 0xf2ce2e,
+        // fog: false, // affected by fog or not
+        shadowSide: THREE.BackSide,
+        emissive: '#F8CE3B',
+        emissiveIntensity: sunLuminosity,
+        // opacity: sunLuminosity,
+        // transparent: true,
+      }
+    );
     this.fakeSun = new THREE.Mesh(geometrySphere, materialSphere);
 
-    const r = 12 / Math.PI;
-    let fakeSunTheta = this.props.sliderValueTotal / r;
+    const fakeSunRadius = 12 / Math.PI;
+    let fakeSunTheta = this.props.sliderValueTotal / fakeSunRadius;
 
-    this.fakeSun.position.x = r * Math.sin(fakeSunTheta) * 6;
-    this.fakeSun.position.y = r * Math.cos(fakeSunTheta) * 6;
+    this.fakeSun.position.x = fakeSunRadius * Math.sin(fakeSunTheta) * 6;
+    this.fakeSun.position.y = fakeSunRadius * Math.cos(fakeSunTheta) * 6;
     this.fakeSun.position.z = -80;
     this.fakeSun.scale.set(0.5, 0.5, 0.5);
     this.scene.add(this.fakeSun);
+
+    // Moon
+    const moonGeometrySphere = new THREE.SphereGeometry(8, 32, 32);
+    const moonLuminosity = Math.abs(this.props.sliderValue /MAX_HOURS);
+    const moonMaterialSphere = new THREE.MeshStandardMaterial(
+      { 
+        color: 0xf2ce2e,
+        // fog: false, // affected by fog or not
+        shadowSide: THREE.BackSide,
+        emissive: '#fff',
+        emissiveIntensity: moonLuminosity,
+        opacity: moonLuminosity,
+        transparent: true,
+        flatShading: false,
+      }
+    );
+    this.moon = new THREE.Mesh(moonGeometrySphere, moonMaterialSphere);
+
+    const moonRadius = 12 / Math.PI;
+    let moonTheta = this.props.sliderValueTotal / moonRadius;
+
+    this.moon.position.x = -moonRadius * Math.sin(moonTheta) * 6;
+    this.moon.position.y = -moonRadius * Math.cos(moonTheta) * 6;
+    this.moon.position.z = -90;
+    this.moon.scale.set(0.6, 0.6, 0.6);
+    this.scene.add(this.moon);
 
     // const cloudGeometry = new THREE.SphereGeometry(10.3,  50, 50);
     // const cloudMaterial = new THREE.MeshPhongMaterial({
@@ -350,11 +386,25 @@ class ThreeAnimation extends React.Component {
       this.dirLight.intensity = dirLightIntensity;
 
       // Update position of fake sun
-      const r = 12 / Math.PI;
-      let fakeSunTheta = nextProps.sliderValueTotal / r;
+      const fakeSunRadius = 12 / Math.PI;
+      let fakeSunTheta = nextProps.sliderValueTotal / fakeSunRadius;
 
-      this.fakeSun.position.x = r * Math.sin(fakeSunTheta) * 6;
-      this.fakeSun.position.y = r * Math.cos(fakeSunTheta) * 6;
+      const sunLuminosity = Math.abs(nextProps.sliderValue / MAX_HOURS);
+      this.fakeSun.material.emissiveIntensity = sunLuminosity;
+
+      this.fakeSun.position.x = fakeSunRadius * Math.sin(fakeSunTheta) * 6;
+      this.fakeSun.position.y = fakeSunRadius * Math.cos(fakeSunTheta) * 6;
+
+      // Update position of moon
+      const moonLuminosity = Math.abs(nextProps.sliderValue / MAX_HOURS);
+      this.moon.material.opacity = moonLuminosity;
+      this.moon.material.emissiveIntensity = moonLuminosity;
+
+      const moonRadius = 12 / Math.PI;
+      let moonTheta = nextProps.sliderValueTotal / moonRadius;
+
+      this.moon.position.x = -moonRadius * Math.sin(moonTheta) * 6;
+      this.moon.position.y = -moonRadius * Math.cos(moonTheta) * 6;
 
       console.log("sliderValueTotal NEXT PROPS ", nextProps.sliderValueTotal);
     }
