@@ -125,10 +125,10 @@ class ThreeAnimation extends React.Component {
     });
 
     let floor = new THREE.Mesh(floorGeometry, floorMaterial);
-    floor.rotation.x = -0.5 * Math.PI; // 90 deg rotation
+    floor.rotation.x = -0.35 * Math.PI; // 90 deg rotation
     floor.receiveShadow = true;
-    floor.position.y = -5;
-    floor.position.z = 0;
+    floor.position.y = -35;
+    floor.position.z = -10;
     this.scene.add(floor);
 
     const resizeRendererToDisplaySize = (renderer) => {
