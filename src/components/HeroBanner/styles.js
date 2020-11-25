@@ -6,12 +6,18 @@ export const Banner = styled.section`
 `;
 
 export const Title = styled.h2`
-  ${tw`text-3xl text-green-500 font-bold w-full text-left`};
-  ${({ center }) => center && tw`text-center`};
+  ${tw`uppercase w-full text-center font-black text-4xl sm:text-5xl lg:text-6xl tracking-widest`};
+
+  margin-top: -3rem;
+  background: linear-gradient(135deg, #48bb78, #ffdb58, #3c366b, #48bb78);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
 `;
 
 export const SubTitle = styled.h2`
-  ${tw`text-3xl font-bold w-full text-left`};
+  ${tw`mt-4 lowercase text-2xl sm:text-3xl font-semibold w-full text-center sm:text-left`};
   ${({ center }) => center && tw`text-center`};
 `;
 

@@ -6,8 +6,16 @@ export const Logo = styled(Link)`
   ${tw`flex items-center mr-auto text-indigo-900 hover:text-indigo-900`};
 `;
 
-export const Text = styled.h1`
-  ${tw`text-lg`};
+export const Text = styled.span`
+  ${tw`text-lg lowercase font-semibold pl-2`};
+
+  letter-spacing: 3px;
+
+  ${({ isFlipped }) => isFlipped && `transform: rotate(-180deg)`};
+`;
+
+export const Emoji = styled.span`
+  ${tw`text-sm`};
 `;
 
 export const Image = styled.figure`

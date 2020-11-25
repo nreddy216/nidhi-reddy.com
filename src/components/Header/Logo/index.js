@@ -1,8 +1,28 @@
 import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
-import Img from "gatsby-image";
 
 import * as Styled from "./styles";
+
+const RandomizedLogo = () => {
+  const emojis = {
+    magic: "(ﾉ◕ヮ◕)ﾉ*:・ﾟ✧",
+    flip: "	(╯°□°)╯︵",
+    shrug: "¯\\_(ツ)_/¯",
+    zen: "⊹╰(⌣ʟ⌣)╯⊹",
+  };
+
+  const randomIndex = Math.floor(Math.random() * Object.keys(emojis).length);
+  const emoji = Object.keys(emojis)[randomIndex];
+
+  let isFlipped = emoji === "flip";
+
+  return (
+    <>
+      <Styled.Emoji aria-hidden>{emojis[emoji]}</Styled.Emoji>
+      <Styled.Text isFlipped={isFlipped}>nidhi reddy</Styled.Text>
+    </>
+  );
+};
 
 const Logo = () => {
   const { site, placeholderImage } = useStaticQuery(graphql`
@@ -12,25 +32,14 @@ const Logo = () => {
           title
         }
       }
-      placeholderImage: file(relativePath: { eq: "profile.jpg" }) {
-        childImageSharp {
-          fluid(maxWidth: 80) {
-            ...GatsbyImageSharpFluid
-          }
-        }
-      }
     }
   `);
 
   const logoTitle = site.siteMetadata.title;
-  const logoImage = placeholderImage.childImageSharp.fluid;
 
   return (
     <Styled.Logo to="/">
-      {/* <Styled.Image>
-        <Img fluid={logoImage} alt={logoTitle} />
-      </Styled.Image> */}
-      <Styled.Text>{logoTitle}</Styled.Text>
+      <RandomizedLogo />
     </Styled.Logo>
   );
 };

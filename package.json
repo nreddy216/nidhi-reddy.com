@@ -3,7 +3,7 @@
   "private": true,
   "description": "Portfolio of Nidhi Reddy",
   "version": "0.1.0",
-  "author": "Nidhi Reddy, Saimir Kapaj",
+  "author": "Nidhi Reddy",
   "dependencies": {
     "@loadable/component": "^5.14.1",
     "@types/loadable__component": "^5.13.1",

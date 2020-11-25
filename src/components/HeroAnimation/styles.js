@@ -5,11 +5,11 @@ export const SliderWrapper = styled.section`
   ${tw`relative w-full overflow-hidden max-h-full flex justify-center items-center`};
 
   ${({ sliderSize }) =>
-    sliderSize && `height: ${sliderSize}px; margin-bottom: 2rem;`};
+    sliderSize && `height: ${sliderSize}px; margin-bottom: 1rem;`};
 `;
 
 export const Slider = styled.section`
-  ${tw`absolute md:relative top-0 left-0`};
+  ${tw`relative top-0 left-0`};
 
   circle {
     cursor: pointer;
@@ -45,5 +45,18 @@ export const LoaderAnim = styled.section`
 `;
 
 export const Loader = styled.section`
-  ${tw`w-full`};
+  ${tw`w-full bg-white`};
+`;
+
+export const Name = styled.h1`
+  ${tw`absolute uppercase left-0 font-black text-6xl`};
+
+  bottom: 2rem;
+
+  transform: rotate(-10deg) skew(10deg, 10deg);
+  background: linear-gradient(45deg, #f3ec78, #3c366b, #48bb78);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
 `;

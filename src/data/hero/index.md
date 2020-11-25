@@ -1,8 +1,8 @@
 ---
 category: 'hero banner'
-title: "Hi! I'm Nidhi"
+title: "hi! i'm nidhi"
 pronounce: "nid-thee"
-subtitle: "I am a <b>freelance web developer</b><br>& <b>creative human</b>."
+subtitle: "I am a freelance web developer<br>& creative human."
 content: "
 <br>
 Most recently, I was a <b>Technical Lead</b> at <a href='//leftfieldlabs.com'>Left Field Labs</a>, where I led a small team dedicated to a variety of Google's developer-focused websites and applications.

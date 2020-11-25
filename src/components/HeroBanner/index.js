@@ -25,7 +25,12 @@ const HeroBanner = () => {
 
   return (
     <Container>
-      <Styled.Title>{title}</Styled.Title>
+      <Styled.Title>
+        {title}
+        <br />
+        (nid-thee)
+        <br />
+      </Styled.Title>
       <Styled.SubTitle>
         <FormatHtml content={subtitle} />
       </Styled.SubTitle>

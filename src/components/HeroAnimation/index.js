@@ -8,8 +8,6 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { Sky } from "three/examples/jsm/objects/Sky.js";
 
-// TODO: Remove if not needed
-// import StarrySkyShader from "./starrySkyShader";
 import Container from "components/ui/Container";
 
 import * as Styled from "./styles";
@@ -34,6 +32,7 @@ class ThreeAnimation extends React.Component {
       raycaster = new THREE.Raycaster(), // Used to detect the click on our character
       canvas;
 
+    THREE.Cache.enabled = true;
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(
       50,
@@ -101,7 +100,8 @@ class ThreeAnimation extends React.Component {
     this.scene.add(hemiLight);
 
     let d = 8.25;
-    this.dirLightIntensity = -Math.abs(this.props.sliderValue / MAX_HOURS) + 0.85;
+    this.dirLightIntensity =
+      -Math.abs(this.props.sliderValue / MAX_HOURS) + 0.85;
     this.dirLight = new THREE.DirectionalLight(
       0xffffff,
       this.dirLightIntensity
@@ -164,15 +164,16 @@ class ThreeAnimation extends React.Component {
 
     // TODO: Make fake sun?
     let fakeSunGeometrySphere = new THREE.SphereBufferGeometry(8, 12, 12);
-    const sunLuminosity = Math.abs(this.props.sliderValueTotal / (MAX_HOURS * 2));
-    let fakeSunMaterialSphere = new THREE.MeshStandardMaterial(
-      { color: 0xf2ce2e,
-        // fog: false, // affected by fog or not
-        shadowSide: THREE.BackSide,
-        emissive: '#F8CE3B',
-        // emissiveIntensity: sunLuminosity,
-      }
+    const sunLuminosity = Math.abs(
+      this.props.sliderValueTotal / (MAX_HOURS * 2)
     );
+    let fakeSunMaterialSphere = new THREE.MeshStandardMaterial({
+      color: 0xf2ce2e,
+      // fog: false, // affected by fog or not
+      shadowSide: THREE.BackSide,
+      emissive: "#F8CE3B",
+      // emissiveIntensity: sunLuminosity,
+    });
     this.fakeSun = new THREE.Mesh(fakeSunGeometrySphere, fakeSunMaterialSphere);
 
     const fakeSunRadius = 12 / Math.PI;
@@ -186,19 +187,17 @@ class ThreeAnimation extends React.Component {
 
     // Moon
     const moonGeometrySphere = new THREE.SphereGeometry(8, 32, 32);
-    const moonLuminosity = Math.abs(this.props.sliderValue /MAX_HOURS);
-    const moonMaterialSphere = new THREE.MeshStandardMaterial(
-      { 
-        color: 0xf2ce2e,
-        // fog: false, // affected by fog or not
-        shadowSide: THREE.BackSide,
-        emissive: '#fff',
-        emissiveIntensity: moonLuminosity,
-        opacity: moonLuminosity,
-        transparent: true,
-        flatShading: false,
-      }
-    );
+    const moonLuminosity = Math.abs(this.props.sliderValue / MAX_HOURS);
+    const moonMaterialSphere = new THREE.MeshStandardMaterial({
+      color: 0xf2ce2e,
+      // fog: false, // affected by fog or not
+      shadowSide: THREE.BackSide,
+      emissive: "#fff",
+      emissiveIntensity: moonLuminosity,
+      opacity: moonLuminosity,
+      transparent: true,
+      flatShading: false,
+    });
     this.moon = new THREE.Mesh(moonGeometrySphere, moonMaterialSphere);
 
     const moonRadius = 12 / Math.PI;
@@ -224,7 +223,8 @@ class ThreeAnimation extends React.Component {
 
     // const MODEL_PATH =
     //   "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy_lightweight.glb"
-    const MODEL_PATH = "https://s3.us-east-2.amazonaws.com/nidhi-reddy.com/models/mixamo-big-hair-001.glb";
+    const MODEL_PATH =
+      "https://s3.us-east-2.amazonaws.com/nidhi-reddy.com/models/mixamo-big-hair-001.glb";
 
     let nidhi_txt = new THREE.TextureLoader().load(
       "https://s3.us-east-2.amazonaws.com/nidhi-reddy.com/models/mixamo-big-hair-001-texture.png"
@@ -243,7 +243,6 @@ class ThreeAnimation extends React.Component {
     loader.load(
       MODEL_PATH,
       function (gltf) {
-        console.log("MODEL ", gltf);
         // A lot is going to happen here
         model = gltf.scene;
         let fileAnimations = gltf.animations;
@@ -280,16 +279,21 @@ class ThreeAnimation extends React.Component {
         self.loaderAnim.remove();
 
         mixer = new THREE.AnimationMixer(model);
+
+        // Animations
+        let walkAnim = THREE.AnimationClip.findByName(
+          fileAnimations,
+          "femaleWalk"
+        );
+        walkAnim.tracks.splice(3, 3);
+        walkAnim.tracks.splice(9, 3);
+        self.walk = mixer.clipAction(walkAnim);
+
         let idleAnim = THREE.AnimationClip.findByName(fileAnimations, "idle");
         idleAnim.tracks.splice(3, 3);
         idleAnim.tracks.splice(9, 3);
         idle = mixer.clipAction(idleAnim);
         idle.play();
-
-        let walkAnim = THREE.AnimationClip.findByName(fileAnimations, "femaleWalk");
-        walkAnim.tracks.splice(3, 3);
-        walkAnim.tracks.splice(9, 3);
-        self.walk = mixer.clipAction(walkAnim);
       },
       undefined, // We don't need this function
       function (error) {
@@ -366,7 +370,9 @@ class ThreeAnimation extends React.Component {
 
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.sliderValue !== this.props.sliderValue) {
-      this.walk.play();
+      if (typeof this != "undefined" && typeof this.walk != "undefined") {
+        this.walk.play();
+      }
 
       let rayleigh = Math.abs(nextProps.sliderValue / MAX_HOURS) * 3 + 0.6;
       let azimuth = Math.abs(nextProps.sliderValue / MAX_HOURS / 2);
