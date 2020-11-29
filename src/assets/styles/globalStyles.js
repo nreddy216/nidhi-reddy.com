@@ -6,6 +6,10 @@ export default createGlobalStyle`
     ${tw`m-0 text-indigo-900 bg-gray-100`};
   }
 
+  b, strong {
+    ${tw`font-semibold`};
+  }
+
   a {
     ${tw`text-indigo-600 hover:text-indigo-700 focus:border-blue-200`};
   }

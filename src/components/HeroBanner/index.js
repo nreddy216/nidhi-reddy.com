@@ -25,15 +25,30 @@ const HeroBanner = () => {
 
   return (
     <Container>
-      {/* <Styled.Title>
-        {title}
-        <br />
-        (nid-thee)
-        <br />
-      </Styled.Title> */}
-      <Styled.SubTitle>
-      {title}
-      </Styled.SubTitle>
+      <Styled.Title>
+        <Styled.CurvedPath
+          xmlns="http://www.w3.org/2000/svg"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
+          version="1.1"
+          viewBox="0 60 600 180"
+        >
+          <defs>
+            <path
+              d="M 50 50 Q 300 300 550 50"
+              id="curved-path"
+            ></path>
+            <linearGradient id="curved-path-gradient">
+            <stop offset="5%" stop-color="#48bb78" />
+            <stop offset="95%" stop-color="#3c366b" />
+          </linearGradient>
+          </defs>
+          <Styled.CurvedText>
+            <textPath role="h1" startOffset="120" xlinkHref="#curved-path">
+            {title} (nid-thee ◍)
+            </textPath>
+          </Styled.CurvedText>
+        </Styled.CurvedPath>
+      </Styled.Title>
       <Styled.SubTitle>
         <FormatHtml content={subtitle} />
       </Styled.SubTitle>
@@ -49,7 +64,7 @@ HeroBanner.propTypes = {
   subtitle: PropTypes.string,
   content: PropTypes.string,
   linkTo: PropTypes.string,
-  linkText: PropTypes.string,
+  linkText: PropTypes.string
 };
 
 export default HeroBanner;
