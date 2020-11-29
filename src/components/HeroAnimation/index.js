@@ -1,6 +1,5 @@
-import React from "react";
+import React, { Suspense } from "react";
 import PropTypes from "prop-types";
-import CircularSlider from "react-circular-slider-svg";
 import { useState, useEffect, memo } from "react";
 
 import * as THREE from "three";
@@ -11,6 +10,8 @@ import { Sky } from "three/examples/jsm/objects/Sky.js";
 import Container from "components/ui/Container";
 
 import * as Styled from "./styles";
+
+const CircularSlider = React.lazy(() => import("react-circular-slider-svg"));
 
 const SLIDER_SIZE = 600;
 const MAX_HOURS = 12;
@@ -276,7 +277,7 @@ class ThreeAnimation extends React.Component {
         self.scene.add(model);
 
         // Remove loader
-        self.loaderAnim.remove();
+        // self.loaderAnim.remove();
 
         mixer = new THREE.AnimationMixer(model);
 
@@ -430,9 +431,9 @@ class ThreeAnimation extends React.Component {
     return (
       <div ref={(ref) => (this.mount = ref)}>
         {/* TODO: Add loading animation */}
-        <Styled.LoaderAnim ref={(ref) => (this.loaderAnim = ref)}>
+        {/* <Styled.LoaderAnim ref={(ref) => (this.loaderAnim = ref)}>
           <Styled.Loader>Loading...</Styled.Loader>
-        </Styled.LoaderAnim>
+        </Styled.LoaderAnim> */}
       </div>
     );
   }
@@ -461,6 +462,7 @@ const HeroAnimation = memo(() => {
       <Container className="relative">
         <Styled.SliderWrapper sliderSize={width}>
           <Styled.Slider>
+          <Suspense fallback={<div>Loading...</div>}>
             <CircularSlider
               size={width}
               minValue={-MAX_HOURS}
@@ -476,6 +478,7 @@ const HeroAnimation = memo(() => {
               arcColor="#48bb78"
               arcBackgroundColor="#3c366b"
             />
+            </Suspense>
           </Styled.Slider>
           <Styled.AnimationWrapper
             animationWidth={animationWidth}

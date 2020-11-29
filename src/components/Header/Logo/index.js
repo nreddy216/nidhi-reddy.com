@@ -3,7 +3,7 @@ import { useStaticQuery, graphql } from "gatsby";
 
 import * as Styled from "./styles";
 
-const RandomizedLogo = () => {
+const RandomizedLogo = ({ title }) => {
   const emojis = {
     magic: "(ﾉ◕ヮ◕)ﾉ*:・ﾟ✧",
     flip: "	(╯°□°)╯︵",
@@ -14,18 +14,20 @@ const RandomizedLogo = () => {
   const randomIndex = Math.floor(Math.random() * Object.keys(emojis).length);
   const emoji = Object.keys(emojis)[randomIndex];
 
-  let isFlipped = emoji === "flip";
+  let isVerticallyFlipped = emoji === "flip";
+  let isHorizontallyFlipped = (emoji === "flip") || (emoji === "magic");
+
 
   return (
     <>
-      <Styled.Emoji aria-hidden>{emojis[emoji]}</Styled.Emoji>
-      <Styled.Text isFlipped={isFlipped}>nidhi reddy</Styled.Text>
+      <Styled.Text isVerticallyFlipped={isVerticallyFlipped}>{title}</Styled.Text>
+      <Styled.Emoji isHorizontallyFlipped={isHorizontallyFlipped} aria-hidden>{emojis[emoji]}</Styled.Emoji>
     </>
   );
 };
 
 const Logo = () => {
-  const { site, placeholderImage } = useStaticQuery(graphql`
+  const { site } = useStaticQuery(graphql`
     query {
       site {
         siteMetadata {
@@ -39,7 +41,7 @@ const Logo = () => {
 
   return (
     <Styled.Logo to="/">
-      <RandomizedLogo />
+      <RandomizedLogo title={logoTitle} />
     </Styled.Logo>
   );
 };

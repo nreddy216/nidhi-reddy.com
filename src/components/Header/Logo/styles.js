@@ -7,15 +7,22 @@ export const Logo = styled(Link)`
 `;
 
 export const Text = styled.span`
-  ${tw`text-lg lowercase font-semibold pl-2`};
+  ${tw`text-lg lowercase font-bold`};
 
   letter-spacing: 3px;
+  background: linear-gradient(135deg,#48bb78,#3c366b,#48bb78);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
 
-  ${({ isFlipped }) => isFlipped && `transform: rotate(-180deg)`};
+  ${({ isVerticallyFlipped }) => isVerticallyFlipped && `transform: rotate(-180deg);`};
 `;
 
 export const Emoji = styled.span`
-  ${tw`text-sm`};
+  ${tw`text-sm text-gray-500 pr-4 pl-4`};
+
+  ${({ isHorizontallyFlipped }) => isHorizontallyFlipped && `transform: scale(-1, 1);`};
 `;
 
 export const Image = styled.figure`
