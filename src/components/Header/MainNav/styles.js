@@ -7,7 +7,7 @@ export const MainNav = styled.nav`
   ${tw`sm:flex flex flex-col sm:flex-row sm:w-auto w-full order-last sm:order-none sm:my-0 m-0 overflow-hidden opacity-0 sm:opacity-100`};
 
   transition: max-height 0.25s cubic-bezier(0.65, 0, 0.35, 1),
-    opacity 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  opacity 0.5s cubic-bezier(0.65, 0, 0.35, 1);
 
   ${({ open }) =>
     open
@@ -18,7 +18,7 @@ export const MainNav = styled.nav`
 `;
 
 export const MainNavItem = motion.custom(styled(Link)`
-  ${tw`relative text-indigo-900 border-b border-transparent hover:text-indigo-900 ml-0 sm:ml-8 mt-3 sm:mt-0`};
+  ${tw`lowercase relative text-indigo-900 border-b border-transparent hover:text-indigo-900 ml-0 sm:ml-8 mt-3 sm:mt-0`};
   width: max-content;
 
   &.active {

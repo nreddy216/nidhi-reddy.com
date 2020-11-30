@@ -57,10 +57,10 @@ module.exports = {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `gatsby-personal-website-starter`,
-        short_name: `starter`,
+        short_name: `nidhi reddy portfolio`,
         start_url: `/`,
-        background_color: `#ed64a6`,
-        theme_color: `#ed64a6`,
+        background_color: `#48bb78`,
+        theme_color: `#48bb78`,
         display: `minimal-ui`,
         icon: `src/assets/images/gatsby-icon.png`,
       },

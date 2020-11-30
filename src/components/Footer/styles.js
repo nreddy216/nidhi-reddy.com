@@ -14,5 +14,5 @@ export const Links = styled.div`
 `;
 
 export const Link = styled.a`
-  ${tw`text-indigo-900 hover:text-indigo-600 mx-2`};
+  ${tw`text-indigo-900 hover:text-indigo-600 mx-2 lowercase`};
 `;

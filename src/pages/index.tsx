@@ -11,7 +11,7 @@ import Container from 'components/ui/Container';
 const IndexPage: React.FC = () => {
   return (
     <Layout>
-      <SEO title="Nidhi Reddy, Freelance Web Developer" />
+      <SEO title="Portfolio" />
       <HeroAnimation />
       <HeroBanner />
       <hr />
