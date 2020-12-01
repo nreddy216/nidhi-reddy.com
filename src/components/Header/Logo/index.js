@@ -15,13 +15,16 @@ const RandomizedLogo = ({ title }) => {
   const emoji = Object.keys(emojis)[randomIndex];
 
   let isVerticallyFlipped = emoji === "flip";
-  let isHorizontallyFlipped = (emoji === "flip") || (emoji === "magic");
-
+  let isHorizontallyFlipped = emoji === "flip" || emoji === "magic";
 
   return (
     <>
-      <Styled.Text isVerticallyFlipped={isVerticallyFlipped}>{title}</Styled.Text>
-      <Styled.Emoji isHorizontallyFlipped={isHorizontallyFlipped} aria-hidden>{emojis[emoji]}</Styled.Emoji>
+      <Styled.Text isVerticallyFlipped={isVerticallyFlipped}>
+        {title}
+      </Styled.Text>
+      <Styled.Emoji isHorizontallyFlipped={isHorizontallyFlipped} aria-hidden>
+        {emojis[emoji]}
+      </Styled.Emoji>
     </>
   );
 };

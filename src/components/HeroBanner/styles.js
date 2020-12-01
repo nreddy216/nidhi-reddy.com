@@ -21,10 +21,11 @@ export const CurvedPath = styled.svg`
 `;
 
 export const CurvedText = styled.text`
- ${tw`font-bold text-2xl sm:text-2xl tracking-wide text-center uppercase sm:lowercase`};
+  ${tw`font-bold text-2xl sm:text-2xl tracking-wide text-center uppercase sm:lowercase`};
 `;
 
 export const Title = styled.div`
   ${tw`w-full overflow-hidden`}
   margin: -8em auto -2em;
+  z-index: -1;
 `;

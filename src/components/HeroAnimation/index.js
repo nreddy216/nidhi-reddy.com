@@ -6,6 +6,8 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { Sky } from "three/examples/jsm/objects/Sky.js";
+import Cloud from "./cloud";
+import Sparkle from "../../assets/images/sparkle-white.png";
 
 import Container from "components/ui/Container";
 
@@ -15,6 +17,23 @@ const CircularSlider = React.lazy(() => import("react-circular-slider-svg"));
 
 const SLIDER_SIZE = 600;
 const MAX_HOURS = 12;
+
+// remap value from the range of [smin,smax] to [emin,emax]
+const map = (val, smin, smax, emin, emax) =>
+  ((emax - emin) * (val - smin)) / (smax - smin) + emin;
+//randomly displace the x,y,z coords by the `per` value
+const jitter = (geo, per) =>
+  geo.vertices.forEach((v) => {
+    v.x += map(Math.random(), 0, 1, -per, per);
+    v.y += map(Math.random(), 0, 1, -per, per);
+    v.z += map(Math.random(), 0, 1, -per, per);
+  });
+
+const getRandom = () => {
+  var num = Math.floor(Math.random() * 60) + 1; // this will get a number between 1 and x;
+  num *= Math.floor(Math.random() * 2) == 1 ? 1 : -1; // this will add minus sign in 50% of cases
+  return num;
+};
 
 class ThreeAnimation extends React.Component {
   constructor(props) {
@@ -100,6 +119,11 @@ class ThreeAnimation extends React.Component {
     // Add hemisphere light to this.scene
     this.scene.add(hemiLight);
 
+    // TODO: Decide if this should exist or not.
+    const light2 = new THREE.DirectionalLight(0xff5566, 0.7);
+    light2.position.set(-2, -1, 0).normalize();
+    this.scene.add(light2);
+
     let d = 8.25;
     this.dirLightIntensity =
       -Math.abs(this.props.sliderValue / MAX_HOURS) + 0.85;
@@ -138,7 +162,6 @@ class ThreeAnimation extends React.Component {
       this.camera.updateProjectionMatrix();
       const pixelRatio = window.devicePixelRatio;
       let width = ((canvas.clientWidth / 3) * pixelRatio) | 0;
-      //   let height = ((canvas.clientHeight / 3) * pixelRatio) | 0;
       let height = width;
 
       const needResize = canvas.width !== width || canvas.height !== height;
@@ -148,32 +171,12 @@ class ThreeAnimation extends React.Component {
       return needResize;
     };
 
-    const update = () => {
-      if (mixer) {
-        mixer.update(clock.getDelta());
-      }
-      if (resizeRendererToDisplaySize(this.renderer)) {
-        canvas = this.renderer.domElement;
-        this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
-        this.camera.updateProjectionMatrix();
-      }
-      this.renderer.render(this.scene, this.camera);
-      requestAnimationFrame(update);
-    };
-
-    update();
-
-    // TODO: Make fake sun?
+    // Fake sun
     let fakeSunGeometrySphere = new THREE.SphereBufferGeometry(8, 12, 12);
-    const sunLuminosity = Math.abs(
-      this.props.sliderValueTotal / (MAX_HOURS * 2)
-    );
     let fakeSunMaterialSphere = new THREE.MeshStandardMaterial({
       color: 0xf2ce2e,
-      // fog: false, // affected by fog or not
       shadowSide: THREE.BackSide,
       emissive: "#F8CE3B",
-      // emissiveIntensity: sunLuminosity,
     });
     this.fakeSun = new THREE.Mesh(fakeSunGeometrySphere, fakeSunMaterialSphere);
 
@@ -210,17 +213,84 @@ class ThreeAnimation extends React.Component {
     this.moon.scale.set(0.6, 0.6, 0.6);
     this.scene.add(this.moon);
 
-    // const cloudGeometry = new THREE.SphereGeometry(10.3,  50, 50);
-    // const cloudMaterial = new THREE.MeshPhongMaterial({
-    //     // map: new THREE.ImageUtils.loadTexture("/images/clouds_2.jpg"),
-    //     color: 0xffffff,
-    //     transparent: true,
-    //     opacity: 0.1
-    // });
+    // Clouds
+    this.clouds = new THREE.Object3D();
+    const cloudGeo = new THREE.Geometry();
 
-    // //Create a cloud mesh and add it to the scene.
-    // const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
-    // this.scene.add(clouds);
+    const tuft1 = new THREE.SphereGeometry(1.25, 7, 8);
+    tuft1.translate(-2, -0.4, 0);
+    cloudGeo.merge(tuft1);
+
+    const tuft2 = new THREE.SphereGeometry(1.75, 7, 8);
+    tuft2.translate(2, 0, 0);
+    cloudGeo.merge(tuft2);
+
+    const tuft3 = new THREE.SphereGeometry(2.0, 7, 8);
+    tuft3.translate(0, 0.3, 0);
+    cloudGeo.merge(tuft3);
+
+    // TODO: Remove if not using.
+    cloudGeo.mergeVertices();
+    cloudGeo.computeFlatVertexNormals();
+
+    jitter(cloudGeo, 0.1);
+
+    const cloud1 = new THREE.Mesh(
+      cloudGeo,
+      new THREE.MeshLambertMaterial({
+        color: "white",
+        flatShading: true,
+        shininess: 0,
+      })
+    );
+
+    cloud1.material.morphTargets = true;
+
+    cloud1.position.x = 10;
+    cloud1.position.y = 10;
+    cloud1.position.z = -20;
+    this.clouds.add(cloud1);
+
+    const cloud2 = cloud1.clone();
+
+    cloud2.position.x = 0;
+    cloud2.position.y = 4.5;
+    cloud2.position.z = -20;
+    cloud2.scale.set(1.2, 1.2, 1.2);
+    cloud2.rotation.y = THREE.Math.degToRad(180);
+    this.clouds.add(cloud2);
+
+    this.scene.add(this.clouds);
+
+    // Stars
+    const createStars = () => {
+      const starTexture = new THREE.TextureLoader().load(Sparkle);
+
+      this.stars = [];
+      this.starsGroup = new THREE.Object3D();
+
+      for (let i = 0; i < 90; i++) {
+        let geometry = new THREE.PlaneGeometry(2, 2);
+        let material = new THREE.MeshBasicMaterial({
+          map: starTexture,
+          transparent: true,
+          opacity: 0.5,
+        });
+        let star = new THREE.Mesh(geometry, material);
+        let starZ = getRandom();
+        starZ = starZ > 0 ? -100 : starZ - 120;
+        star.position.set(getRandom(), getRandom(), starZ);
+        star.material.side = THREE.DoubleSide;
+        this.stars.push(star);
+        this.starsGroup.add(star);
+      }
+
+      for (let j = 0; j < this.stars.length; j++) {
+        this.scene.add(this.stars[j]);
+      }
+    };
+
+    createStars();
 
     // const MODEL_PATH =
     //   "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy_lightweight.glb"
@@ -274,7 +344,7 @@ class ThreeAnimation extends React.Component {
 
         // TODO: Uncomment when ready
         // Add model to this.scene
-        self.scene.add(model);
+        // self.scene.add(model);
 
         // Remove loader
         // self.loaderAnim.remove();
@@ -363,6 +433,67 @@ class ThreeAnimation extends React.Component {
       }
       return { x: dx, y: dy };
     }
+
+    const shiftClouds = (delta) => {
+      if (this.clouds.position.x > 20) {
+        this.clouds.position.x = -30;
+      } else {
+        this.clouds.position.x += 0.01;
+      }
+    };
+
+    this.starLightness = 0;
+    const twinkleStars = (delta) => {
+      for (let k = 0; k < this.stars.length; k++) {
+        let star = this.stars[k];
+        star.rotation.y > 0.1
+          ? (star.rotation.y = 0.1)
+          : (star.rotation.y += 0.01);
+        star.rotation.z += 0.01;
+        // this.starLightness > 1 ? this.starLightness = 0 : this.starLightness += 0.5 * delta;
+        // star.material.color.setHSL(0.2, 1, Math.round(this.starLightness * 100)/100);
+        const starScaleDifference = (Math.random() > 0.5 ? -1 : 1) * 2 * delta;
+        if (
+          this.props.sliderValueTotal > 17 ||
+          this.props.sliderValueTotal < 6
+        ) {
+          star.scale.x = 0;
+          star.scale.y = 0;
+        } else if (star.scale.x > 1) {
+          star.scale.x = 1;
+          star.scale.y = 1;
+        } else if (star.scale.x < 0) {
+          star.scale.x = 0;
+          star.scale.y = 0;
+        } else {
+          star.scale.x += starScaleDifference;
+          star.scale.y += starScaleDifference;
+        }
+      }
+    };
+
+    const update = () => {
+      const delta = clock.getDelta();
+      if (mixer) {
+        mixer.update(delta);
+      }
+      if (resizeRendererToDisplaySize(this.renderer)) {
+        canvas = this.renderer.domElement;
+        this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        this.camera.updateProjectionMatrix();
+      }
+
+      // Move clouds
+      shiftClouds();
+
+      // Twinkle stars
+      twinkleStars(delta);
+
+      this.renderer.render(this.scene, this.camera);
+      requestAnimationFrame(update);
+    };
+
+    update();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -462,22 +593,22 @@ const HeroAnimation = memo(() => {
       <Container className="relative">
         <Styled.SliderWrapper sliderSize={width}>
           <Styled.Slider>
-          <Suspense fallback={<div>Loading...</div>}>
-            <CircularSlider
-              size={width}
-              minValue={-MAX_HOURS}
-              maxValue={MAX_HOURS}
-              handle1={{
-                value: sliderValue,
-                onChange: (v) => {
-                  setSliderValue(v);
-                  const vTotal = v < 0 ? v + MAX_HOURS * 2 : v;
-                  setSliderValueTotal(vTotal);
-                },
-              }}
-              arcColor="#48bb78"
-              arcBackgroundColor="#3c366b"
-            />
+            <Suspense fallback={<div>Loading...</div>}>
+              <CircularSlider
+                size={width}
+                minValue={-MAX_HOURS}
+                maxValue={MAX_HOURS}
+                handle1={{
+                  value: sliderValue,
+                  onChange: (v) => {
+                    setSliderValue(v);
+                    const vTotal = v < 0 ? v + MAX_HOURS * 2 : v;
+                    setSliderValueTotal(vTotal);
+                  },
+                }}
+                arcColor="#48bb78"
+                arcBackgroundColor="#3c366b"
+              />
             </Suspense>
           </Styled.Slider>
           <Styled.AnimationWrapper

@@ -33,18 +33,15 @@ const HeroBanner = () => {
           viewBox="0 60 600 180"
         >
           <defs>
-            <path
-              d="M 50 50 Q 300 300 550 50"
-              id="curved-path"
-            ></path>
+            <path d="M 50 50 Q 300 300 550 50" id="curved-path"></path>
             <linearGradient id="curved-path-gradient">
-            <stop offset="5%" stop-color="#48bb78" />
-            <stop offset="95%" stop-color="#3c366b" />
-          </linearGradient>
+              <stop offset="5%" stop-color="#48bb78" />
+              <stop offset="95%" stop-color="#3c366b" />
+            </linearGradient>
           </defs>
           <Styled.CurvedText>
             <textPath role="h1" startOffset="145" xlinkHref="#curved-path">
-            {title} (nid-thee ◍)
+              {title} (nid-thee ◍)
             </textPath>
           </Styled.CurvedText>
         </Styled.CurvedPath>
@@ -64,7 +61,7 @@ HeroBanner.propTypes = {
   subtitle: PropTypes.string,
   content: PropTypes.string,
   linkTo: PropTypes.string,
-  linkText: PropTypes.string
+  linkText: PropTypes.string,
 };
 
 export default HeroBanner;

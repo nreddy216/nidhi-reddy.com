@@ -10,19 +10,21 @@ export const Text = styled.span`
   ${tw`text-lg lowercase font-bold`};
 
   letter-spacing: 3px;
-  background: linear-gradient(135deg,#48bb78,#3c366b,#48bb78);
+  background: linear-gradient(135deg, #48bb78, #3c366b, #48bb78);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
 
-  ${({ isVerticallyFlipped }) => isVerticallyFlipped && `transform: rotate(-180deg);`};
+  ${({ isVerticallyFlipped }) =>
+    isVerticallyFlipped && `transform: rotate(-180deg);`};
 `;
 
 export const Emoji = styled.span`
   ${tw`text-sm text-gray-500 pr-4 pl-4`};
 
-  ${({ isHorizontallyFlipped }) => isHorizontallyFlipped && `transform: scale(-1, 1);`};
+  ${({ isHorizontallyFlipped }) =>
+    isHorizontallyFlipped && `transform: scale(-1, 1);`};
 `;
 
 export const Image = styled.figure`
