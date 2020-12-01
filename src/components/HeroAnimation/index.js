@@ -40,6 +40,36 @@ class ThreeAnimation extends React.Component {
     super(props);
   }
 
+  shiftClouds = (sliderValue) => {
+    const MAX_CLOUD_X = 40;
+    const SLOW_CLOUD_INCREMENT = 0.01;
+    if (typeof sliderValue !== "undefined") {
+      if (this.cloudsA.position.x > MAX_CLOUD_X) {
+        this.cloudsA.position.x = -MAX_CLOUD_X;
+      } else {
+        this.cloudsA.position.x += sliderValue / (MAX_HOURS * 1.5);
+      }
+
+      if (this.cloudsB.position.x > MAX_CLOUD_X) {
+        this.cloudsB.position.x = -MAX_CLOUD_X;
+      } else {
+        this.cloudsB.position.x += sliderValue / (MAX_HOURS * 1.5);
+      }
+    } else {
+      if (this.cloudsA.position.x > MAX_CLOUD_X) {
+        this.cloudsA.position.x = -MAX_CLOUD_X;
+      } else {
+        this.cloudsA.position.x += SLOW_CLOUD_INCREMENT;
+      }
+
+      if (this.cloudsB.position.x > MAX_CLOUD_X) {
+        this.cloudsB.position.x = -MAX_CLOUD_X;
+      } else {
+        this.cloudsB.position.x += SLOW_CLOUD_INCREMENT;
+      }
+    }
+  };
+
   componentDidMount() {
     let model, // Our character
       neck, // Reference to the neck bone in the skeleton
@@ -120,9 +150,9 @@ class ThreeAnimation extends React.Component {
     this.scene.add(hemiLight);
 
     // TODO: Decide if this should exist or not.
-    const light2 = new THREE.DirectionalLight(0xff5566, 0.7);
-    light2.position.set(-2, -1, 0).normalize();
-    this.scene.add(light2);
+    // const light2 = new THREE.DirectionalLight(0xff5566, 0.7);
+    // light2.position.set(-2, -1, 0).normalize();
+    // this.scene.add(light2);
 
     let d = 8.25;
     this.dirLightIntensity =
@@ -214,7 +244,7 @@ class ThreeAnimation extends React.Component {
     this.scene.add(this.moon);
 
     // Clouds
-    this.clouds = new THREE.Object3D();
+    this.cloudsA = new THREE.Object3D();
     const cloudGeo = new THREE.Geometry();
 
     const tuft1 = new THREE.SphereGeometry(1.25, 7, 8);
@@ -231,7 +261,8 @@ class ThreeAnimation extends React.Component {
 
     // TODO: Remove if not using.
     cloudGeo.mergeVertices();
-    cloudGeo.computeFlatVertexNormals();
+    // cloudGeo.computeFlatVertexNormals();
+    cloudGeo.computeVertexNormals();
 
     jitter(cloudGeo, 0.1);
 
@@ -249,18 +280,28 @@ class ThreeAnimation extends React.Component {
     cloud1.position.x = 10;
     cloud1.position.y = 10;
     cloud1.position.z = -20;
-    this.clouds.add(cloud1);
+    this.cloudsA.add(cloud1);
 
     const cloud2 = cloud1.clone();
 
     cloud2.position.x = 0;
     cloud2.position.y = 4.5;
-    cloud2.position.z = -20;
     cloud2.scale.set(1.2, 1.2, 1.2);
     cloud2.rotation.y = THREE.Math.degToRad(180);
-    this.clouds.add(cloud2);
+    this.cloudsA.add(cloud2);
 
-    this.scene.add(this.clouds);
+    const cloud3 = cloud1.clone();
+
+    cloud3.position.x = -10;
+    cloud3.position.y = 13.5;
+    cloud3.scale.set(1.2, 1.2, 1.2);
+    this.cloudsA.add(cloud3);
+
+    this.cloudsB = this.cloudsA.clone();
+    this.cloudsB.position.x = -40;
+
+    this.scene.add(this.cloudsA);
+    this.scene.add(this.cloudsB);
 
     // Stars
     const createStars = () => {
@@ -434,14 +475,6 @@ class ThreeAnimation extends React.Component {
       return { x: dx, y: dy };
     }
 
-    const shiftClouds = (delta) => {
-      if (this.clouds.position.x > 20) {
-        this.clouds.position.x = -30;
-      } else {
-        this.clouds.position.x += 0.01;
-      }
-    };
-
     this.starLightness = 0;
     const twinkleStars = (delta) => {
       for (let k = 0; k < this.stars.length; k++) {
@@ -450,12 +483,10 @@ class ThreeAnimation extends React.Component {
           ? (star.rotation.y = 0.1)
           : (star.rotation.y += 0.01);
         star.rotation.z += 0.01;
-        // this.starLightness > 1 ? this.starLightness = 0 : this.starLightness += 0.5 * delta;
-        // star.material.color.setHSL(0.2, 1, Math.round(this.starLightness * 100)/100);
         const starScaleDifference = (Math.random() > 0.5 ? -1 : 1) * 2 * delta;
         if (
           this.props.sliderValueTotal > 17 ||
-          this.props.sliderValueTotal < 6
+          this.props.sliderValueTotal < 7
         ) {
           star.scale.x = 0;
           star.scale.y = 0;
@@ -484,7 +515,7 @@ class ThreeAnimation extends React.Component {
       }
 
       // Move clouds
-      shiftClouds();
+      this.shiftClouds();
 
       // Twinkle stars
       twinkleStars(delta);
@@ -551,6 +582,9 @@ class ThreeAnimation extends React.Component {
 
       this.moon.position.x = -moonRadius * Math.sin(moonTheta) * 6;
       this.moon.position.y = -moonRadius * Math.cos(moonTheta) * 6;
+
+      // Clouds
+      this.shiftClouds(nextProps.sliderValueTotal);
 
       console.log("sliderValueTotal NEXT PROPS ", nextProps.sliderValueTotal);
     }

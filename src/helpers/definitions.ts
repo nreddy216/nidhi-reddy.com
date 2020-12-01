@@ -1,4 +1,4 @@
-import { FluidObject } from 'gatsby-image';
+import { FluidObject } from "gatsby-image";
 
 export type ImageSharpFluid = FluidObject | FluidObject[] | undefined;
 
