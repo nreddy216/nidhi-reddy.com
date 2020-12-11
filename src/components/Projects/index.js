@@ -4,16 +4,12 @@ import Img from "gatsby-image";
 import Link from "gatsby-link";
 import { motion } from "framer-motion";
 
-import Container from "components/ui/Container";
-import TitleSection from "components/ui/TitleSection";
-
 import * as Styled from "./styles";
 
 const ProjectCard = ({
   cover,
   imageStyle,
   title,
-  date,
   description,
   hideTags,
   tags,
@@ -84,7 +80,7 @@ const ProjectCardWide = ({
 };
 
 const Projects = ({ featured, filteredTags, hideTags, wide }) => {
-  const { markdownRemark, allMarkdownRemark } = useStaticQuery(graphql`
+  const { allMarkdownRemark } = useStaticQuery(graphql`
     query {
       markdownRemark(frontmatter: { category: { eq: "projects" } }) {
         frontmatter {
@@ -128,7 +124,6 @@ const Projects = ({ featured, filteredTags, hideTags, wide }) => {
     }
   `);
 
-  const sectionTitle = markdownRemark.frontmatter;
   const projects = allMarkdownRemark.edges;
 
   return (
