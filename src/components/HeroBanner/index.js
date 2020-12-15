@@ -1,12 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { useStaticQuery, graphql } from "gatsby";
+import * as Styled from "./styles";
 
-import Banner from "components/ui/Banner";
+import { graphql, useStaticQuery } from "gatsby";
+
 import Container from "components/ui/Container";
 import FormatHtml from "components/utils/FormatHtml";
-
-import * as Styled from "./styles";
+import PropTypes from "prop-types";
+import React from "react";
 
 const HeroBanner = () => {
   const { markdownRemark } = useStaticQuery(graphql`
@@ -40,8 +39,9 @@ const HeroBanner = () => {
             </linearGradient>
           </defs>
           <Styled.CurvedText>
+            {/* TODO: Add audio pronunciation. */}
             <textPath role="h1" startOffset="145" xlinkHref="#curved-path">
-              {title} (nid-thee ◍)
+              {title} (nid-thee)
             </textPath>
           </Styled.CurvedText>
         </Styled.CurvedPath>

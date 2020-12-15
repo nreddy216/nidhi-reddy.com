@@ -1,15 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { useStaticQuery, graphql } from "gatsby";
-import { motion, AnimatePresence } from "framer-motion";
-
-import { isInBrowser } from "../../helpers/constants";
-import Header from "components/Header";
-import Footer from "components/Footer";
-
 import "assets/styles/global.css";
-import GlobalStyles from "assets/styles/globalStyles";
+
 import * as Styled from "./styles";
+
+import { graphql, useStaticQuery } from "gatsby";
+
+import Footer from "components/Footer";
+import GlobalStyles from "assets/styles/globalStyles";
+import Header from "components/Header";
+import PropTypes from "prop-types";
+import React from "react";
+import { isInBrowser } from "../../helpers/constants";
+import { motion } from "framer-motion";
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -25,7 +26,6 @@ const Layout = ({ children }) => {
   return (
     <>
       <GlobalStyles />
-      {/* <AnimatePresence exitBeforeEnter> */}
       <Styled.Layout>
         <Header siteTitle={data.site.siteMetadata.title} />
         <motion.div
@@ -38,7 +38,6 @@ const Layout = ({ children }) => {
           <Footer />
         </motion.div>
       </Styled.Layout>
-      {/* </AnimatePresence> */}
     </>
   );
 };

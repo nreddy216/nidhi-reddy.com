@@ -1,10 +1,11 @@
-import React from "react";
-import { useStaticQuery, graphql } from "gatsby";
+import * as Styled from "./styles";
+
+import { graphql, useStaticQuery } from "gatsby";
+
 import Img from "gatsby-image";
 import Link from "gatsby-link";
+import React from "react";
 import { motion } from "framer-motion";
-
-import * as Styled from "./styles";
 
 const ProjectCard = ({
   cover,
@@ -144,6 +145,8 @@ const Projects = ({ featured, filteredTags, hideTags, wide }) => {
             return filteredTags.some((i) =>
               item.node.frontmatter.tags.includes(i)
             );
+          } else {
+            return false;
           }
         })
         .map((item) => {

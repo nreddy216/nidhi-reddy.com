@@ -63,7 +63,7 @@ const jitter = (geo, per) =>
 
 const getRandom = () => {
   var num = Math.floor(Math.random() * 60) + 1; // this will get a number between 1 and x;
-  num *= Math.floor(Math.random() * 2) == 1 ? 1 : -1; // this will add minus sign in 50% of cases
+  num *= Math.floor(Math.random() * 2) === 1 ? 1 : -1; // this will add minus sign in 50% of cases
   return num;
 };
 
@@ -473,7 +473,7 @@ class ThreeAnimation extends React.Component {
     );
 
     modelTexture.flipY = false; // we flip the texture so that its the right way up
-    modelTexture.anisotropy = this.renderer.getMaxAnisotropy();
+    modelTexture.anisotropy = this.renderer.capabilities.getMaxAnisotropy();
     modelTexture.minFilter = NearestFilter;
 
     const modelMaterial = new MeshPhysicalMaterial({

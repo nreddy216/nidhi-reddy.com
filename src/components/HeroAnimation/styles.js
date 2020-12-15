@@ -20,6 +20,7 @@ export const AnimationWrapper = styled.section`
   ${tw`absolute`};
 
   clip-path: circle(38% at 50% 50%);
+  transition: all 0.5s ease;
   z-index: -1;
 
   @media (min-width: 1024px) {

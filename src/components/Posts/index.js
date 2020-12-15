@@ -1,10 +1,10 @@
-import React from "react";
-import { useStaticQuery, graphql } from "gatsby";
+import * as Styled from "./styles";
+
+import { graphql, useStaticQuery } from "gatsby";
 
 import Container from "components/ui/Container";
 import Post from "components/Post";
-
-import * as Styled from "./styles";
+import React from "react";
 
 const Posts = () => {
   const { markdownRemark, allMarkdownRemark } = useStaticQuery(graphql`
