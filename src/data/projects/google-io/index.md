@@ -12,15 +12,8 @@ tags: ["Development", "Tech Lead", "Work"]
 clients: ["Left Field Labs", "Google"]
 published: true
 featured: true
-scripts:
-  [
-    {
-      src: "https://platform.twitter.com/widgets.js",
-      async: true,
-      charset: "utf-8",
-    },
-    { src: "https://player.vimeo.com/api/player.js" },
-  ]
+twitter_embed: true
+vimeo_embed: true
 ---
 
 ## Overview

@@ -13,6 +13,7 @@ url: https://fastlane.tools
 tags: ["Development", "Motion Design", "Work"]
 published: true
 featured: true
+vimeo_embed: true
 ---
 
 ## Overview

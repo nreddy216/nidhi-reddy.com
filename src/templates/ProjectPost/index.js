@@ -17,10 +17,24 @@ import Icon from "components/ui/Icon";
 const ProjectPost = ({ data, pageContext }) => {
   const post = data.markdownRemark;
   const { previous, next } = pageContext;
+  let scripts = [];
+  
+  if (post.frontmatter.video_id || post.frontmatter.vimeo_embed) {
+    scripts.push({
+      src: "https://player.vimeo.com/api/player.js"
+    });
+  }
+  if (post.frontmatter.twitter_embed) {
+    scripts.push({
+      src: "https://platform.twitter.com/widgets.js",
+      async: true,
+      charset: "utf-8"
+    });
+  }
 
   return (
     <Layout>
-      <SEO title={post.frontmatter.title} scripts={post.frontmatter.scripts} />
+      <SEO title={post.frontmatter.title} scripts={scripts} />
       <Container section>
         <Styled.LinksNoMargin>
           <Link to={"/projects"} rel="projects">
@@ -119,11 +133,8 @@ export const query = graphql`
         description
         description_long
         tags
-        scripts {
-          src
-          async
-          charset
-        }
+        twitter_embed
+        vimeo_embed
       }
     }
   }

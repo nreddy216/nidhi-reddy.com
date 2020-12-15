@@ -11,15 +11,7 @@ date: "2018"
 tags: ["Development", "Creative Tech", "Work"]
 published: true
 featured: false
-scripts:
-  [
-    {
-      src: "https://platform.twitter.com/widgets.js",
-      async: true,
-      charset: "utf-8",
-    },
-    { src: "https://player.vimeo.com/api/player.js" },
-  ]
+twitter_embed: true
 ---
 
 ## Press
@@ -36,8 +28,7 @@ scripts:
 Our team sent out an initial tweet with an enigmatic clue, a binary code that decodes to the URL for the game.
 
 <section class="flex-row">
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Plans are coming along for <a href="https://twitter.com/hashtag/io18?src=hash&amp;ref_src=twsrc%5Etfw">#io18</a>… <a href="https://t.co/48VpqvVqWU">pic.twitter.com/48VpqvVqWU</a></p>&mdash; Google Developers (@googledevs) <a href="https://twitter.com/googledevs/status/956074091676688384?ref_src=twsrc%5Etfw">January 24, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</section>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Plans are coming along for <a href="https://twitter.com/hashtag/io18?src=hash&amp;ref_src=twsrc%5Etfw">#io18</a>… <a href="https://t.co/48VpqvVqWU">pic.twitter.com/48VpqvVqWU</a></p>&mdash; Google Developers (@googledevs) <a href="https://twitter.com/googledevs/status/956074091676688384?ref_src=twsrc%5Etfw">January 24, 2018</a></blockquote></section>
 <br>
 
 Then, players went through the escape room, where each room was part of the Google campus and had surrealist clues (i.e. one of the rooms was filled with yams to represent "may" backwards). In order to unlock the door to the next room, you were required to an answer to a cryptic question correctly or solve a puzzle. This experience engendered Discord chats and Twitter threads of eager developers looking to solve clues, which eventually was solved a few hours after the initial tweet.
