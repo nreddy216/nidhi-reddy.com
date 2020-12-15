@@ -1,6 +1,7 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { useState, useEffect, memo } from "react";
 
+import CircularSlider from "react-circular-slider-svg";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Sky } from "three/examples/jsm/objects/Sky.js";
@@ -11,8 +12,6 @@ import { isInBrowser } from "../../helpers/constants";
 import Container from "components/ui/Container";
 
 import * as Styled from "./styles";
-
-const CircularSlider = React.lazy(() => import("react-circular-slider-svg"));
 
 const SLIDER_SIZE = 600;
 const MAX_HOURS = 12;
@@ -842,23 +841,21 @@ const HeroAnimation = memo(() => {
       <Container className="relative">
         <Styled.SliderWrapper sliderSize={width}>
           <Styled.Slider>
-            <Suspense fallback={<div>Loading...</div>}>
-              <CircularSlider
-                size={width}
-                minValue={-MAX_HOURS}
-                maxValue={MAX_HOURS}
-                handle1={{
-                  value: sliderValue,
-                  onChange: v => {
-                    setSliderValue(v);
-                    const vTotal = v < 0 ? v + MAX_HOURS * 2 : v;
-                    setSliderValueTotal(vTotal);
-                  }
-                }}
-                arcColor="#48bb78"
-                arcBackgroundColor="#3c366b"
-              />
-            </Suspense>
+            <CircularSlider
+              size={width}
+              minValue={-MAX_HOURS}
+              maxValue={MAX_HOURS}
+              handle1={{
+                value: sliderValue,
+                onChange: v => {
+                  setSliderValue(v);
+                  const vTotal = v < 0 ? v + MAX_HOURS * 2 : v;
+                  setSliderValueTotal(vTotal);
+                }
+              }}
+              arcColor="#48bb78"
+              arcBackgroundColor="#3c366b"
+            />
           </Styled.Slider>
           <Styled.AnimationWrapper
             animationWidth={animationWidth}
