@@ -6,6 +6,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Sky } from "three/examples/jsm/objects/Sky.js";
 import { ImprovedNoise } from "three/examples/jsm/math/ImprovedNoise.js";
 import Sparkle from "../../assets/images/sparkle-white.png";
+import { isInBrowser } from "../../helpers/constants";
 
 import Container from "components/ui/Container";
 
@@ -22,9 +23,10 @@ const worldDepth = 100;
 // remap value from the range of [smin,smax] to [emin,emax]
 const map = (val, smin, smax, emin, emax) =>
   ((emax - emin) * (val - smin)) / (smax - smin) + emin;
+
 //randomly displace the x,y,z coords by the `per` value
 const jitter = (geo, per) =>
-  geo.vertices.forEach((v) => {
+  geo.vertices.forEach(v => {
     v.x += map(Math.random(), 0, 1, -per, per);
     v.y += map(Math.random(), 0, 1, -per, per);
     v.z += map(Math.random(), 0, 1, -per, per);
@@ -94,7 +96,6 @@ const generateGroundTexture = (data, width, height) => {
   context.putImageData(image, 0, 0);
 
   // Scaled 4x
-
   const canvasScaled = document.createElement("canvas");
   canvasScaled.width = width * 4;
   canvasScaled.height = height * 4;
@@ -122,6 +123,8 @@ const generateGroundTexture = (data, width, height) => {
 class ThreeAnimation extends React.Component {
   constructor(props) {
     super(props);
+
+    this.laptopMovingDown = true;
   }
 
   createGround = () => {
@@ -153,7 +156,7 @@ class ThreeAnimation extends React.Component {
       new THREE.MeshPhysicalMaterial({
         map: this.groundTexture,
         color: 0xd3d3d3,
-        flatShading: true,
+        flatShading: true
       })
     );
     this.groundMesh.position.set(0, -58, 30);
@@ -162,7 +165,7 @@ class ThreeAnimation extends React.Component {
     this.scene.add(this.groundMesh);
   };
 
-  shiftClouds = (sliderValue) => {
+  shiftClouds = sliderValue => {
     const MAX_CLOUD_X = 40;
     const SLOW_CLOUD_INCREMENT = 0.01;
     if (typeof sliderValue !== "undefined") {
@@ -192,56 +195,62 @@ class ThreeAnimation extends React.Component {
     }
   };
 
-  componentDidMount() {
-    let model, // Our character
-      neck, // Reference to the neck bone in the skeleton
-      waist, // Reference to the waist bone in the skeleton
-      rightHand,
-      possibleAnims, // Animations found in our file
-      mixer, // THREE.js animations mixer
-      idle, // Idle, the default state our character returns to
-      clock = new THREE.Clock(), // Used for anims, which run to a clock instead of frame rate
-      currentlyAnimating = false, // Used to check whether characters neck is being used in another anim
-      raycaster = new THREE.Raycaster(), // Used to detect the click on our character
-      canvas;
+  floatLaptop = () => {
+    if (this.laptop) {
+      if (this.laptop.position.y < 0.87) {
+        this.laptopMovingDown = false;
+      } else if (this.laptop.position.y > 0.9) {
+        this.laptopMovingDown = true;
+      }
 
-    THREE.Cache.enabled = true;
-    this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(
-      50,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    );
-    this.camera.position.x = 2;
-    this.camera.position.y = 2;
-    this.camera.position.z = 30;
-    this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    this.renderer.setPixelRatio(window.devicePixelRatio);
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.outputEncoding = THREE.sRGBEncoding;
-    this.renderer.shadowMap.enabled = true;
-    this.renderer.setPixelRatio(window.devicePixelRatio);
+      if (this.laptopMovingDown) {
+        this.laptop.position.y -= 0.0002;
+      } else {
+        this.laptop.position.y += 0.0002;
+      }
+    }
+  };
 
-    this.scene.background = new THREE.Color(0xefd1b5);
-    // this.scene.fog = new THREE.Fog(0xbfe3dd, 60, 10);
+  twinkleStars = delta => {
+    for (let k = 0; k < this.stars.length; k++) {
+      let star = this.stars[k];
+      star.rotation.y > 0.1
+        ? (star.rotation.y = 0.1)
+        : (star.rotation.y += 0.01);
+      star.rotation.z += 0.01;
+      const starScaleDifference = (Math.random() > 0.5 ? -1 : 1) * 2 * delta;
+      if (
+        this.props.sliderValueTotal > 17 ||
+        this.props.sliderValueTotal < 7 ||
+        star.scale.x < 0
+      ) {
+        star.scale.x = 0;
+        star.scale.y = 0;
+      } else if (star.scale.x > 1) {
+        star.scale.x = 1;
+        star.scale.y = 1;
+      } else {
+        star.scale.x += starScaleDifference;
+        star.scale.y += starScaleDifference;
+      }
+    }
+  };
 
-    // SKY & SUN
+  createSky = () => {
     this.sky = new Sky();
     this.sky.scale.setScalar(4500);
     this.scene.add(this.sky);
 
     this.sun = new THREE.Vector3();
 
-    // Comments are original values
     this.skyEffectValues = {
-      turbidity: 10, // 10
-      rayleigh: Math.abs(this.props.sliderValue / MAX_HOURS) * 2 + 0.6, // 3
-      mieCoefficient: 0.005, // 0.005
-      mieDirectionalG: 0.7, // 0.7
-      inclination: Math.abs(this.props.sliderValue / MAX_HOURS / 2), // 0.49
-      azimuth: Math.abs(this.props.sliderValue / MAX_HOURS / 2), // 0.25
-      exposure: this.renderer.toneMappingExposure, // this.renderer.toneMappingExposure
+      turbidity: 10,
+      rayleigh: Math.abs(this.props.sliderValue / MAX_HOURS) * 2 + 0.6,
+      mieCoefficient: 0.005,
+      mieDirectionalG: 0.7,
+      inclination: Math.abs(this.props.sliderValue / MAX_HOURS / 2),
+      azimuth: Math.abs(this.props.sliderValue / MAX_HOURS / 2),
+      exposure: this.renderer.toneMappingExposure
     };
 
     const uniforms = this.sky.material.uniforms;
@@ -260,22 +269,14 @@ class ThreeAnimation extends React.Component {
     uniforms["sunPosition"].value.copy(this.sun);
 
     this.renderer.toneMappingExposure = this.skyEffectValues.exposure;
+  };
 
-    // END OF SKY
-
-    // Append to DOM
-    this.mount.appendChild(this.renderer.domElement);
-
-    // Add lights
+  addLights = () => {
     let hemiLight = new THREE.HemisphereLight(0xfed8b1, 0xfed8b1, 0.3);
     hemiLight.position.set(0, 0, 0);
+
     // Add hemisphere light to this.scene
     this.scene.add(hemiLight);
-
-    // TODO: Decide if this should exist or not.
-    // const light2 = new THREE.DirectionalLight(0xff5566, 0.7);
-    // light2.position.set(-2, -1, 0).normalize();
-    // this.scene.add(light2);
 
     let d = 8.25;
     this.dirLightIntensity =
@@ -293,33 +294,18 @@ class ThreeAnimation extends React.Component {
     this.dirLight.shadow.camera.right = d;
     this.dirLight.shadow.camera.top = d;
     this.dirLight.shadow.camera.bottom = d * -1;
+
     // Add directional Light to this.scene
     this.scene.add(this.dirLight);
+  };
 
-    // Ground
-    this.createGround();
-
-    const resizeRendererToDisplaySize = (renderer) => {
-      canvas = renderer.domElement;
-      this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
-      this.camera.updateProjectionMatrix();
-      const pixelRatio = window.devicePixelRatio;
-      let width = ((canvas.clientWidth / 3) * pixelRatio) | 0;
-      let height = width;
-
-      const needResize = canvas.width !== width || canvas.height !== height;
-      if (needResize) {
-        renderer.setSize(width, height, false);
-      }
-      return needResize;
-    };
-
+  addSunAndMoon = () => {
     // Fake sun
     let fakeSunGeometrySphere = new THREE.SphereBufferGeometry(8, 12, 12);
     let fakeSunMaterialSphere = new THREE.MeshStandardMaterial({
       color: 0xf2ce2e,
       shadowSide: THREE.BackSide,
-      emissive: "#F8CE3B",
+      emissive: "#F8CE3B"
     });
     this.fakeSun = new THREE.Mesh(fakeSunGeometrySphere, fakeSunMaterialSphere);
 
@@ -337,13 +323,12 @@ class ThreeAnimation extends React.Component {
     const moonLuminosity = Math.abs(this.props.sliderValue / MAX_HOURS);
     const moonMaterialSphere = new THREE.MeshStandardMaterial({
       color: 0xf2ce2e,
-      // fog: false, // affected by fog or not
       shadowSide: THREE.BackSide,
       emissive: "#fff",
       emissiveIntensity: moonLuminosity,
       opacity: moonLuminosity,
       transparent: true,
-      flatShading: false,
+      flatShading: false
     });
     this.moon = new THREE.Mesh(moonGeometrySphere, moonMaterialSphere);
 
@@ -355,129 +340,135 @@ class ThreeAnimation extends React.Component {
     this.moon.position.z = -90;
     this.moon.scale.set(0.6, 0.6, 0.6);
     this.scene.add(this.moon);
+  };
 
-    // Clouds
-    const createClouds = () => {
-      this.cloudsA = new THREE.Object3D();
-      const cloudGeo = new THREE.Geometry();
+  createClouds = () => {
+    this.cloudsA = new THREE.Object3D();
+    const cloudGeo = new THREE.Geometry();
 
-      const tuft1 = new THREE.SphereGeometry(1.25, 7, 8);
-      tuft1.translate(-2, -0.4, 0);
-      cloudGeo.merge(tuft1);
+    const tuft1 = new THREE.SphereGeometry(1.25, 7, 8);
+    tuft1.translate(-2, -0.4, 0);
+    cloudGeo.merge(tuft1);
 
-      const tuft2 = new THREE.SphereGeometry(1.75, 7, 8);
-      tuft2.translate(2, 0, 0);
-      cloudGeo.merge(tuft2);
+    const tuft2 = new THREE.SphereGeometry(1.75, 7, 8);
+    tuft2.translate(2, 0, 0);
+    cloudGeo.merge(tuft2);
 
-      const tuft3 = new THREE.SphereGeometry(2.0, 7, 8);
-      tuft3.translate(0, 0.3, 0);
-      cloudGeo.merge(tuft3);
+    const tuft3 = new THREE.SphereGeometry(2.0, 7, 8);
+    tuft3.translate(0, 0.3, 0);
+    cloudGeo.merge(tuft3);
 
-      // TODO: Remove if not using.
-      cloudGeo.mergeVertices();
-      // cloudGeo.computeFlatVertexNormals();
-      cloudGeo.computeVertexNormals();
+    // Subdivide clouds
+    cloudGeo.mergeVertices();
+    cloudGeo.computeVertexNormals();
 
-      jitter(cloudGeo, 0.1);
+    // Unique-ify clouds
+    jitter(cloudGeo, 0.1);
 
-      const cloud1 = new THREE.Mesh(
-        cloudGeo,
-        new THREE.MeshLambertMaterial({
-          color: "white",
-          flatShading: true,
-        })
-      );
+    const cloud1 = new THREE.Mesh(
+      cloudGeo,
+      new THREE.MeshLambertMaterial({
+        color: "white",
+        flatShading: true
+      })
+    );
 
-      cloud1.material.morphTargets = true;
+    cloud1.material.morphTargets = true;
 
-      cloud1.position.x = 10;
-      cloud1.position.y = 10;
-      cloud1.position.z = -20;
-      this.cloudsA.add(cloud1);
+    cloud1.position.x = 10;
+    cloud1.position.y = 10;
+    cloud1.position.z = -20;
+    this.cloudsA.add(cloud1);
 
-      const cloud2 = cloud1.clone();
+    const cloud2 = cloud1.clone();
 
-      cloud2.position.x = 0;
-      cloud2.position.y = 4.5;
-      cloud2.scale.set(1.2, 1.2, 1.2);
-      cloud2.rotation.y = THREE.Math.degToRad(180);
-      this.cloudsA.add(cloud2);
+    cloud2.position.x = 0;
+    cloud2.position.y = 4.5;
+    cloud2.scale.set(1.2, 1.2, 1.2);
+    cloud2.rotation.y = THREE.Math.degToRad(180);
+    this.cloudsA.add(cloud2);
 
-      const cloud3 = cloud1.clone();
+    const cloud3 = cloud1.clone();
 
-      cloud3.position.x = -10;
-      cloud3.position.y = 13.5;
-      cloud3.scale.set(1.2, 1.2, 1.2);
-      this.cloudsA.add(cloud3);
+    cloud3.position.x = -10;
+    cloud3.position.y = 13.5;
+    cloud3.scale.set(1.2, 1.2, 1.2);
+    this.cloudsA.add(cloud3);
 
-      this.cloudsB = this.cloudsA.clone();
-      this.cloudsB.position.x = -40;
+    this.cloudsB = this.cloudsA.clone();
+    this.cloudsB.position.x = -40;
 
-      this.scene.add(this.cloudsA);
-      this.scene.add(this.cloudsB);
-    };
+    this.scene.add(this.cloudsA);
+    this.scene.add(this.cloudsB);
+  };
 
-    createClouds();
+  createStars = () => {
+    const starTexture = new THREE.TextureLoader().load(Sparkle);
 
-    // Stars
-    const createStars = () => {
-      const starTexture = new THREE.TextureLoader().load(Sparkle);
+    this.stars = [];
+    this.starsGroup = new THREE.Object3D();
 
-      this.stars = [];
-      this.starsGroup = new THREE.Object3D();
+    for (let i = 0; i < 90; i++) {
+      let geometry = new THREE.PlaneGeometry(2, 2);
+      let material = new THREE.MeshBasicMaterial({
+        map: starTexture,
+        transparent: true,
+        opacity: 0.5
+      });
+      let star = new THREE.Mesh(geometry, material);
+      let starZ = getRandom();
+      starZ = starZ > 0 ? -100 : starZ - 120;
+      star.position.set(getRandom(), getRandom(), starZ);
+      star.material.side = THREE.DoubleSide;
+      this.stars.push(star);
+      this.starsGroup.add(star);
+    }
 
-      for (let i = 0; i < 90; i++) {
-        let geometry = new THREE.PlaneGeometry(2, 2);
-        let material = new THREE.MeshBasicMaterial({
-          map: starTexture,
-          transparent: true,
-          opacity: 0.5,
-        });
-        let star = new THREE.Mesh(geometry, material);
-        let starZ = getRandom();
-        starZ = starZ > 0 ? -100 : starZ - 120;
-        star.position.set(getRandom(), getRandom(), starZ);
-        star.material.side = THREE.DoubleSide;
-        this.stars.push(star);
-        this.starsGroup.add(star);
-      }
+    for (let j = 0; j < this.stars.length; j++) {
+      this.scene.add(this.stars[j]);
+    }
+  };
 
-      for (let j = 0; j < this.stars.length; j++) {
-        this.scene.add(this.stars[j]);
-      }
-    };
-
-    createStars();
+  addModelAndLaptop() {
+    let model, // Our character
+      neck, // Reference to the neck bone in the skeleton
+      waist, // Reference to the waist bone in the skeleton
+      // TODO: For future update when there are more animations, uncomment this.
+      // possibleAnims, // Animations found in our file
+      // currentlyAnimating = false, // Used to check whether characters neck is being used in another anim
+      // raycaster = new THREE.Raycaster(), // Used to detect the click on our character
+      idle; // Idle, the default state our character returns to
 
     const MODEL_PATH =
       "https://s3.us-east-2.amazonaws.com/nidhi-reddy.com/models/nidhi-006.glb";
 
-    let nidhi_txt = new THREE.TextureLoader().load(
-      "https://s3.us-east-2.amazonaws.com/nidhi-reddy.com/models/nidhi-006-texture.png"
+    let modelTexture = new THREE.TextureLoader().load(
+      `https://s3.us-east-2.amazonaws.com/nidhi-reddy.com/models/nidhi-006-texture.jpg`
     );
 
-    nidhi_txt.flipY = false; // we flip the texture so that its the right way up
+    modelTexture.flipY = false; // we flip the texture so that its the right way up
+    modelTexture.anisotropy = this.renderer.getMaxAnisotropy();
+    modelTexture.minFilter = THREE.NearestFilter;
 
-    const nidhi_mtl = new THREE.MeshStandardMaterial({
-      map: nidhi_txt,
-      color: 0xdddddd,
+    const modelMaterial = new THREE.MeshPhysicalMaterial({
+      map: modelTexture,
       skinning: true,
+      color: 0xb48648
     });
 
-    var self = this;
-    var loader = new GLTFLoader();
+    const loader = new GLTFLoader();
     loader.load(
       MODEL_PATH,
-      function (gltf) {
+      gltf => {
         // A lot is going to happen here
         model = gltf.scene;
         let fileAnimations = gltf.animations;
 
-        model.traverse((o) => {
+        model.traverse(o => {
           if (o.isMesh) {
             o.castShadow = true;
             o.receiveShadow = true;
-            o.material = nidhi_mtl;
+            o.material = modelMaterial;
           }
 
           // Reference the neck and waist bones
@@ -487,10 +478,6 @@ class ThreeAnimation extends React.Component {
           if (o.isBone && o.name === "mixamorigSpine") {
             waist = o;
             waist.rotation.x = THREE.Math.degToRad(-5);
-          }
-
-          if (o.isBone && o.name === "mixamorigRightHand") {
-            rightHand = o;
           }
         });
 
@@ -504,30 +491,30 @@ class ThreeAnimation extends React.Component {
 
         model.castShadow = true;
 
-        mixer = new THREE.AnimationMixer(model);
+        this.mixer = new THREE.AnimationMixer(model);
 
         let idleAnim = THREE.AnimationClip.findByName(fileAnimations, "typing");
         idleAnim.tracks.splice(3, 3);
         idleAnim.tracks.splice(9, 3);
-        idle = mixer.clipAction(idleAnim);
+        idle = this.mixer.clipAction(idleAnim);
         idle.play();
 
-        // LAPTOP
+        // Laptop
         const LAPTOP_PATH = `https://s3.us-east-2.amazonaws.com/nidhi-reddy.com/models/laptop-001.glb`;
 
         const laptop_mtl = new THREE.MeshStandardMaterial({
           color: 0xd3d3d3,
           metalness: 0.5,
-          skinning: true,
+          skinning: true
         });
 
         // Add laptop to scene
         loader.load(
           LAPTOP_PATH,
-          function (gltf) {
-            self.laptop = gltf.scene;
+          gltf => {
+            this.laptop = gltf.scene;
 
-            self.laptop.traverse((o) => {
+            this.laptop.traverse(o => {
               if (o.isMesh) {
                 o.castShadow = true;
                 o.receiveShadow = true;
@@ -535,10 +522,10 @@ class ThreeAnimation extends React.Component {
               }
             });
 
-            self.laptop.castShadow = true;
-            self.laptop.position.set(-0.5, 0.85, 1.3);
-            self.laptop.scale.set(0.8, 0.8, 0.8);
-            self.laptop.emissive = true;
+            this.laptop.castShadow = true;
+            this.laptop.position.set(-0.5, 0.85, 1.3);
+            this.laptop.scale.set(0.8, 0.8, 0.8);
+            this.laptop.emissive = true;
 
             const laptopLight = new THREE.DirectionalLight(0x0000ff, 0.3);
             laptopLight.position.set(-0.5, 0.7, 1.2);
@@ -549,45 +536,44 @@ class ThreeAnimation extends React.Component {
 
             laptopLight.target = laptopLightTarget;
 
-            self.scene.add(laptopLightTarget);
+            this.scene.add(laptopLightTarget);
 
-            model.add(self.laptop);
-            self.scene.add(laptopLight);
-            self.scene.add(model);
+            model.add(this.laptop);
+            this.scene.add(laptopLight);
+            this.scene.add(model);
           },
           undefined, // We don't need this function
-          function (error) {
+          function(error) {
             console.error(error);
           }
         );
-        // END OF LAPTOP
       },
       undefined, // We don't need this function
-      function (error) {
+      function(error) {
         console.error(error);
       }
     );
 
-    document.addEventListener("mousemove", function (e) {
+    document.addEventListener("mousemove", e => {
       var mousecoords = getMousePos(e);
-      if (neck && waist && self.laptop) {
+      if (neck && waist && this.laptop) {
         moveJoint(mousecoords, neck, 50);
-        moveJoint(mousecoords, waist, 1);
-        moveJoint(mousecoords, self.laptop, 5);
+        moveJoint(mousecoords, waist, 10);
+        moveJoint(mousecoords, this.laptop, 5);
       }
     });
 
-    function getMousePos(e) {
+    const getMousePos = e => {
       return { x: e.clientX, y: e.clientY };
-    }
+    };
 
-    function moveJoint(mouse, joint, degreeLimit) {
+    const moveJoint = (mouse, joint, degreeLimit) => {
       let degrees = getMouseDegrees(mouse.x, mouse.y, degreeLimit);
       joint.rotation.y = THREE.Math.degToRad(degrees.x);
       joint.rotation.x = THREE.Math.degToRad(degrees.y / 2);
-    }
+    };
 
-    function getMouseDegrees(x, y, degreeLimit) {
+    const getMouseDegrees = (x, y, degreeLimit) => {
       let dx = 0,
         dy = 0,
         xdiff,
@@ -629,44 +615,85 @@ class ThreeAnimation extends React.Component {
         dy = (degreeLimit * yPercentage) / 100;
       }
       return { x: dx, y: dy };
+    };
+  }
+
+  componentDidMount() {
+    if (!isInBrowser) {
+      return;
     }
 
-    this.starLightness = 0;
-    const twinkleStars = (delta) => {
-      for (let k = 0; k < this.stars.length; k++) {
-        let star = this.stars[k];
-        star.rotation.y > 0.1
-          ? (star.rotation.y = 0.1)
-          : (star.rotation.y += 0.01);
-        star.rotation.z += 0.01;
-        const starScaleDifference = (Math.random() > 0.5 ? -1 : 1) * 2 * delta;
-        if (
-          this.props.sliderValueTotal > 17 ||
-          this.props.sliderValueTotal < 7
-        ) {
-          star.scale.x = 0;
-          star.scale.y = 0;
-        } else if (star.scale.x > 1) {
-          star.scale.x = 1;
-          star.scale.y = 1;
-        } else if (star.scale.x < 0) {
-          star.scale.x = 0;
-          star.scale.y = 0;
-        } else {
-          star.scale.x += starScaleDifference;
-          star.scale.y += starScaleDifference;
-        }
+    let clock = new THREE.Clock(); // Used for anims, which run to a clock instead of frame rate
+
+    THREE.Cache.enabled = true;
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(
+      50,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+    this.camera.position.x = 2;
+    this.camera.position.y = 2;
+    this.camera.position.z = 30;
+    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.outputEncoding = THREE.sRGBEncoding;
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+
+    this.scene.background = new THREE.Color(0xefd1b5);
+
+    // Create sunlight and sky
+    this.createSky();
+
+    // Append to DOM
+    this.mount.appendChild(this.renderer.domElement);
+
+    // Add lights
+    this.addLights();
+
+    // Add fake sun and fake moon
+    this.addSunAndMoon();
+
+    // Ground
+    this.createGround();
+
+    const resizeRendererToDisplaySize = renderer => {
+      this.canvas = renderer.domElement;
+      this.camera.aspect = this.canvas.clientWidth / this.canvas.clientHeight;
+      this.camera.updateProjectionMatrix();
+      const pixelRatio = window.devicePixelRatio;
+      let width = ((this.canvas.clientWidth / 3) * pixelRatio) | 0;
+      let height = width;
+
+      const needResize =
+        this.canvas.width !== width || this.canvas.height !== height;
+      if (needResize) {
+        renderer.setSize(width, height, false);
       }
+      return needResize;
     };
+
+    // Clouds
+    this.createClouds();
+
+    // Stars
+    this.createStars();
+
+    // Add model and laptop
+    this.addModelAndLaptop();
 
     const update = () => {
       const delta = clock.getDelta();
-      if (mixer) {
-        mixer.update(delta);
+
+      if (this.mixer) {
+        this.mixer.update(delta);
       }
       if (resizeRendererToDisplaySize(this.renderer)) {
-        canvas = this.renderer.domElement;
-        this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        this.canvas = this.renderer.domElement;
+        this.camera.aspect = this.canvas.clientWidth / this.canvas.clientHeight;
         this.camera.updateProjectionMatrix();
       }
 
@@ -674,10 +701,13 @@ class ThreeAnimation extends React.Component {
       this.shiftClouds();
 
       // Twinkle stars
-      twinkleStars(delta);
+      this.twinkleStars(delta);
+
+      // Move laptop up and down
+      this.floatLaptop();
 
       this.renderer.render(this.scene, this.camera);
-      requestAnimationFrame(update);
+      this.animationFrameId = window.requestAnimationFrame(update);
     };
 
     update();
@@ -722,9 +752,6 @@ class ThreeAnimation extends React.Component {
       const fakeSunRadius = 12 / Math.PI;
       let fakeSunTheta = nextProps.sliderValueTotal / fakeSunRadius;
 
-      // const sunLuminosity = Math.abs(MAX_HOURS * (Math.ceil(Math.random() * nextProps.sliderValue)));
-      // this.fakeSun.material.emissiveIntensity = sunLuminosity;
-
       this.fakeSun.position.x = fakeSunRadius * Math.sin(fakeSunTheta) * 6;
       this.fakeSun.position.y = fakeSunRadius * Math.cos(fakeSunTheta) * 6;
 
@@ -744,11 +771,17 @@ class ThreeAnimation extends React.Component {
     }
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    if (isInBrowser) {
+      if (this.animationFrameId) {
+        window.cancelAnimationFrame(this.animationFrameId);
+      }
+    }
+  }
 
   render() {
     return (
-      <div ref={(ref) => (this.mount = ref)}>
+      <div ref={ref => (this.mount = ref)}>
         {/* TODO: Add loading animation */}
         {/* <Styled.LoaderAnim ref={(ref) => (this.loaderAnim = ref)}>
           <Styled.Loader>Loading...</Styled.Loader>
@@ -758,11 +791,41 @@ class ThreeAnimation extends React.Component {
   }
 }
 
+const useWindowSize = () => {
+  // Initialize state with undefined width so server and client renders match
+  const [windowSize, setWindowSize] = useState({
+    width: SLIDER_SIZE,
+    height: SLIDER_SIZE
+  });
+
+  useEffect(() => {
+    // Handler to call on window resize
+    function handleResize() {
+      // Set window width/height to state
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    }
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Call handler right away so state gets updated with initial window size
+    handleResize();
+
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []); // Empty array ensures that effect is only run on mount
+
+  return windowSize;
+};
+
 const HeroAnimation = memo(() => {
   const time = new Date();
   const [sliderValue, setSliderValue] = useState(time.getHours() - MAX_HOURS);
   const [sliderValueTotal, setSliderValueTotal] = useState(
-    time.getHours() - MAX_HOURS
+    time.getHours() + MAX_HOURS
   );
   const size = useWindowSize();
 
@@ -786,11 +849,11 @@ const HeroAnimation = memo(() => {
                 maxValue={MAX_HOURS}
                 handle1={{
                   value: sliderValue,
-                  onChange: (v) => {
+                  onChange: v => {
                     setSliderValue(v);
                     const vTotal = v < 0 ? v + MAX_HOURS * 2 : v;
                     setSliderValueTotal(vTotal);
-                  },
+                  }
                 }}
                 arcColor="#48bb78"
                 arcBackgroundColor="#3c366b"
@@ -811,37 +874,5 @@ const HeroAnimation = memo(() => {
     </>
   );
 });
-
-// HeroAnimation.propTypes = {};
-
-const useWindowSize = () => {
-  // Initialize state with undefined width so server and client renders match
-  const [windowSize, setWindowSize] = useState({
-    width: SLIDER_SIZE,
-    height: SLIDER_SIZE,
-  });
-
-  useEffect(() => {
-    // Handler to call on window resize
-    function handleResize() {
-      // Set window width/height to state
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    }
-
-    // Add event listener
-    window.addEventListener("resize", handleResize);
-
-    // Call handler right away so state gets updated with initial window size
-    handleResize();
-
-    // Remove event listener on cleanup
-    return () => window.removeEventListener("resize", handleResize);
-  }, []); // Empty array ensures that effect is only run on mount
-
-  return windowSize;
-};
 
 export default HeroAnimation;
