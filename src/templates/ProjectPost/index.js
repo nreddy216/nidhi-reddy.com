@@ -18,17 +18,17 @@ const ProjectPost = ({ data, pageContext }) => {
   const post = data.markdownRemark;
   const { previous, next } = pageContext;
   let scripts = [];
-  
+
   if (post.frontmatter.video_id || post.frontmatter.vimeo_embed) {
     scripts.push({
-      src: "https://player.vimeo.com/api/player.js"
+      src: "https://player.vimeo.com/api/player.js",
     });
   }
   if (post.frontmatter.twitter_embed) {
     scripts.push({
       src: "https://platform.twitter.com/widgets.js",
       async: true,
-      charset: "utf-8"
+      charset: "utf-8",
     });
   }
 

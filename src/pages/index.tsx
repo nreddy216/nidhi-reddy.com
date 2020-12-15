@@ -1,12 +1,11 @@
-import React from "react";
-
-import Layout from "components/Layout";
-import SEO from "components/SEO";
-import HeroBanner from "components/HeroBanner";
-import HeroAnimation from "components/HeroAnimation";
-import Projects from "components/Projects";
-import TitleSection from "components/ui/TitleSection";
 import Container from "components/ui/Container";
+import HeroAnimation from "components/HeroAnimation";
+import HeroBanner from "components/HeroBanner";
+import Layout from "components/Layout";
+import Projects from "components/Projects";
+import React from "react";
+import SEO from "components/SEO";
+import TitleSection from "components/ui/TitleSection";
 
 const IndexPage: React.FC = () => {
   return (

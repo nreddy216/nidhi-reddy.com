@@ -1,9 +1,8 @@
-import React from "react";
-
-import Layout from "components/Layout";
-import SEO from "components/SEO";
-import Experience from "components/Experience";
 import Education from "components/Education";
+import Experience from "components/Experience";
+import Layout from "components/Layout";
+import React from "react";
+import SEO from "components/SEO";
 import Skills from "components/Skills";
 
 const ResumePage: React.FC = () => (
