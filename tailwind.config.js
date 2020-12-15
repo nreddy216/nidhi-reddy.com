@@ -1,6 +1,14 @@
 module.exports = {
+  purge: {
+    enabled: process.env.NODE_ENV === 'production',
+    content: [
+      './src/**/*.js',
+      './src/**/**/*.js',
+      './src/**/**/**/*.js',
+      './src/pages/*.tsx'
+    ]
+  },
   theme: {
-    purge: false,
     extend: {},
     listStyleType: {
       circle: "circle",

@@ -13,7 +13,7 @@ const ProjectPage: React.FC = () => {
       <Container section>
         <TitleSection
           title="Work"
-          subtitle="Coding, tech leading, motion design"
+          subtitle="coding | designing | leading"
           center
         />
         <Projects filteredTags={["Work"]} showTags />
@@ -21,7 +21,7 @@ const ProjectPage: React.FC = () => {
       <Container section>
         <TitleSection
           title="Not Work"
-          subtitle="Experiments, art, animation, AR/VR"
+          subtitle="creative experimenting | ar/vr | art"
           center
         />
         <Projects filteredTags={["NotWork"]} showTags />
