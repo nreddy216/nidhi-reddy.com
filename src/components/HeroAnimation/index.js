@@ -34,8 +34,6 @@ import {
 } from "three";
 import { memo, useEffect, useState } from "react";
 
-// import CircleSlider from "circle-slider";
-// import CircularSlider from "react-circular-slider-svg";
 import CircleSlider from "./circleSlider";
 import Container from "components/ui/Container";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
@@ -877,7 +875,6 @@ const HeroAnimation = memo(() => {
     slider = new CircleSlider("circle-slider", options);
     
     const newAngle = (360 * sliderValueTotal) / (MAX_HOURS * 2);
-    console.log("ANGLE ", newAngle, sliderValueTotal);
     slider.setAngle(newAngle);
 
     slider.on("sliderMove", setSliderValues);
@@ -895,23 +892,8 @@ const HeroAnimation = memo(() => {
       <Container className="relative">
         <Styled.SliderWrapper sliderSize={width}>
           <Styled.Slider>
-            {/* <CircularSlider
-              size={width}
-              minValue={-MAX_HOURS}
-              maxValue={MAX_HOURS}
-              handle1={{
-                value: sliderValue,
-                onChange: (v) => {
-                  setSliderValue(v);
-                  const vTotal = v < 0 ? v + MAX_HOURS * 2 : v;
-                  setSliderValueTotal(vTotal);
-                },
-              }}
-              arcColor="#48bb78"
-              arcBackgroundColor="#3c366b"
-            /> */}
             <Styled.CircleSlider
-              sliderSize={width}
+              sliderSize={animationWidth}
               id="circle-slider"
             ></Styled.CircleSlider>
           </Styled.Slider>
@@ -919,10 +901,10 @@ const HeroAnimation = memo(() => {
             animationWidth={animationWidth}
             windowHeight={size.height}
           >
-            {/* <ThreeAnimation
+            <ThreeAnimation
               sliderValue={sliderValue}
               sliderValueTotal={sliderValueTotal}
-            /> */}
+            />
           </Styled.AnimationWrapper>
         </Styled.SliderWrapper>
       </Container>

@@ -146,11 +146,10 @@ class CircleSlider extends EventEmitter {
     this.root.addEventListener(startEvent, e => moveHandle(e));
 
     // user clicks random part of circle
-    this.root.addEventListener(startEvent, (e) => this._mouseMoveHandler(e), false);
+    this.root.addEventListener(startEvent, e => this._mouseMoveHandler(e));
   }
 
   _mouseMoveHandler(e) {
-    e.preventDefault();
     this._moveHandle(this._getRawAngle(e));
   }
 
@@ -184,7 +183,7 @@ class CircleSlider extends EventEmitter {
   _getRawAngle(e) {
     const pivot = CircleSlider._getCenter(this.root);
     let mouse;
-    if (e.type === "touchmove") {
+    if (e.type === "touchmove" || e.type === "touchstart") {
       mouse = {
         x: e.touches[0].clientX,
         y: e.touches[0].clientY
@@ -199,6 +198,7 @@ class CircleSlider extends EventEmitter {
     const angle =
       CircleSlider._radToDeg(Math.atan2(mouse.y - pivot.y, mouse.x - pivot.x)) %
       360;
+
     return angle;
   }
 
