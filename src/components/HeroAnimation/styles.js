@@ -2,7 +2,7 @@ import styled from "styled-components";
 import tw from "tailwind.macro";
 
 export const SliderWrapper = styled.section`
-  ${tw`relative w-full overflow-hidden max-h-full flex justify-center items-center`};
+  ${tw`relative w-full max-h-full flex justify-center items-center`};
 
   ${({ sliderSize }) =>
     sliderSize && `height: ${sliderSize}px; margin-bottom: 1rem;`};
@@ -60,4 +60,64 @@ export const Name = styled.h1`
   -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
+`;
+
+export const CircleSlider = styled.div`
+position: relative;
+border-radius: 100%;
+border: 6px solid black;
+
+/* Other than the above two, go wild! */
+${({ sliderSize }) =>
+sliderSize && `height: ${sliderSize}px; width: ${sliderSize}px;`};
+
+
+/*
+  Probably best to paste this exactly as is.
+  These CSS rules make sure that the handle rotates
+  properly, so don't change anything here.
+*/
+.cs-handle-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  margin-top: -1px;
+}
+
+.cs-handle {
+  position: absolute;
+  transform: translateY(-50%);
+  width: 0; 
+  height: 0; 
+  border-top: 24px solid transparent;
+  border-bottom: 24px solid transparent;
+  border-left: 36px solid #48bb78;
+  transition: border-left-color 0.25s ease;
+  
+  /*
+    Change 'right' to change the offset from the edge.
+    E.g right: 0 puts the handle just next to the edge
+    of #slider, on the inside
+  */
+  right: -20px;
+  cursor: pointer;
+
+  &:after {
+    content: '';
+    position: absolute;
+    right: 50px;
+    top: -30px;
+    background: #48bb78;
+    width: 6px;
+    height: 60px;
+    transform: rotate(90deg);
+  }
+}
+
+.cs-handle:active {
+  border-left-color: blue;
+}
+);
 `;

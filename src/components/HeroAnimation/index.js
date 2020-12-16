@@ -30,11 +30,13 @@ import {
   Vector2,
   Vector3,
   WebGLRenderer,
-  sRGBEncoding,
+  sRGBEncoding
 } from "three";
 import { memo, useEffect, useState } from "react";
 
-import CircularSlider from "react-circular-slider-svg";
+// import CircleSlider from "circle-slider";
+// import CircularSlider from "react-circular-slider-svg";
+import CircleSlider from "./circleSlider";
 import Container from "components/ui/Container";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { ImprovedNoise } from "three/examples/jsm/math/ImprovedNoise.js";
@@ -55,7 +57,7 @@ const map = (val, smin, smax, emin, emax) =>
 
 //randomly displace the x,y,z coords by the `per` value
 const jitter = (geo, per) =>
-  geo.vertices.forEach((v) => {
+  geo.vertices.forEach(v => {
     v.x += map(Math.random(), 0, 1, -per, per);
     v.y += map(Math.random(), 0, 1, -per, per);
     v.z += map(Math.random(), 0, 1, -per, per);
@@ -185,7 +187,7 @@ class ThreeAnimation extends React.Component {
       new MeshPhysicalMaterial({
         map: this.groundTexture,
         color: 0xd3d3d3,
-        flatShading: true,
+        flatShading: true
       })
     );
     this.groundMesh.position.set(0, -58, 30);
@@ -194,7 +196,7 @@ class ThreeAnimation extends React.Component {
     this.scene.add(this.groundMesh);
   };
 
-  shiftClouds = (sliderValue) => {
+  shiftClouds = sliderValue => {
     const MAX_CLOUD_X = 40;
     const SLOW_CLOUD_INCREMENT = 0.01;
     if (typeof sliderValue !== "undefined") {
@@ -240,7 +242,7 @@ class ThreeAnimation extends React.Component {
     }
   };
 
-  twinkleStars = (delta) => {
+  twinkleStars = delta => {
     for (let k = 0; k < this.stars.length; k++) {
       let star = this.stars[k];
       star.rotation.y > 0.1
@@ -279,7 +281,7 @@ class ThreeAnimation extends React.Component {
       mieDirectionalG: 0.7,
       inclination: Math.abs(this.props.sliderValue / MAX_HOURS / 2),
       azimuth: Math.abs(this.props.sliderValue / MAX_HOURS / 2),
-      exposure: this.renderer.toneMappingExposure,
+      exposure: this.renderer.toneMappingExposure
     };
 
     const uniforms = this.sky.material.uniforms;
@@ -331,7 +333,7 @@ class ThreeAnimation extends React.Component {
     let fakeSunMaterialSphere = new MeshStandardMaterial({
       color: 0xf2ce2e,
       shadowSide: BackSide,
-      emissive: "#F8CE3B",
+      emissive: "#F8CE3B"
     });
     this.fakeSun = new Mesh(fakeSunGeometrySphere, fakeSunMaterialSphere);
 
@@ -354,7 +356,7 @@ class ThreeAnimation extends React.Component {
       emissiveIntensity: moonLuminosity,
       opacity: moonLuminosity,
       transparent: true,
-      flatShading: false,
+      flatShading: false
     });
     this.moon = new Mesh(moonGeometrySphere, moonMaterialSphere);
 
@@ -395,7 +397,7 @@ class ThreeAnimation extends React.Component {
       cloudGeo,
       new MeshLambertMaterial({
         color: "white",
-        flatShading: true,
+        flatShading: true
       })
     );
 
@@ -439,7 +441,7 @@ class ThreeAnimation extends React.Component {
       let material = new MeshBasicMaterial({
         map: starTexture,
         transparent: true,
-        opacity: 0.5,
+        opacity: 0.5
       });
       let star = new Mesh(geometry, material);
       let starZ = getRandom();
@@ -479,18 +481,18 @@ class ThreeAnimation extends React.Component {
     const modelMaterial = new MeshPhysicalMaterial({
       map: modelTexture,
       skinning: true,
-      color: 0xb48648,
+      color: 0xb48648
     });
 
     const loader = new GLTFLoader();
     loader.load(
       MODEL_PATH,
-      (gltf) => {
+      gltf => {
         // A lot is going to happen here
         model = gltf.scene;
         let fileAnimations = gltf.animations;
 
-        model.traverse((o) => {
+        model.traverse(o => {
           if (o.isMesh) {
             o.castShadow = true;
             o.receiveShadow = true;
@@ -531,16 +533,16 @@ class ThreeAnimation extends React.Component {
         const laptop_mtl = new MeshStandardMaterial({
           color: 0xd3d3d3,
           metalness: 0.5,
-          skinning: true,
+          skinning: true
         });
 
         // Add laptop to scene
         loader.load(
           LAPTOP_PATH,
-          (gltf) => {
+          gltf => {
             this.laptop = gltf.scene;
 
-            this.laptop.traverse((o) => {
+            this.laptop.traverse(o => {
               if (o.isMesh) {
                 o.castShadow = true;
                 o.receiveShadow = true;
@@ -569,18 +571,18 @@ class ThreeAnimation extends React.Component {
             this.scene.add(model);
           },
           undefined, // We don't need this function
-          function (error) {
+          function(error) {
             console.error(error);
           }
         );
       },
       undefined, // We don't need this function
-      function (error) {
+      function(error) {
         console.error(error);
       }
     );
 
-    document.addEventListener("mousemove", (e) => {
+    document.addEventListener("mousemove", e => {
       var mousecoords = getMousePos(e);
       if (neck && waist && this.laptop) {
         moveJoint(mousecoords, neck, 50);
@@ -589,7 +591,7 @@ class ThreeAnimation extends React.Component {
       }
     });
 
-    const getMousePos = (e) => {
+    const getMousePos = e => {
       return { x: e.clientX, y: e.clientY };
     };
 
@@ -686,7 +688,7 @@ class ThreeAnimation extends React.Component {
     // Ground
     this.createGround();
 
-    const resizeRendererToDisplaySize = (renderer) => {
+    const resizeRendererToDisplaySize = renderer => {
       this.canvas = renderer.domElement;
       this.camera.aspect = this.canvas.clientWidth / this.canvas.clientHeight;
       this.camera.updateProjectionMatrix();
@@ -807,7 +809,7 @@ class ThreeAnimation extends React.Component {
 
   render() {
     return (
-      <div ref={(ref) => (this.mount = ref)}>
+      <div ref={ref => (this.mount = ref)}>
         {/* TODO: Add loading animation */}
         {/* <Styled.LoaderAnim ref={(ref) => (this.loaderAnim = ref)}>
           <Styled.Loader>Loading...</Styled.Loader>
@@ -821,7 +823,7 @@ const useWindowSize = () => {
   // Initialize state with undefined width so server and client renders match
   const [windowSize, setWindowSize] = useState({
     width: SLIDER_SIZE,
-    height: SLIDER_SIZE,
+    height: SLIDER_SIZE
   });
 
   useEffect(() => {
@@ -830,7 +832,7 @@ const useWindowSize = () => {
       // Set window width/height to state
       setWindowSize({
         width: window.innerWidth,
-        height: window.innerHeight,
+        height: window.innerHeight
       });
     }
 
@@ -851,9 +853,10 @@ const HeroAnimation = memo(() => {
   const time = new Date();
   const [sliderValue, setSliderValue] = useState(time.getHours() - MAX_HOURS);
   const [sliderValueTotal, setSliderValueTotal] = useState(
-    time.getHours() + MAX_HOURS
+    time.getHours()
   );
   const size = useWindowSize();
+  let slider;
 
   const padding = 40;
   let width =
@@ -863,12 +866,36 @@ const HeroAnimation = memo(() => {
       ? SLIDER_SIZE * 2 - padding
       : size.width - padding;
 
+  useEffect(() => {
+    
+    const options = {
+      snap: 15,
+      clockwise: true,
+      startPos: 'bottom',
+    };
+    
+    slider = new CircleSlider("circle-slider", options);
+    
+    const newAngle = (360 * sliderValueTotal) / (MAX_HOURS * 2);
+    console.log("ANGLE ", newAngle, sliderValueTotal);
+    slider.setAngle(newAngle);
+
+    slider.on("sliderMove", setSliderValues);
+  }, []);
+
+  const setSliderValues = angle => {
+    const valueTotal = (MAX_HOURS * 2) / (360 / angle);
+    const value = valueTotal - MAX_HOURS;
+    setSliderValueTotal(valueTotal);
+    setSliderValue(value);
+  };
+
   return (
     <>
       <Container className="relative">
         <Styled.SliderWrapper sliderSize={width}>
           <Styled.Slider>
-            <CircularSlider
+            {/* <CircularSlider
               size={width}
               minValue={-MAX_HOURS}
               maxValue={MAX_HOURS}
@@ -882,16 +909,20 @@ const HeroAnimation = memo(() => {
               }}
               arcColor="#48bb78"
               arcBackgroundColor="#3c366b"
-            />
+            /> */}
+            <Styled.CircleSlider
+              sliderSize={width}
+              id="circle-slider"
+            ></Styled.CircleSlider>
           </Styled.Slider>
           <Styled.AnimationWrapper
             animationWidth={animationWidth}
             windowHeight={size.height}
           >
-            <ThreeAnimation
+            {/* <ThreeAnimation
               sliderValue={sliderValue}
               sliderValueTotal={sliderValueTotal}
-            />
+            /> */}
           </Styled.AnimationWrapper>
         </Styled.SliderWrapper>
       </Container>
