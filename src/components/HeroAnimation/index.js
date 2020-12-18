@@ -754,10 +754,6 @@ class ThreeAnimation extends React.Component {
     update();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.sliderValue !== this.props.sliderValue;
-  }
-
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.sliderValue !== this.props.sliderValue) {
       if (typeof this != "undefined" && typeof this.walk != "undefined") {

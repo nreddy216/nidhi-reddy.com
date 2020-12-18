@@ -9,7 +9,7 @@ export const SliderWrapper = styled.section`
   margin-bottom: 1rem;
   transition: all 0.25s ease;
 
-  // ${({ sliderSize }) => sliderSize ? `height: ${sliderSize}px; opacity: 1;` : `opacity: 0;` };
+  ${({ sliderSize }) => sliderSize && `height: ${sliderSize}px;`};
 `;
 
 export const Slider = styled.section`
@@ -21,10 +21,8 @@ export const Slider = styled.section`
 `;
 
 export const Canvas = styled.canvas`
-  canvas {
-    transition: opacity 0.25 ease;
-    ${({ loaded }) => (loaded ? `opacity: 1;` : `opacity: 0;`)};
-  }
+  transition: opacity 0.25 ease;
+  ${({ loaded }) => (loaded ? `opacity: 1;` : `opacity: 0;`)};
 `;
 
 export const AnimationWrapper = styled.section`
@@ -83,7 +81,9 @@ max-height: 600px;
 transition: opacity 0.25s ease;
 
 ${({ sliderSize }) =>
-  !!sliderSize ? `opacity: 1; height: ${sliderSize}px; width: ${sliderSize}px;` : `opacity: 0; @media (min-width: 1024px) {
+  !!sliderSize
+    ? `opacity: 1; height: ${sliderSize}px; width: ${sliderSize}px;`
+    : `opacity: 0; @media (min-width: 1024px) {
     height: 600px;
   }`};
 
