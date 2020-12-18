@@ -5,17 +5,25 @@ const navyBlue = "#3c366b";
 const green = "#48bb78";
 
 export const SliderWrapper = styled.section`
-  ${tw`relative w-full max-h-full flex justify-center items-center`};
+  ${tw`relative w-full h-full max-h-full flex justify-center items-center`};
+  margin-bottom: 1rem;
+  transition: all 0.25s ease;
 
-  ${({ sliderSize }) =>
-    sliderSize && `height: ${sliderSize}px; margin-bottom: 1rem;`};
+  // ${({ sliderSize }) => sliderSize ? `height: ${sliderSize}px; opacity: 1;` : `opacity: 0;` };
 `;
 
 export const Slider = styled.section`
-  ${tw`relative top-0 left-0`};
+  ${tw`relative w-full`};
 
   circle {
     cursor: pointer;
+  }
+`;
+
+export const Canvas = styled.canvas`
+  canvas {
+    transition: opacity 0.25 ease;
+    ${({ loaded }) => (loaded ? `opacity: 1;` : `opacity: 0;`)};
   }
 `;
 
@@ -34,22 +42,20 @@ export const AnimationWrapper = styled.section`
     animationWidth &&
     windowHeight &&
     `
-    canvas {
-      max-width: 100% !important;
-      max-height: ${
-        animationWidth * 0.65 < 300 ? 300 : animationWidth * 0.65
-      }px !important;
-      width: ${animationWidth}px !important;
-      height: ${animationWidth}px !important;
-    }`};
+  canvas {
+    max-width: 100% !important;
+    max-height: ${
+      animationWidth * 0.65 < 300 ? 300 : animationWidth * 0.65
+    }px !important;
+    width: ${animationWidth}px !important;
+    height: ${animationWidth}px !important;
+  }`};
 `;
 
-export const LoaderAnim = styled.section`
-  ${tw`w-full`};
-`;
+export const LoaderAnim = styled.div`
+  transition: opacity 0.25s ease;
 
-export const Loader = styled.section`
-  ${tw`w-full bg-white`};
+  ${({ loaded }) => (loaded ? `opacity: 0;` : `opacity: 1;`)};
 `;
 
 export const Name = styled.h1`
@@ -69,10 +75,17 @@ export const CircleSlider = styled.div`
 position: relative;
 border-radius: 100%;
 border: 4px solid ${navyBlue};
-
+width: 100%;
+max-width: 600px;
+margin: 0 auto;
+height: 50vh;
+max-height: 600px;
+transition: opacity 0.25s ease;
 
 ${({ sliderSize }) =>
-  sliderSize && `height: ${sliderSize}px; width: ${sliderSize}px;`};
+  !!sliderSize ? `opacity: 1; height: ${sliderSize}px; width: ${sliderSize}px;` : `opacity: 0; @media (min-width: 1024px) {
+    height: 600px;
+  }`};
 
 .cs-handle-container {
   position: absolute;
@@ -86,7 +99,6 @@ ${({ sliderSize }) =>
 .cs-handle {
   position: relative;
   transform: translateY(-50%);
-  transition: border-left-color 0.25s ease;
   cursor: grab;
 
   &.active {

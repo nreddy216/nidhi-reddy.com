@@ -1,18 +1,17 @@
-import React from "react";
-import { graphql } from "gatsby";
-import Link from "gatsby-link";
-
-import Layout from "components/Layout";
-import SEO from "components/SEO";
-import Container from "components/ui/Container";
-import TitleSection from "components/ui/TitleSection";
-import FormatHtml from "components/utils/FormatHtml";
-import Img from "gatsby-image";
-import Button from "components/ui/Button";
-import VimeoPlayer from "components/VimeoPlayer";
-
 import * as Styled from "./styles";
+
+import Button from "components/ui/Button";
+import Container from "components/ui/Container";
+import FormatHtml from "components/utils/FormatHtml";
 import Icon from "components/ui/Icon";
+import Img from "gatsby-image";
+import Layout from "components/Layout";
+import Link from "gatsby-link";
+import React from "react";
+import SEO from "components/SEO";
+import TitleSection from "components/ui/TitleSection";
+import VimeoPlayer from "components/VimeoPlayer";
+import { graphql } from "gatsby";
 
 const ProjectPost = ({ data, pageContext }) => {
   const post = data.markdownRemark;
@@ -63,7 +62,7 @@ const ProjectPost = ({ data, pageContext }) => {
               id={post.frontmatter.video_id}
               url={post.frontmatter.video_url}
               title={post.frontmatter.video_title}
-              autoplay={post.frontmatter.video_autoplay}
+              autoplay={post.frontmatter.video_autoplay !== false}
             ></VimeoPlayer>
           ) : (
             post.frontmatter.cover && (

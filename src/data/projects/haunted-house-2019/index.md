@@ -14,7 +14,7 @@ published: true
 featured: true
 ---
 
-Here's also this slideshow walkthrough of the steps along with some lessons learned through the process.
+<!-- Here's also this slideshow walkthrough of the steps along with some lessons learned through the process.
 
 <br>
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQV4QYWTQoeWld2pM4FWFeiSFGTeCCwxQ9YcByvzORDa4BnmGURsW0_VZ4yob3EmhYU5HOQn6IxeBOn/embed?start=true&loop=true&delayms=10000" frameborder="0" width="720px" height="426px" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQV4QYWTQoeWld2pM4FWFeiSFGTeCCwxQ9YcByvzORDa4BnmGURsW0_VZ4yob3EmhYU5HOQn6IxeBOn/embed?start=true&loop=true&delayms=10000" frameborder="0" width="720px" height="426px" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe> -->
