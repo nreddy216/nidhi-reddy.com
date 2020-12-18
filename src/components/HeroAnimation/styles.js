@@ -9,7 +9,8 @@ export const SliderWrapper = styled.section`
   margin-bottom: 1rem;
   transition: all 0.25s ease;
 
-  // ${({ sliderSize }) => sliderSize ? `height: ${sliderSize}px; opacity: 1;` : `opacity: 0;` };
+  ${({ sliderSize }) =>
+    sliderSize ? `height: ${sliderSize}px; opacity: 1;` : `opacity: 0;`};
 `;
 
 export const Slider = styled.section`
@@ -20,15 +21,8 @@ export const Slider = styled.section`
   }
 `;
 
-export const Canvas = styled.canvas`
-  canvas {
-    transition: opacity 0.25 ease;
-    ${({ loaded }) => (loaded ? `opacity: 1;` : `opacity: 0;`)};
-  }
-`;
-
 export const AnimationWrapper = styled.section`
-  ${tw`absolute`};
+  ${tw`absolute w-full h-full`};
 
   clip-path: circle(38% at 50% 50%);
   transition: all 0.5s ease;
@@ -52,10 +46,29 @@ export const AnimationWrapper = styled.section`
   }`};
 `;
 
+export const ThreeAnimation = styled.div`
+  ${tw`w-full h-full flex justify-center items-center bg-blue-100`};
+`;
+
 export const LoaderAnim = styled.div`
+  ${tw`w-full h-full flex justify-center items-center`};
   transition: opacity 0.25s ease;
 
   ${({ loaded }) => (loaded ? `opacity: 0;` : `opacity: 1;`)};
+
+  svg {
+    width: 60px;
+    height: 60px;
+
+    circle, line {
+      stroke: ${green};
+    }
+  }
+`;
+
+export const Canvas = styled.canvas`
+  ${({ loaded }) => (loaded ? `opacity: 1;` : `opacity: 0;`)};
+  transition: opacity 0.25 ease;
 `;
 
 export const Name = styled.h1`
@@ -83,7 +96,9 @@ max-height: 600px;
 transition: opacity 0.25s ease;
 
 ${({ sliderSize }) =>
-  !!sliderSize ? `opacity: 1; height: ${sliderSize}px; width: ${sliderSize}px;` : `opacity: 0; @media (min-width: 1024px) {
+  !!sliderSize
+    ? `opacity: 1; height: ${sliderSize}px; width: ${sliderSize}px;`
+    : `opacity: 0; @media (min-width: 1024px) {
     height: 600px;
   }`};
 

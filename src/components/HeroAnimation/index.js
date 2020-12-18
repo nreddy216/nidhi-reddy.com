@@ -156,7 +156,7 @@ class ThreeAnimation extends React.Component {
 
     this.laptopMovingDown = true;
     this.state = {
-      loaded: false,
+      loaded: false
     };
   }
 
@@ -572,10 +572,8 @@ class ThreeAnimation extends React.Component {
             this.scene.add(model);
           },
           // undefined, // We don't need this function
-          (xhr) => {
-
-          },
-          (error) => {
+          xhr => {},
+          error => {
             console.error(error);
           }
         );
@@ -583,11 +581,14 @@ class ThreeAnimation extends React.Component {
       // undefined, // We don't need this function
       xhr => {
         if (xhr.loaded === xhr.total) {
-          this.setState({
-            loaded: true,
-          }, () => {
-            this.loaderAnim.remove();
-          });
+          this.setState(
+            {
+              loaded: true
+            },
+            () => {
+              this.loaderAnim.remove();
+            }
+          );
         }
       },
       error => {
@@ -754,10 +755,6 @@ class ThreeAnimation extends React.Component {
     update();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.sliderValue !== this.props.sliderValue;
-  }
-
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.sliderValue !== this.props.sliderValue) {
       if (typeof this != "undefined" && typeof this.walk != "undefined") {
@@ -821,13 +818,79 @@ class ThreeAnimation extends React.Component {
   }
 
   render() {
+    const { loaded } = this.state;
+
     return (
-      <div ref={ref => (this.mount = ref)}>
-        {/* TODO: Add loading animation */}
-        <Styled.LoaderAnim ref={ref => (this.loaderAnim = ref)} loaded={this.state.loaded}>
+      <Styled.ThreeAnimation ref={ref => (this.mount = ref)}>
+        <Styled.LoaderAnim ref={ref => (this.loaderAnim = ref)} loaded={loaded}>
+          <svg
+            version="1.1"
+            id="L2"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            viewBox="0 0 100 100"
+            enableBackground="new 0 0 100 100"
+            xmlSpace="preserve"
+          >
+            <circle
+              fill="none"
+              stroke="#fff"
+              stroke-width="4"
+              stroke-miterlimit="10"
+              cx="50"
+              cy="50"
+              r="48"
+            ></circle>
+            <line
+              fill="none"
+              strokeLinecap="round"
+              stroke="#fff"
+              strokeWidth="4"
+              strokeMiterlimit="10"
+              x1="50"
+              y1="50"
+              x2="85"
+              y2="50.5"
+            >
+              <animateTransform
+                attributeName="transform"
+                dur="2s"
+                type="rotate"
+                from="0 50 50"
+                to="360 50 50"
+                repeatCount="indefinite"
+              ></animateTransform>
+            </line>
+            <line
+              fill="none"
+              strokeLinecap="round"
+              stroke="#fff"
+              strokeWidth="4"
+              strokeMiterlimit="10"
+              x1="50"
+              y1="50"
+              x2="49.5"
+              y2="74"
+            >
+              <animateTransform
+                attributeName="transform"
+                dur="15s"
+                type="rotate"
+                from="0 50 50"
+                to="360 50 50"
+                repeatCount="indefinite"
+              ></animateTransform>
+            </line>
+          </svg>
         </Styled.LoaderAnim>
-        <Styled.Canvas loaded={this.state.loaded} id="three-js" ref={ref => (this.canvas = ref)} />
-      </div>
+        <Styled.Canvas
+          loaded={loaded}
+          id="three-js"
+          ref={ref => (this.canvas = ref)}
+        />
+      </Styled.ThreeAnimation>
     );
   }
 }
@@ -875,7 +938,7 @@ const HeroAnimation = memo(() => {
 
   const padding = 120;
   let width =
-    (size.width - padding >= SLIDER_SIZE) ? SLIDER_SIZE : (size.width - padding);
+    size.width - padding >= SLIDER_SIZE ? SLIDER_SIZE : size.width - padding;
   let animationWidth =
     size.width >= SLIDER_SIZE * 2
       ? SLIDER_SIZE * 2 - padding
@@ -909,6 +972,7 @@ const HeroAnimation = memo(() => {
             ></Styled.CircleSlider>
           </Styled.Slider>
           <Styled.AnimationWrapper
+            sizeLoaded={!!size.width}
             animationWidth={animationWidth}
             windowHeight={size.height}
           >
