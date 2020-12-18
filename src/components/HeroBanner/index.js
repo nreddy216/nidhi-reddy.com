@@ -52,7 +52,8 @@ const HeroBanner = () => {
         <FormatHtml content={content} />
       </Styled.Content>
     </Container>
-  )};
+  );
+};
 
 HeroBanner.propTypes = {
   title: PropTypes.string,

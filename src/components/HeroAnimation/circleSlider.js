@@ -1,5 +1,7 @@
+const HandCursor = require("../../assets/images/hand-cursor-01.png");
 const EventEmitter = require("eventemitter3");
 
+// Source: https://github.com/willwull/circle-slider
 class CircleSlider extends EventEmitter {
   /**
    * Creates an instance of CircleSlider inside the element with the id `targetId`
@@ -64,7 +66,7 @@ class CircleSlider extends EventEmitter {
     // just to keep track of all event names
     this.events = {
       sliderMove: "sliderMove",
-      sliderUp: "sliderUp"
+      sliderUp: "sliderUp",
     };
 
     // active is true when user is holding down handle
@@ -112,12 +114,14 @@ class CircleSlider extends EventEmitter {
   // "private" methods
 
   _addEventListeners(startEvent, moveEvent, endEvent) {
-    const moveHandle = e => {
+    const moveHandle = (e) => {
       // prevent text selection
       e.preventDefault();
 
       if (!this.active) {
         this.active = true;
+
+        this.handle.classList.add("active");
 
         // user moves handle
         document.addEventListener(moveEvent, this._mouseMoveHandler, false);
@@ -135,18 +139,21 @@ class CircleSlider extends EventEmitter {
 
           // remove event listener after this has been fired once
           ev.currentTarget.removeEventListener(endEvent, endFunc, false);
+
+          // remove active handle class
+          _this.handle.classList.remove("active");
         });
       }
     };
 
     // user presses handle
-    this.handle.addEventListener(startEvent, e => moveHandle(e));
+    this.handle.addEventListener(startEvent, (e) => moveHandle(e));
 
     // user drags handle within circle
-    this.root.addEventListener(startEvent, e => moveHandle(e));
+    this.root.addEventListener(startEvent, (e) => moveHandle(e));
 
     // user clicks random part of circle
-    this.root.addEventListener(startEvent, e => this._mouseMoveHandler(e));
+    this.root.addEventListener(startEvent, (e) => this._mouseMoveHandler(e));
   }
 
   _mouseMoveHandler(e) {
@@ -186,12 +193,12 @@ class CircleSlider extends EventEmitter {
     if (e.type === "touchmove" || e.type === "touchstart") {
       mouse = {
         x: e.touches[0].clientX,
-        y: e.touches[0].clientY
+        y: e.touches[0].clientY,
       };
     } else {
       mouse = {
         x: e.clientX,
-        y: e.clientY
+        y: e.clientY,
       };
     }
 
@@ -206,7 +213,7 @@ class CircleSlider extends EventEmitter {
     const rect = elem.getBoundingClientRect();
     return {
       x: rect.left + rect.width / 2,
-      y: rect.top + rect.height / 2
+      y: rect.top + rect.height / 2,
     };
   }
 
@@ -229,8 +236,22 @@ class CircleSlider extends EventEmitter {
 
   static _createHandleElem() {
     const h = document.createElement("div");
-    h.tabIndex = 0;
     h.className = "cs-handle";
+    h.tabIndex = 0;
+    h.role = "button";
+    h.ariaLabel = "Click to drag and change the time in the scene.";
+
+    const imageWrapper = document.createElement("div");
+    imageWrapper.className = "cs-handle-img-wrapper";
+
+    const image = document.createElement("img");
+    image.src = HandCursor;
+    image.alt = "Hand cursor";
+    image.className = "cs-handle-img";
+
+    imageWrapper.appendChild(image);
+    h.appendChild(imageWrapper);
+
     return h;
   }
 }

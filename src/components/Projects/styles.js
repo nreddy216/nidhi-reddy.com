@@ -67,11 +67,11 @@ export const Date = styled.h3`
 `;
 
 export const Tags = styled.div`
-  ${tw`p-4 pt-2 mt-auto overflow-scroll text-overflow-ellipsis`}
+  ${tw`p-4 pt-2 mt-auto text-overflow-ellipsis`}
 `;
 
 export const TagsWide = styled.div`
-  ${tw`pt-2 mt-auto overflow-scroll text-overflow-ellipsis`}
+  ${tw`pt-2 mt-auto text-overflow-ellipsis`}
 `;
 
 export const Tag = styled.span`

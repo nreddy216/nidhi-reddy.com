@@ -30,7 +30,7 @@ import {
   Vector2,
   Vector3,
   WebGLRenderer,
-  sRGBEncoding
+  sRGBEncoding,
 } from "three";
 import { memo, useEffect, useState } from "react";
 
@@ -55,7 +55,7 @@ const map = (val, smin, smax, emin, emax) =>
 
 //randomly displace the x,y,z coords by the `per` value
 const jitter = (geo, per) =>
-  geo.vertices.forEach(v => {
+  geo.vertices.forEach((v) => {
     v.x += map(Math.random(), 0, 1, -per, per);
     v.y += map(Math.random(), 0, 1, -per, per);
     v.z += map(Math.random(), 0, 1, -per, per);
@@ -185,7 +185,7 @@ class ThreeAnimation extends React.Component {
       new MeshPhysicalMaterial({
         map: this.groundTexture,
         color: 0xd3d3d3,
-        flatShading: true
+        flatShading: true,
       })
     );
     this.groundMesh.position.set(0, -58, 30);
@@ -194,7 +194,7 @@ class ThreeAnimation extends React.Component {
     this.scene.add(this.groundMesh);
   };
 
-  shiftClouds = sliderValue => {
+  shiftClouds = (sliderValue) => {
     const MAX_CLOUD_X = 40;
     const SLOW_CLOUD_INCREMENT = 0.01;
     if (typeof sliderValue !== "undefined") {
@@ -240,7 +240,7 @@ class ThreeAnimation extends React.Component {
     }
   };
 
-  twinkleStars = delta => {
+  twinkleStars = (delta) => {
     for (let k = 0; k < this.stars.length; k++) {
       let star = this.stars[k];
       star.rotation.y > 0.1
@@ -249,8 +249,7 @@ class ThreeAnimation extends React.Component {
       star.rotation.z += 0.01;
       const starScaleDifference = (Math.random() > 0.5 ? -1 : 1) * 2 * delta;
       if (
-        this.props.sliderValueTotal > 17 ||
-        this.props.sliderValueTotal < 7 ||
+        (this.props.sliderValueTotal < 17 && this.props.sliderValueTotal > 7) ||
         star.scale.x < 0
       ) {
         star.scale.x = 0;
@@ -279,7 +278,7 @@ class ThreeAnimation extends React.Component {
       mieDirectionalG: 0.7,
       inclination: Math.abs(this.props.sliderValue / MAX_HOURS / 2),
       azimuth: Math.abs(this.props.sliderValue / MAX_HOURS / 2),
-      exposure: this.renderer.toneMappingExposure
+      exposure: this.renderer.toneMappingExposure,
     };
 
     const uniforms = this.sky.material.uniforms;
@@ -331,15 +330,15 @@ class ThreeAnimation extends React.Component {
     let fakeSunMaterialSphere = new MeshStandardMaterial({
       color: 0xf2ce2e,
       shadowSide: BackSide,
-      emissive: "#F8CE3B"
+      emissive: "#F8CE3B",
     });
     this.fakeSun = new Mesh(fakeSunGeometrySphere, fakeSunMaterialSphere);
 
     const fakeSunRadius = 12 / Math.PI;
     let fakeSunTheta = this.props.sliderValueTotal / fakeSunRadius;
 
-    this.fakeSun.position.x = fakeSunRadius * Math.sin(fakeSunTheta) * 6;
-    this.fakeSun.position.y = fakeSunRadius * Math.cos(fakeSunTheta) * 6;
+    this.fakeSun.position.x = -fakeSunRadius * Math.sin(fakeSunTheta) * 6;
+    this.fakeSun.position.y = -fakeSunRadius * Math.cos(fakeSunTheta) * 6;
     this.fakeSun.position.z = -80;
     this.fakeSun.scale.set(0.5, 0.5, 0.5);
     this.scene.add(this.fakeSun);
@@ -354,15 +353,15 @@ class ThreeAnimation extends React.Component {
       emissiveIntensity: moonLuminosity,
       opacity: moonLuminosity,
       transparent: true,
-      flatShading: false
+      flatShading: false,
     });
     this.moon = new Mesh(moonGeometrySphere, moonMaterialSphere);
 
     const moonRadius = 12 / Math.PI;
     let moonTheta = this.props.sliderValueTotal / moonRadius;
 
-    this.moon.position.x = -moonRadius * Math.sin(moonTheta) * 6;
-    this.moon.position.y = -moonRadius * Math.cos(moonTheta) * 6;
+    this.moon.position.x = moonRadius * Math.sin(moonTheta) * 6;
+    this.moon.position.y = moonRadius * Math.cos(moonTheta) * 6;
     this.moon.position.z = -90;
     this.moon.scale.set(0.6, 0.6, 0.6);
     this.scene.add(this.moon);
@@ -395,7 +394,7 @@ class ThreeAnimation extends React.Component {
       cloudGeo,
       new MeshLambertMaterial({
         color: "white",
-        flatShading: true
+        flatShading: true,
       })
     );
 
@@ -439,7 +438,7 @@ class ThreeAnimation extends React.Component {
       let material = new MeshBasicMaterial({
         map: starTexture,
         transparent: true,
-        opacity: 0.5
+        opacity: 0.5,
       });
       let star = new Mesh(geometry, material);
       let starZ = getRandom();
@@ -479,18 +478,18 @@ class ThreeAnimation extends React.Component {
     const modelMaterial = new MeshPhysicalMaterial({
       map: modelTexture,
       skinning: true,
-      color: 0xb48648
+      color: 0xb48648,
     });
 
     const loader = new GLTFLoader();
     loader.load(
       MODEL_PATH,
-      gltf => {
+      (gltf) => {
         // A lot is going to happen here
         model = gltf.scene;
         let fileAnimations = gltf.animations;
 
-        model.traverse(o => {
+        model.traverse((o) => {
           if (o.isMesh) {
             o.castShadow = true;
             o.receiveShadow = true;
@@ -531,16 +530,16 @@ class ThreeAnimation extends React.Component {
         const laptop_mtl = new MeshStandardMaterial({
           color: 0xd3d3d3,
           metalness: 0.5,
-          skinning: true
+          skinning: true,
         });
 
         // Add laptop to scene
         loader.load(
           LAPTOP_PATH,
-          gltf => {
+          (gltf) => {
             this.laptop = gltf.scene;
 
-            this.laptop.traverse(o => {
+            this.laptop.traverse((o) => {
               if (o.isMesh) {
                 o.castShadow = true;
                 o.receiveShadow = true;
@@ -569,18 +568,18 @@ class ThreeAnimation extends React.Component {
             this.scene.add(model);
           },
           undefined, // We don't need this function
-          function(error) {
+          function (error) {
             console.error(error);
           }
         );
       },
       undefined, // We don't need this function
-      function(error) {
+      function (error) {
         console.error(error);
       }
     );
 
-    document.addEventListener("mousemove", e => {
+    document.addEventListener("mousemove", (e) => {
       var mousecoords = getMousePos(e);
       if (neck && waist && this.laptop) {
         moveJoint(mousecoords, neck, 50);
@@ -589,7 +588,7 @@ class ThreeAnimation extends React.Component {
       }
     });
 
-    const getMousePos = e => {
+    const getMousePos = (e) => {
       return { x: e.clientX, y: e.clientY };
     };
 
@@ -686,7 +685,7 @@ class ThreeAnimation extends React.Component {
     // Ground
     this.createGround();
 
-    const resizeRendererToDisplaySize = renderer => {
+    const resizeRendererToDisplaySize = (renderer) => {
       this.canvas = renderer.domElement;
       this.camera.aspect = this.canvas.clientWidth / this.canvas.clientHeight;
       this.camera.updateProjectionMatrix();
@@ -778,8 +777,8 @@ class ThreeAnimation extends React.Component {
       const fakeSunRadius = 12 / Math.PI;
       let fakeSunTheta = nextProps.sliderValueTotal / fakeSunRadius;
 
-      this.fakeSun.position.x = fakeSunRadius * Math.sin(fakeSunTheta) * 6;
-      this.fakeSun.position.y = fakeSunRadius * Math.cos(fakeSunTheta) * 6;
+      this.fakeSun.position.x = -fakeSunRadius * Math.sin(fakeSunTheta) * 6;
+      this.fakeSun.position.y = -fakeSunRadius * Math.cos(fakeSunTheta) * 6;
 
       // Update position of moon
       const moonLuminosity = Math.abs(nextProps.sliderValue / MAX_HOURS);
@@ -789,8 +788,8 @@ class ThreeAnimation extends React.Component {
       const moonRadius = 12 / Math.PI;
       let moonTheta = nextProps.sliderValueTotal / moonRadius;
 
-      this.moon.position.x = -moonRadius * Math.sin(moonTheta) * 6;
-      this.moon.position.y = -moonRadius * Math.cos(moonTheta) * 6;
+      this.moon.position.x = moonRadius * Math.sin(moonTheta) * 6;
+      this.moon.position.y = moonRadius * Math.cos(moonTheta) * 6;
 
       // Clouds
       this.shiftClouds(nextProps.sliderValueTotal);
@@ -807,7 +806,7 @@ class ThreeAnimation extends React.Component {
 
   render() {
     return (
-      <div ref={ref => (this.mount = ref)}>
+      <div ref={(ref) => (this.mount = ref)}>
         {/* TODO: Add loading animation */}
         {/* <Styled.LoaderAnim ref={(ref) => (this.loaderAnim = ref)}>
           <Styled.Loader>Loading...</Styled.Loader>
@@ -821,7 +820,7 @@ const useWindowSize = () => {
   // Initialize state with undefined width so server and client renders match
   const [windowSize, setWindowSize] = useState({
     width: SLIDER_SIZE,
-    height: SLIDER_SIZE
+    height: SLIDER_SIZE,
   });
 
   useEffect(() => {
@@ -830,7 +829,7 @@ const useWindowSize = () => {
       // Set window width/height to state
       setWindowSize({
         width: window.innerWidth,
-        height: window.innerHeight
+        height: window.innerHeight,
       });
     }
 
@@ -850,13 +849,15 @@ const useWindowSize = () => {
 const HeroAnimation = memo(() => {
   const time = new Date();
   const [sliderValue, setSliderValue] = useState(time.getHours() - MAX_HOURS);
-  const [sliderValueTotal, setSliderValueTotal] = useState(
-    time.getHours()
-  );
+  const [sliderValueTotal, setSliderValueTotal] = useState(time.getHours());
   const size = useWindowSize();
-  let slider;
 
-  const padding = 40;
+  const sliderOptions = {
+    clockwise: true,
+    startPos: "bottom",
+  };
+
+  const padding = 120;
   let width =
     size.width - padding >= SLIDER_SIZE ? SLIDER_SIZE : size.width - padding;
   let animationWidth =
@@ -865,22 +866,16 @@ const HeroAnimation = memo(() => {
       : size.width - padding;
 
   useEffect(() => {
-    
-    const options = {
-      snap: 15,
-      clockwise: true,
-      startPos: 'bottom',
-    };
-    
-    slider = new CircleSlider("circle-slider", options);
-    
-    const newAngle = (360 * sliderValueTotal) / (MAX_HOURS * 2);
-    slider.setAngle(newAngle);
+    const slider = new CircleSlider("circle-slider", sliderOptions);
+    if (slider) {
+      const newAngle = (360 * sliderValueTotal) / (MAX_HOURS * 2);
+      slider.setAngle(newAngle);
 
-    slider.on("sliderMove", setSliderValues);
+      slider.on("sliderMove", setSliderValues);
+    }
   }, []);
 
-  const setSliderValues = angle => {
+  const setSliderValues = (angle) => {
     const valueTotal = (MAX_HOURS * 2) / (360 / angle);
     const value = valueTotal - MAX_HOURS;
     setSliderValueTotal(valueTotal);
@@ -893,9 +888,10 @@ const HeroAnimation = memo(() => {
         <Styled.SliderWrapper sliderSize={width}>
           <Styled.Slider>
             <Styled.CircleSlider
-              sliderSize={animationWidth}
+              sliderSize={width}
               id="circle-slider"
-            ></Styled.CircleSlider>
+            >
+            </Styled.CircleSlider>
           </Styled.Slider>
           <Styled.AnimationWrapper
             animationWidth={animationWidth}

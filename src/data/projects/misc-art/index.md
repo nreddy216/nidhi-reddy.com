@@ -10,7 +10,7 @@ url: https://instagram.com/nidhisreddy
 url_text: See latest
 date: ""
 tags: ["Miscellaneous", "Art", "NotWork"]
-published: true
+published: false
 featured: false
 ---
 

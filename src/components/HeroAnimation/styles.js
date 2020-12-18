@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import tw from "tailwind.macro";
 
+const navyBlue = "#3c366b";
+const green = "#48bb78";
+
 export const SliderWrapper = styled.section`
   ${tw`relative w-full max-h-full flex justify-center items-center`};
 
@@ -24,7 +27,7 @@ export const AnimationWrapper = styled.section`
   z-index: -1;
 
   @media (min-width: 1024px) {
-    clip-path: circle(35% at 50% 50%);
+    clip-path: circle(36% at 50% 50%);
   }
 
   ${({ animationWidth, windowHeight }) =>
@@ -65,18 +68,12 @@ export const Name = styled.h1`
 export const CircleSlider = styled.div`
 position: relative;
 border-radius: 100%;
-border: 6px solid black;
+border: 4px solid ${navyBlue};
 
-/* Other than the above two, go wild! */
+
 ${({ sliderSize }) =>
-sliderSize && `height: ${sliderSize}px; width: ${sliderSize}px;`};
+  sliderSize && `height: ${sliderSize}px; width: ${sliderSize}px;`};
 
-
-/*
-  Probably best to paste this exactly as is.
-  These CSS rules make sure that the handle rotates
-  properly, so don't change anything here.
-*/
 .cs-handle-container {
   position: absolute;
   left: 0;
@@ -87,37 +84,53 @@ sliderSize && `height: ${sliderSize}px; width: ${sliderSize}px;`};
 }
 
 .cs-handle {
-  position: absolute;
+  position: relative;
   transform: translateY(-50%);
-  width: 0; 
-  height: 0; 
-  border-top: 24px solid transparent;
-  border-bottom: 24px solid transparent;
-  border-left: 36px solid #48bb78;
   transition: border-left-color 0.25s ease;
-  
-  /*
-    Change 'right' to change the offset from the edge.
-    E.g right: 0 puts the handle just next to the edge
-    of #slider, on the inside
-  */
-  right: -20px;
-  cursor: pointer;
+  cursor: grab;
 
-  &:after {
-    content: '';
-    position: absolute;
-    right: 50px;
-    top: -30px;
-    background: #48bb78;
-    width: 6px;
-    height: 60px;
+  &.active {
+    .cs-handle-img-wrapper {
+      background: #efefef;
+      box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px 0;
+    }
+  }
+
+  &:focus {
+    outline: none !important;
+    .cs-handle-img-wrapper {
+      background: ${navyBlue};
+    }
+  }
+
+  .cs-handle-img-wrapper {
+    border-radius: 100%;
+    background: linear-gradient(180deg, #ffffff, #efefef);
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transform: rotate(90deg);
+    position: absolute;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    top: -16px;
+
+    @media (min-width: 500px) {
+      right: 25px;
+      width: 50px;
+      height: 50px;
+      top: -25px;
+    }    
+  }
+  .cs-handle-img {
+    width: 50%;
   }
 }
-
-.cs-handle:active {
-  border-left-color: blue;
-}
 );
+`;
+
+export const HandCursor = styled.div`
+  ${({ icon }) => icon && `background-image: url(${icon});`};
 `;
