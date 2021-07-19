@@ -10,7 +10,7 @@ import TitleSection from "components/ui/TitleSection";
 const IndexPage: React.FC = () => {
   return (
     <Layout>
-      <SEO title="Portfolio" />
+      <SEO />
       <HeroAnimation />
       <HeroBanner />
       <hr />

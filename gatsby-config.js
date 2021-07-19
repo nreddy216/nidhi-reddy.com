@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: `Nidhi Reddy`,
-    description: `Nidhi Reddy's Portfolio`,
+    title: `Nidhi Reddy | Portfolio`,
+    description: `Nidhi Reddy is a multidisciplinary engineer who builds web applications for organizations ranging from startups to Google. She's always interested in working with mission-driven orgs, and would like for you to say hi at me@nidhi-reddy.com.`,
     author: `Nidhi Reddy`,
   },
   plugins: [
@@ -65,7 +65,7 @@ module.exports = {
         icon: `src/assets/images/gatsby-icon.png`,
       },
     },
-    // `gatsby-plugin-offline`,
+    `gatsby-plugin-offline`,
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-postcss`,
     `gatsby-plugin-tailwindcss`,

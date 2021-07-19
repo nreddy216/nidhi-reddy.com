@@ -40,7 +40,7 @@ const Logo = () => {
     }
   `);
 
-  const logoTitle = site.siteMetadata.title;
+  const logoTitle = `nidhi reddy`;
 
   return (
     <Styled.Logo to="/">

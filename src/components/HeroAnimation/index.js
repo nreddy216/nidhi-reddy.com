@@ -55,7 +55,7 @@ const map = (val, smin, smax, emin, emax) =>
 
 //randomly displace the x,y,z coords by the `per` value
 const jitter = (geo, per) =>
-  geo.vertices.forEach(v => {
+  geo.vertices.forEach((v) => {
     v.x += map(Math.random(), 0, 1, -per, per);
     v.y += map(Math.random(), 0, 1, -per, per);
     v.z += map(Math.random(), 0, 1, -per, per);
@@ -157,6 +157,7 @@ class ThreeAnimation extends React.Component {
     this.laptopMovingDown = true;
     this.state = {
       loaded: false,
+      bgLoaded: false
     };
   }
 
@@ -198,7 +199,7 @@ class ThreeAnimation extends React.Component {
     this.scene.add(this.groundMesh);
   };
 
-  shiftClouds = sliderValue => {
+  shiftClouds = (sliderValue) => {
     const MAX_CLOUD_X = 40;
     const SLOW_CLOUD_INCREMENT = 0.01;
     if (typeof sliderValue !== "undefined") {
@@ -244,7 +245,7 @@ class ThreeAnimation extends React.Component {
     }
   };
 
-  twinkleStars = delta => {
+  twinkleStars = (delta) => {
     for (let k = 0; k < this.stars.length; k++) {
       let star = this.stars[k];
       star.rotation.y > 0.1
@@ -488,12 +489,12 @@ class ThreeAnimation extends React.Component {
     const loader = new GLTFLoader();
     loader.load(
       MODEL_PATH,
-      gltf => {
+      (gltf) => {
         // A lot is going to happen here
         model = gltf.scene;
         let fileAnimations = gltf.animations;
 
-        model.traverse(o => {
+        model.traverse((o) => {
           if (o.isMesh) {
             o.castShadow = true;
             o.receiveShadow = true;
@@ -540,10 +541,10 @@ class ThreeAnimation extends React.Component {
         // Add laptop to scene
         loader.load(
           LAPTOP_PATH,
-          gltf => {
+          (gltf) => {
             this.laptop = gltf.scene;
 
-            this.laptop.traverse(o => {
+            this.laptop.traverse((o) => {
               if (o.isMesh) {
                 o.castShadow = true;
                 o.receiveShadow = true;
@@ -572,30 +573,31 @@ class ThreeAnimation extends React.Component {
             this.scene.add(model);
           },
           // undefined, // We don't need this function
-          (xhr) => {
-
-          },
+          (xhr) => {},
           (error) => {
             console.error(error);
           }
         );
       },
       // undefined, // We don't need this function
-      xhr => {
+      (xhr) => {
         if (xhr.loaded === xhr.total) {
-          this.setState({
-            loaded: true,
-          }, () => {
-            this.loaderAnim.remove();
-          });
+          this.setState(
+            {
+              loaded: true
+            },
+            () => {
+              this.loaderAnim.remove();
+            }
+          );
         }
       },
-      error => {
+      (error) => {
         console.error(error);
       }
     );
 
-    document.addEventListener("mousemove", e => {
+    document.addEventListener("mousemove", (e) => {
       var mousecoords = getMousePos(e);
       if (neck && waist && this.laptop) {
         moveJoint(mousecoords, neck, 50);
@@ -604,7 +606,7 @@ class ThreeAnimation extends React.Component {
       }
     });
 
-    const getMousePos = e => {
+    const getMousePos = (e) => {
       return { x: e.clientX, y: e.clientY };
     };
 
@@ -701,7 +703,7 @@ class ThreeAnimation extends React.Component {
     // Ground
     this.createGround();
 
-    const resizeRendererToDisplaySize = renderer => {
+    const resizeRendererToDisplaySize = (renderer) => {
       this.canvas = renderer.domElement;
       this.camera.aspect = this.canvas.clientWidth / this.canvas.clientHeight;
       this.camera.updateProjectionMatrix();
@@ -749,6 +751,12 @@ class ThreeAnimation extends React.Component {
 
       this.renderer.render(this.scene, this.camera);
       this.animationFrameId = window.requestAnimationFrame(update);
+
+      if (!this.state.bgLoaded) {
+        this.setState({
+          bgLoaded: true
+        });
+      }
     };
 
     update();
@@ -818,12 +826,15 @@ class ThreeAnimation extends React.Component {
 
   render() {
     return (
-      <div ref={ref => (this.mount = ref)}>
-        {/* TODO: Add loading animation */}
-        <Styled.LoaderAnim ref={ref => (this.loaderAnim = ref)} loaded={this.state.loaded}>
-        </Styled.LoaderAnim>
-        <Styled.Canvas loaded={this.state.loaded} id="three-js" ref={ref => (this.canvas = ref)} />
-      </div>
+      <>
+        <div ref={(ref) => (this.mount = ref)}>
+          {/* TODO: Add loading animation */}
+          {/* <Styled.LoaderAnim
+            ref={(ref) => (this.loaderAnim = ref)}
+            loaded={this.state.loaded}
+          ></Styled.LoaderAnim> */}
+        </div>
+      </>
     );
   }
 }
@@ -871,7 +882,7 @@ const HeroAnimation = memo(() => {
 
   const padding = 120;
   let width =
-    (size.width - padding >= SLIDER_SIZE) ? SLIDER_SIZE : (size.width - padding);
+    size.width - padding >= SLIDER_SIZE ? SLIDER_SIZE : size.width - padding;
   let animationWidth =
     size.width >= SLIDER_SIZE * 2
       ? SLIDER_SIZE * 2 - padding
@@ -887,7 +898,7 @@ const HeroAnimation = memo(() => {
     }
   }, []);
 
-  const setSliderValues = angle => {
+  const setSliderValues = (angle) => {
     const valueTotal = (MAX_HOURS * 2) / (360 / angle);
     const value = valueTotal - MAX_HOURS;
     setSliderValueTotal(valueTotal);
@@ -908,10 +919,12 @@ const HeroAnimation = memo(() => {
             animationWidth={animationWidth}
             windowHeight={size.height}
           >
-            <ThreeAnimation
-              sliderValue={sliderValue}
-              sliderValueTotal={sliderValueTotal}
-            />
+            {
+              <ThreeAnimation
+                sliderValue={sliderValue}
+                sliderValueTotal={sliderValueTotal}
+              />
+            }
           </Styled.AnimationWrapper>
         </Styled.SliderWrapper>
       </Container>

@@ -39,8 +39,8 @@ const HeroBanner = () => {
             </linearGradient>
           </defs>
           <Styled.CurvedText>
-            <textPath role="h1" startOffset="158" xlinkHref="#curved-path">
-              {title} (nid-thee)
+            <textPath role="h1" startOffset="162" xlinkHref="#curved-path">
+              {title} (ni-thee)
             </textPath>
           </Styled.CurvedText>
         </Styled.CurvedPath>

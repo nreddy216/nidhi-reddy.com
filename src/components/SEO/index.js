@@ -1,4 +1,5 @@
 import { graphql, useStaticQuery } from "gatsby";
+import NidhiCoding from '../../assets/images/nidhi-coding-fallback.png';
 
 import Helmet from "react-helmet";
 import PropTypes from "prop-types";
@@ -40,6 +41,10 @@ const SEO = ({ description, lang, meta, title, scripts }) => {
         {
           property: `og:description`,
           content: metaDescription,
+        },
+        {
+          property: `og:image`,
+          content: `https://nidhi-reddy.com/${NidhiCoding}`,
         },
         {
           property: `og:type`,
