@@ -44,7 +44,7 @@ const SEO = ({ description, lang, meta, title, scripts }) => {
         },
         {
           property: `og:image`,
-          content: `https://nidhi-reddy.com/${NidhiCoding}`,
+          content: `https://nidhi-reddy.com${NidhiCoding}`,
         },
         {
           property: `og:type`,
