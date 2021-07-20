@@ -22,7 +22,7 @@ export const Slider = styled.section`
 
 export const Canvas = styled.canvas`
   transition: opacity 0.25 ease;
-  ${({ loaded }) => (loaded ? `opacity: 1;` : `opacity: 0;`)};
+  ${({ loaded }) => (loaded ? `opacity: 1; display: block;` : `opacity: 0; display: none;`)};
 `;
 
 export const AnimationWrapper = styled.section`
@@ -52,8 +52,16 @@ export const AnimationWrapper = styled.section`
 
 export const LoaderAnim = styled.div`
   transition: opacity 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  ${({ loaded }) => (loaded ? `opacity: 0;` : `opacity: 1;`)};
+  svg {
+    width: 100px;
+    height: 100px;
+  }
+
+  ${({ loaded }) => (loaded ? `opacity: 0; display: none;` : `opacity: 1; display: block;`)};
 `;
 
 export const Name = styled.h1`
